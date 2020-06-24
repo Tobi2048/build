@@ -1,0 +1,3 @@
+C:/Users/tobia/Desktop/Masterarbeit_Qualitätskontrolle_Passsteinautomat/build/CMakeFiles/Master.dir
+C:/Users/tobia/Desktop/Masterarbeit_Qualitätskontrolle_Passsteinautomat/build/CMakeFiles/ALL_BUILD.dir
+C:/Users/tobia/Desktop/Masterarbeit_Qualitätskontrolle_Passsteinautomat/build/CMakeFiles/ZERO_CHECK.dir
