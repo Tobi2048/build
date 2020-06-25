@@ -318,7 +318,9 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
   <ItemGroup>
     <ClCompile Include="C:\Users\tobia\Desktop\Masterarbeit_Qualitätskontrolle_Passsteinautomat\Master_prog.cpp" />
     <ClCompile Include="Filter.cpp" />
+    <ClCompile Include="Solldaten.cpp" />
     <ClCompile Include="Txt_to_pcd.cpp" />
+    <ClCompile Include="Vergleicher_ist_soll.cpp" />
     <ClCompile Include="Viewer.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -331,7 +333,9 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Filter.h" />
+    <ClInclude Include="Solldaten.h" />
     <ClInclude Include="Txt_to_pcd.h" />
+    <ClInclude Include="Vergleicher_ist_soll.h" />
     <ClInclude Include="Viewer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

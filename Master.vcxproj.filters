@@ -13,6 +13,12 @@
     <ClCompile Include="Filter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Solldaten.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Vergleicher_ist_soll.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="C:\Users\tobia\Desktop\Masterarbeit_Qualitätskontrolle_Passsteinautomat\CMakeLists.txt" />
@@ -30,6 +36,12 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="Filter.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Solldaten.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Vergleicher_ist_soll.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
