@@ -25,14 +25,14 @@ pcl::PointCloud<pcl::PointXYZ>::Ptr flaechen_filter(pcl::PointCloud<pcl::PointXY
     pcl::PassThrough<pcl::PointXYZ> pass;
     pass.setInputCloud(cl_fl_in);
     pass.setFilterFieldName(achse);
-    pass.setFilterLimits(grenzw, grenzw + aufloesung);//Schneidet alle punkte unterhalb und oberhalb ab--------------------------------<--<--<--
+    pass.setFilterLimits(grenzw, (grenzw + aufloesung));//Schneidet alle punkte unterhalb und oberhalb ab--------------------------------<--<--<--
     //pass.setFilterLimitsNegative (true);
     pass.filter(*cl_fl_out);
     return(cl_fl_out);
 }
 
 
-pcl::PointCloud<pcl::PointXYZ>::Ptr oberflaechen_filter(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, int num)
+pcl::PointCloud<pcl::PointXYZ>::Ptr oberflaechen_filter(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, int num, int showcloud)
 {
 
 
@@ -52,15 +52,15 @@ pcl::PointCloud<pcl::PointXYZ>::Ptr oberflaechen_filter(pcl::PointCloud<pcl::Poi
     pass.filter(*indices);
 
     pcl::RegionGrowing<pcl::PointXYZ, pcl::Normal> reg;
-    reg.setMinClusterSize(3000);
-    reg.setMaxClusterSize(1000000);
+    reg.setMinClusterSize(2000);
+    reg.setMaxClusterSize(10000000);
     reg.setSearchMethod(tree);
-    reg.setNumberOfNeighbours(50);
+    reg.setNumberOfNeighbours(40);
     reg.setInputCloud(cloud);
     //reg.setIndices (indices);
     reg.setInputNormals(normals);
-    reg.setSmoothnessThreshold(4.0 / 180.0 * M_PI);
-    reg.setCurvatureThreshold(1.0);
+    reg.setSmoothnessThreshold(5.0 / 180.0 * M_PI);
+    reg.setCurvatureThreshold(2.0);
 
     std::vector <pcl::PointIndices> clusters;
     reg.extract(clusters);
@@ -92,20 +92,22 @@ pcl::PointCloud<pcl::PointXYZ>::Ptr oberflaechen_filter(pcl::PointCloud<pcl::Poi
         std::cout << "PointCloud representing the Cluster: " << cloud_cluster->points.size() << " data points." << std::endl;
         std::stringstream ss;
         ss << "cloud_cluster_" << j << ".pcd";
-        writer.write<pcl::PointXYZ>(ss.str(), *cloud_cluster, false); //*
-        j++;
+        writer.write<pcl::PointXYZ>("C:/Users/tobia/Desktop/Masterarbeit_Qualitätskontrolle_Passsteinautomat/Point_Clouds/"+ss.str(), *cloud_cluster, false); //*
+        
         if (num == j)
             cloud_stein = cloud_cluster;
+        j++;
     }
 
-
-    pcl::PointCloud <pcl::PointXYZRGB>::Ptr colored_cloud = reg.getColoredCloud();
-    pcl::visualization::CloudViewer viewer("Cluster viewer");
-    viewer.showCloud(colored_cloud);
-
-    while (!viewer.wasStopped())
+    if (showcloud == 1)
     {
-    }
+        pcl::PointCloud <pcl::PointXYZRGB>::Ptr colored_cloud = reg.getColoredCloud();
+        pcl::visualization::CloudViewer viewer("Cluster viewer");
+        viewer.showCloud(colored_cloud);
 
+        while (!viewer.wasStopped())
+        {
+        }
+    }
     return (cloud_stein);
 }
