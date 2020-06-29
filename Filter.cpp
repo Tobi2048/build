@@ -28,7 +28,13 @@ pcl::PointCloud<pcl::PointXYZ>::Ptr flaechen_filter(pcl::PointCloud<pcl::PointXY
     pass.setFilterLimits(grenzw, (grenzw + aufloesung));//Schneidet alle punkte unterhalb und oberhalb ab--------------------------------<--<--<--
     //pass.setFilterLimitsNegative (true);
     pass.filter(*cl_fl_out);
-    return(cl_fl_out);
+    if (cl_fl_out->points.size() > 0)
+        return(cl_fl_out);
+    else {
+        cl_fl_out->points[0] = { 0,0,0 };
+        std::cout << "lade 0 0 0\n";
+        return(cl_fl_out);
+    }
 }
 
 

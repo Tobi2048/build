@@ -39,7 +39,7 @@ pcl::PointCloud<pcl::PointXYZ>::Ptr sollstein_erstellen(float aufloesung)
 		{
 			for (float x = vec_TxtPoints[0].x; x <= vec_TxtPoints[1].x - vec_TxtPoints[0].x; x += aufloesung)//auflösung
 			{
-				for (float y = vec_TxtPoints[0].y; y <= (vec_TxtPoints[2].y - vec_TxtPoints[0].y)-my*x; y += aufloesung)
+				for (float y = vec_TxtPoints[0].y; y <= (vec_TxtPoints[2].y - vec_TxtPoints[0].y)+my*x; y += aufloesung)
 				{
 					pcl::PointXYZ point;
 					point.x = x;  point.y = y;  point.z = z;
