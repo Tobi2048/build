@@ -4,19 +4,25 @@
     <ClCompile Include="C:\Users\tobia\Desktop\Masterarbeit_Qualitätskontrolle_Passsteinautomat\Master_prog.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Viewer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Txt_to_pcd.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Filter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Solldaten.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Txt_to_pcd.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="Vergleicher_ist_soll.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Viewer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Transformation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Mathe.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -29,19 +35,25 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Viewer.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Txt_to_pcd.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="Filter.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="Solldaten.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="Txt_to_pcd.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
     <ClInclude Include="Vergleicher_ist_soll.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Viewer.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Transformation.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Mathe.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -15,7 +15,8 @@
 
 
 
-pcl::PointCloud<pcl::PointXYZ>::Ptr sollstein_erstellen(float aufloesung=1);
+pcl::PointCloud<pcl::PointXYZ>::Ptr sollstein_erstellen(float aufloesung = 0.1);
+float soll_breite_txt();
 
 typedef struct points_txt_soll
 {
@@ -24,4 +25,11 @@ typedef struct points_txt_soll
 	double z;  //mm world coordinate z
 };
 
+
+typedef struct points_txt_solll
+{
+	double x;  //mm world coordinate x
+	double y;  //mm world coordinate y
+	double z;  //mm world coordinate z
+};
 
