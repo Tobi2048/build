@@ -21,10 +21,21 @@ pcl::PointCloud<pcl::PointXYZ>::Ptr Ausrichten(pcl::PointCloud<pcl::PointXYZ>::P
     int minElementIndex_y = min_max(cloud_mess, "min", "index", "y");
     float start = cloud_mess->points[minElementIndex_y].y;
     //visual_app(cloud_mess, "auto_close", 1000);
-    pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_fl = flaechen_filter(cloud_mess, start, "y", 0.5);//y min filtern um davon min max zu finden
+    pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_fl = flaechen_filter(cloud_mess, start, "y", 0.4);//y min filtern um davon min max zu finden
+    
     //visual_app(cloud_fl, "auto_clos", 6000);
-    int maxIndex_x = min_max(cloud_fl, "max", "index", "x");
-    int minIndex_x = min_max(cloud_fl, "min", "index", "x");
+    int maxIndex_x = min_max(cloud_fl,"max","index","x");
+    int minIndex_x = min_max(cloud_fl,"min","index","x");
+
+    if (cloud_fl->points[minIndex_x].x != 0 || cloud_fl->points[minIndex_x].y != 0)
+    {
+        Eigen::Affine3f transform_to_0 = Eigen::Affine3f::Identity();
+        transform_to_0.translation() << -cloud_fl->points[minIndex_x].x, -cloud_fl->points[minIndex_x].y, 0.0;
+        pcl::transformPointCloud(*cloud_mess, *cloud_mess,transform_to_0);
+        pcl::transformPointCloud(*cloud_fl, *cloud_fl, transform_to_0);
+        std::cout<<"ruecke linke ecke zu 0,0" << cloud_mess->points[minElementIndex_x] << std::endl;
+    }
+    std::cout << "linke ecke " << cloud_mess->points[minElementIndex_x] << std::endl;
     std::cout << (cloud_fl->points[maxIndex_x].x - cloud_fl->points[minIndex_x].x) << std::endl;// gibt die breite der gefilterten fläche
         
 
@@ -58,14 +69,7 @@ pcl::PointCloud<pcl::PointXYZ>::Ptr Ausrichten(pcl::PointCloud<pcl::PointXYZ>::P
                 count++;
               // std::cout << " " << cloud_mess->points[minElementIndex_y].x << " soll gleich  " << cloud_mess->points[minElementIndex_x].x << std::endl;
             }
-            //-----------------------------------------------------------------bring y min zu 0_________________________
-            std::cout << cloud_mess->points[minElementIndex_y] << std::endl;
-            Eigen::Affine3f transform_to_0 = Eigen::Affine3f::Identity();
-            transform_to_0.translation() << -cloud_mess->points[minElementIndex_y].x, -cloud_mess->points[minElementIndex_y].y, 0.0;
-            pcl::transformPointCloud(*cloud_mess, *cloud_mess, transform_to_0);
-            std::cout << cloud_mess->points[minElementIndex_y] << std::endl;
-            return(cloud_mess);
-            visual_app(cloud_mess, "auto_close", 1000);
+           
         }
         else if (cloud_mess->points[min_max(cloud_mess, "min", "index", "x")].y - cloud_mess->points[min_max(cloud_mess, "min", "index", "y")].y < soll_breite * 0.8)//defi wirum der stein liegt
         {
@@ -95,14 +99,8 @@ pcl::PointCloud<pcl::PointXYZ>::Ptr Ausrichten(pcl::PointCloud<pcl::PointXYZ>::P
                 
                 //std::cout << " " << cloud_mess->points[minElementIndex_y].y << " soll gleich  " << cloud_mess->points[minElementIndex_x].y << std::endl;
             }
-            //-----------------------------------------------------------------bring x min zu 0_________________________
-            std::cout << cloud_mess->points[minElementIndex_x] << std::endl;
-            Eigen::Affine3f transform_to_0 = Eigen::Affine3f::Identity();
-            transform_to_0.translation() << -cloud_mess->points[minElementIndex_x].x, -cloud_mess->points[minElementIndex_x].y, 0.0;
-            pcl::transformPointCloud(*cloud_mess, *cloud_mess, transform_to_0);
-            std::cout << cloud_mess->points[minElementIndex_x] << std::endl;
-            return(cloud_mess);
-            visual_app(cloud_mess, "auto_close", 1000);
+            
+            
         }
         else
             std::cout << "drehung fehler" << std::endl;
@@ -114,5 +112,7 @@ pcl::PointCloud<pcl::PointXYZ>::Ptr Ausrichten(pcl::PointCloud<pcl::PointXYZ>::P
         std::cout << "cloud ist gerade\n";
         return(cloud_mess);
     }
-    
+   
+    return(cloud_mess);
+    visual_app(cloud_mess, "auto_close", 1000);
 }
