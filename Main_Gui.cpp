@@ -54,17 +54,62 @@ LRESULT CALLBACK MessageHandler(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 	case WM_COMMAND:
 		switch (LOWORD(wParam)) {
 		case button_id_open_mess:
-			if (SendMessage(list_soll, LB_GETSEL, 0 , 0) > 0) {
+			if (SendMessage(list_mess, LB_GETSEL, 0 , 0) > 0) {
 				
 				str.insert(0, Verteiler('c',"Jokari"));
+				SetWindowText(mess_text, "Die Datei ""blablabla"" ist \n ausgewählt");
 				lpcstr = str.c_str();
 				SetWindowText(text_edit, lpcstr);
 				break;
 			}
 			else {
-				MessageBox(hwnd, "", "doof", MB_OK);
+				SetWindowText(mess_text, "Bitte erst eine Datei \n auswählen");
 				break;
 			}
+		case button_id_open_soll:
+			if (SendMessage(list_soll, LB_GETSEL, 0, 0) > 0) {
+				str.insert(0, Verteiler('s', "Soll_A_gut"));
+				SetWindowText(soll_text, "Die Datei:\n ""Soll_A_gut"" \n ist  ausgewählt");
+			}
+			else if (SendMessage(list_soll, LB_GETSEL, 1, 0) > 0) {
+				str.insert(0, Verteiler('s', "Soll_A_kurz"));
+				SetWindowText(soll_text, "Die Datei:\n ""Soll_A_kurz"" \nist  ausgewählt");
+			}
+			else if (SendMessage(list_soll, LB_GETSEL, 2, 0) > 0) {
+				str.insert(0, Verteiler('s', "Soll_A_lang"));
+				SetWindowText(soll_text, "Die Datei:\n ""Soll_A_lang""\n ist ausgewählt");
+			}
+			else if (SendMessage(list_soll, LB_GETSEL, 3, 0) > 0) {
+				str.insert(0, Verteiler('s', "Soll_B_gut"));
+				SetWindowText(soll_text, "Die Datei:\n ""Soll_B_gut"" \nist ausgewählt");
+			}
+			else if (SendMessage(list_soll, LB_GETSEL, 4, 0) > 0) {
+				str.insert(0, Verteiler('s', "Soll_B_kurz"));
+				SetWindowText(soll_text, "Die Datei:\n ""Soll_B_kurz""\n ist ausgewählt");
+			}
+			else if (SendMessage(list_soll, LB_GETSEL, 5, 0) > 0) {
+				str.insert(0, Verteiler('s', "Soll_B_lang"));
+				SetWindowText(soll_text, "Die Datei:\n ""Soll_B_lang""\n ist ausgewählt");
+			}
+			else if (SendMessage(list_soll, LB_GETSEL, 6, 0) > 0) {
+				str.insert(0, Verteiler('s', "Soll_C_gut"));
+				SetWindowText(soll_text, "Die Datei:\n ""Soll_C_gut"" \nist ausgewählt");
+			}
+			else if (SendMessage(list_soll, LB_GETSEL, 7, 0) > 0) {
+				str.insert(0, Verteiler('s', "Soll_C_kurz"));
+				SetWindowText(soll_text, "Die Datei:\n ""Soll_C_kurz"" \nist ausgewählt");
+			}
+			else if (SendMessage(list_soll, LB_GETSEL, 8, 0) > 0) {
+				str.insert(0, Verteiler('s', "Soll_C_lang"));
+				SetWindowText(soll_text, "Die Datei:\n ""Soll_C_lang""\n ist ausgewählt");
+			}
+			else {
+				SetWindowText(soll_text, "Bitte erst eine Datei \n auswählen");
+			}
+
+			lpcstr = str.c_str();
+			SetWindowText(text_edit, lpcstr);
+			break;
 		case button_id_visu:
 			str.insert(0, Verteiler('v'));
 			lpcstr = str.c_str();
@@ -82,17 +127,7 @@ LRESULT CALLBACK MessageHandler(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 		AddControls(hwnd);
 		AddListboxs(hwnd);
 		AddText(hwnd);
-		hhAnzeige = CreateWindow(szAnzeige,
-			szAnzeige,
-			WS_OVERLAPPEDWINDOW|WS_VISIBLE,
-			1,
-			1,
-			1940,
-			1000,
-			0,
-			NULL,
-			((LPCREATESTRUCT)lParam)->hInstance,
-			NULL);
+		hhAnzeige = CreateWindow(szAnzeige,szAnzeige,WS_OVERLAPPEDWINDOW|WS_VISIBLE,1,1,1940,1000,0,NULL,((LPCREATESTRUCT)lParam)->hInstance,NULL);
 		
 		
 		break;
@@ -138,8 +173,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	//-----------------------------------------------------------------------------------------------------------
 
 	//----------------------Buttons----------------------------------------------------------------------
-
-
 
 
 	MSG msg;

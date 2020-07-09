@@ -5,4 +5,4 @@
 
 
 
-std::string Verteiler(char anw, std::string = "l");
+std::string Verteiler(char anw, std::string = "leer");
