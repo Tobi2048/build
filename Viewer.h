@@ -6,4 +6,5 @@
 #include <pcl/point_cloud.h>
 
 
-void visual_app(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, std::string anw, unsigned long zeit);
+void visual_app_soll(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud);
+void visual_app_mess(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud);

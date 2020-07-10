@@ -8,7 +8,7 @@ void AddText(HWND hwnd);
 #define button_id_open_soll 10 
 #define button_id_open_mess 11 
 #define button_id_visu 2
-
+#define button_id_visu_2 3
 #define list_soll_id 101
 #define list_mess_id 102
 
@@ -20,6 +20,7 @@ HWND mess_text = nullptr;
 HWND button_open_soll = nullptr;
 HWND button_open_mess = nullptr;
 HWND button_visu = nullptr;
+HWND button_visu_2 = nullptr;
 
 HWND list_soll = nullptr;
 HWND list_mess = nullptr;
@@ -30,7 +31,7 @@ void AddControls(HWND hwnd) {
 	button_open_soll = CreateWindow("BUTTON", "Open", WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON, 276, 30, size_x*2, size_y, hwnd, (HMENU)button_id_open_soll, NULL, NULL);
 	button_open_mess = CreateWindow("BUTTON", "Open", WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON, 725, 30, size_x*2, size_y, hwnd, (HMENU)button_id_open_mess, NULL, NULL);
 	button_visu = CreateWindow("BUTTON", "View", WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON, 100, 250, size_x, size_y, hwnd, (HMENU)button_id_visu, NULL, NULL);
-
+	button_visu_2 = CreateWindow("BUTTON", "View", WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON, 100, 350, size_x, size_y, hwnd, (HMENU)button_id_visu_2, NULL, NULL);
 	//-----------------------Texte----------------------------------------------------------------------------------
 
 

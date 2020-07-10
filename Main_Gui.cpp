@@ -13,8 +13,8 @@ std::string str;
 LPCSTR lpcstr = str.c_str();
 std::string dat;
 
-
-
+HWND hwnd1;
+HWND hwnd2;
 
 //----------------------Fenstergröße------------------------------------------------------------------
 LRESULT CALLBACK AnzeigeProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
@@ -50,6 +50,8 @@ LRESULT CALLBACK AnzeigeProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPar
 LRESULT CALLBACK MessageHandler(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 	static HWND hhAnzeige;
 	static HWND uhhAnzeige;
+	static int z = 0;
+	static int z1 = 0;
 	switch (uMsg) {
 	case WM_COMMAND:
 		switch (LOWORD(wParam)) {
@@ -57,7 +59,7 @@ LRESULT CALLBACK MessageHandler(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 			if (SendMessage(list_mess, LB_GETSEL, 0 , 0) > 0) {
 				
 				str.insert(0, Verteiler('c',"Jokari"));
-				SetWindowText(mess_text, "Die Datei ""blablabla"" ist \n ausgewählt");
+				SetWindowText(mess_text, "Die Datei:\n ""Jokari""\nist ausgewählt");
 				lpcstr = str.c_str();
 				SetWindowText(text_edit, lpcstr);
 				break;
@@ -111,9 +113,36 @@ LRESULT CALLBACK MessageHandler(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 			SetWindowText(text_edit, lpcstr);
 			break;
 		case button_id_visu:
-			str.insert(0, Verteiler('v'));
-			lpcstr = str.c_str();
-			SetWindowText(text_edit, lpcstr);
+			hwnd1 = FindWindow(NULL, "Anzeige des Soll-Steins");
+				if (hwnd1) 
+					DestroyWindow(hwnd1);
+				str.insert(0, Verteiler('v'));
+				lpcstr = str.c_str();
+				SetWindowText(text_edit, lpcstr);
+				
+			
+			
+				MessageBox(hwnd,"hallo","hallo",MB_OK);
+				
+				
+				
+			
+			break;
+		case button_id_visu_2:
+			hwnd2 = FindWindow(NULL, "Anzeige des Mess-Steins");
+			if (hwnd2)
+				DestroyWindow(hwnd2);
+
+				str.insert(0, Verteiler('V'));
+				lpcstr = str.c_str();
+				SetWindowText(text_edit, lpcstr);
+				
+			
+			
+				
+				
+				
+			
 			break;
 		
 		}
@@ -121,6 +150,13 @@ LRESULT CALLBACK MessageHandler(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 
 	case WM_CLOSE: // kreuz befehl
 		PostQuitMessage(0);
+		hwnd1 = FindWindow(NULL, "Anzeige des Soll-Steins");
+		 if (hwnd1) {
+			 DestroyWindow(hwnd1);
+		 }
+		 hwnd2 = FindWindow(NULL,"Anzeige des Mess-Steins");
+		 if (hwnd2)
+			 DestroyWindow(hwnd2);
 		
 		break;
 	case WM_CREATE://Tastatureingabe
@@ -133,6 +169,16 @@ LRESULT CALLBACK MessageHandler(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 		break;
 	case WM_DESTROY:
 		PostQuitMessage(0);
+		DestroyWindow(hhAnzeige);
+		hwnd1 = FindWindow(NULL, "Anzeige des Soll-Steins");
+		 if (hwnd1) {
+			 MessageBox(hwnd, "Programm konnte nicht gefunden werden!", "Error!", MB_OK);
+			 DestroyWindow(hwnd1);
+		 }
+		 hwnd2 = FindWindow(NULL,"Anzeige des Mess-Steins");
+		 if (hwnd2)
+			 DestroyWindow(hwnd2);
+		
 		break;
 	default:
 		break;
@@ -141,7 +187,7 @@ LRESULT CALLBACK MessageHandler(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 }
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
-
+	
 	WNDCLASS wc;
 	ZeroMemory(&wc, sizeof(WNDCLASS));
 	
@@ -165,7 +211,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	//--------------------------Hauptfenster-----------------------------------
 	hwnd = CreateWindow(
 		"WindowClass", "Erste Fenster", WS_VISIBLE | WS_OVERLAPPEDWINDOW,
-		965, 0, 960, 1000, NULL, NULL, hInstance, NULL);
+		955, 0, 980, 1005, NULL, NULL, hInstance, NULL);
 	
 	if (hwnd == nullptr) {
 		DWORD errVal = GetLastError();

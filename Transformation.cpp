@@ -2,7 +2,8 @@
 #include"Mathe.h"
 
 #include"Filter.h"
-#include"Viewer.h"
+
+
 
 pcl::PointCloud<pcl::PointXYZ>::Ptr Ausrichten(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_mess,float soll_breite,float aufloesung)
 {
@@ -20,10 +21,10 @@ pcl::PointCloud<pcl::PointXYZ>::Ptr Ausrichten(pcl::PointCloud<pcl::PointXYZ>::P
     int minElementIndex_x = min_max(cloud_mess, "min", "index", "x");
     int minElementIndex_y = min_max(cloud_mess, "min", "index", "y");
     float start = cloud_mess->points[minElementIndex_y].y;
-    //visual_app(cloud_mess, "auto_close", 1000);
+   
     pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_fl = flaechen_filter(cloud_mess, start, "y", 0.4);//y min filtern um davon min max zu finden
     
-    //visual_app(cloud_fl, "auto_clos", 6000);
+  
     int maxIndex_x = min_max(cloud_fl,"max","index","x");
     int minIndex_x = min_max(cloud_fl,"min","index","x");
 
@@ -114,5 +115,5 @@ pcl::PointCloud<pcl::PointXYZ>::Ptr Ausrichten(pcl::PointCloud<pcl::PointXYZ>::P
     }
    
     return(cloud_mess);
-    visual_app(cloud_mess, "auto_close", 1000);
+   
 }
