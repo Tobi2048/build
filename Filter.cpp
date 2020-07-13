@@ -38,7 +38,7 @@ pcl::PointCloud<pcl::PointXYZ>::Ptr flaechen_filter(pcl::PointCloud<pcl::PointXY
 }
 
 
-pcl::PointCloud<pcl::PointXYZ>::Ptr oberflaechen_filter(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, int num, int showcloud)
+pcl::PointCloud<pcl::PointXYZ>::Ptr oberflaechen_filter(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, int num)
 {
 
 
@@ -72,16 +72,7 @@ pcl::PointCloud<pcl::PointXYZ>::Ptr oberflaechen_filter(pcl::PointCloud<pcl::Poi
     reg.extract(clusters);
 
     std::cout << "Number of clusters is equal to " << clusters.size() << std::endl;
-    for (int i = 0; i < clusters.size(); i++)
-    {
-
-        std::cout << i << " cluster has " << clusters[i].indices.size() << " points." << std::endl;
-        std::cout << "These are the indices of the points of the initial" <<
-            std::endl << "cloud that belong to the first cluster:" << std::endl;
-
-
-        std::cout << std::endl;
-    }
+   
     pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_stein(new pcl::PointCloud<pcl::PointXYZ>);
     pcl::PCDWriter writer;
     int j = 0;
@@ -98,22 +89,13 @@ pcl::PointCloud<pcl::PointXYZ>::Ptr oberflaechen_filter(pcl::PointCloud<pcl::Poi
         std::cout << "PointCloud representing the Cluster: " << cloud_cluster->points.size() << " data points." << std::endl;
         std::stringstream ss;
         ss << "cloud_cluster_" << j << ".pcd";
-        writer.write<pcl::PointXYZ>("C:/Users/tobia/Desktop/Masterarbeit_Qualitätskontrolle_Passsteinautomat/Point_Clouds/"+ss.str(), *cloud_cluster, false); //*
+        writer.write<pcl::PointXYZ>("C:/Users/tobia/Desktop/Masterarbeit_Qualitätskontrolle_Passsteinautomat/Point_Clouds/cluster/"+ss.str(), *cloud_cluster, false); //*
         
         if (num == j)
             cloud_stein = cloud_cluster;
         j++;
     }
 
-    if (showcloud == 1)
-    {
-        pcl::PointCloud <pcl::PointXYZRGB>::Ptr colored_cloud = reg.getColoredCloud();
-        pcl::visualization::CloudViewer viewer("Cluster viewer");
-        viewer.showCloud(colored_cloud);
-
-        while (!viewer.wasStopped())
-        {
-        }
-    }
+   
     return (cloud_stein);
 }

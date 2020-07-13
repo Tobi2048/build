@@ -11,7 +11,7 @@ void visual_app_soll(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud)
     // We add the point cloud to the viewer and pass the color handler
     viewer.addPointCloud(cloud, cloud_color_handler, "original_cloud");
     viewer.setWindowName("Anzeige des Soll-Steins");
-    viewer.addCoordinateSystem(1.0, "cloud", 0);
+    viewer.addCoordinateSystem(100.0, "cloud", 0);
     viewer.setBackgroundColor(255, 255, 255, 0); // Setting background to a dark grey
     viewer.setPointCloudRenderingProperties(pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 1, "original_cloud");
     viewer.setSize(475, 475);
@@ -35,7 +35,7 @@ void visual_app_mess(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud)
     // We add the point cloud to the viewer and pass the color handler
     viewer.addPointCloud(cloud, cloud_color_handler, "original_cloud");
     viewer.setWindowName("Anzeige des Mess-Steins");
-    viewer.addCoordinateSystem(1.0, "cloud", 0);
+    viewer.addCoordinateSystem(100.0, "cloud", 0);
     viewer.setBackgroundColor(255, 255, 255, 0); // Setting background to a dark grey
     viewer.setPointCloudRenderingProperties(pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 1, "original_cloud");
     viewer.setSize(475, 475);

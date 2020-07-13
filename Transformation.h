@@ -5,4 +5,4 @@
 #include <pcl/common/transforms.h>
 
 
-pcl::PointCloud<pcl::PointXYZ>::Ptr Ausrichten(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_mess,  float soll_breite,float aufloesung);
+pcl::PointCloud<pcl::PointXYZ>::Ptr Ausrichten(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_mess,  float soll_breite);

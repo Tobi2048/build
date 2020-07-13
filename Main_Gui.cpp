@@ -15,7 +15,7 @@ std::string dat;
 
 HWND hwnd1;
 HWND hwnd2;
-
+HWND hwnd3; HWND hwnd4;
 //----------------------Fenstergröße------------------------------------------------------------------
 LRESULT CALLBACK AnzeigeProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -115,36 +115,45 @@ LRESULT CALLBACK MessageHandler(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 		case button_id_visu:
 			hwnd1 = FindWindow(NULL, "Anzeige des Soll-Steins");
 				if (hwnd1) 
+				SetForegroundWindow(hwnd1);
+				keybd_event((BYTE)VkKeyScan('q'), 0, 0, 0);
 					DestroyWindow(hwnd1);
 				str.insert(0, Verteiler('v'));
 				lpcstr = str.c_str();
 				SetWindowText(text_edit, lpcstr);
-				
-			
-			
-				MessageBox(hwnd,"hallo","hallo",MB_OK);
-				
-				
-				
-			
 			break;
 		case button_id_visu_2:
 			hwnd2 = FindWindow(NULL, "Anzeige des Mess-Steins");
 			if (hwnd2)
+				SetForegroundWindow(hwnd2);
+				keybd_event((BYTE)VkKeyScan('q'), 0, 0, 0);
 				DestroyWindow(hwnd2);
-
 				str.insert(0, Verteiler('V'));
 				lpcstr = str.c_str();
 				SetWindowText(text_edit, lpcstr);
-				
-			
-			
-				
-				
-				
-			
 			break;
-		
+		case button_filter_stein_id:
+			str.insert(0, Verteiler('o'));
+			lpcstr = str.c_str();
+			SetWindowText(text_edit, lpcstr);
+			break;
+		case button_auswerten_id:
+			hwnd3 = FindWindow(NULL, "Anzeige Auswertung breite des Steins");
+			if (hwnd3) {
+				SetForegroundWindow(hwnd3);
+				keybd_event((BYTE)VkKeyScan('q'), 0, 0, 0);
+				DestroyWindow(hwnd3);
+			}
+			hwnd4 = FindWindow(NULL, "Anzeige Auswertung laenge des Steins");
+			if (hwnd4) {
+				SetForegroundWindow(hwnd4);
+				keybd_event((BYTE)VkKeyScan('q'), 0, 0, 0);
+				DestroyWindow(hwnd4);
+			}
+			str.insert(0, Verteiler('a'));
+			lpcstr = str.c_str();
+			SetWindowText(text_edit, lpcstr);
+			break;
 		}
 		break;
 
@@ -152,11 +161,27 @@ LRESULT CALLBACK MessageHandler(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 		PostQuitMessage(0);
 		hwnd1 = FindWindow(NULL, "Anzeige des Soll-Steins");
 		 if (hwnd1) {
+			 SetForegroundWindow(hwnd1);
+			 keybd_event((BYTE)VkKeyScan('q'), 0, 0, 0);
 			 DestroyWindow(hwnd1);
 		 }
 		 hwnd2 = FindWindow(NULL,"Anzeige des Mess-Steins");
 		 if (hwnd2)
+			 SetForegroundWindow(hwnd2);
+		 keybd_event((BYTE)VkKeyScan('q'), 0, 0, 0);
 			 DestroyWindow(hwnd2);
+			 hwnd3 = FindWindow(NULL, "Anzeige Auswertung breite des Steins");
+			 if (hwnd3) {
+				 SetForegroundWindow(hwnd3);
+				 keybd_event((BYTE)VkKeyScan('q'), 0, 0, 0);
+				 DestroyWindow(hwnd3);
+			 }
+			 hwnd4 = FindWindow(NULL, "Anzeige Auswertung laenge des Steins");
+			 if (hwnd4) {
+				 SetForegroundWindow(hwnd4);
+				 keybd_event((BYTE)VkKeyScan('q'), 0, 0, 0);
+				 DestroyWindow(hwnd4);
+			 }
 		
 		break;
 	case WM_CREATE://Tastatureingabe
@@ -172,12 +197,27 @@ LRESULT CALLBACK MessageHandler(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 		DestroyWindow(hhAnzeige);
 		hwnd1 = FindWindow(NULL, "Anzeige des Soll-Steins");
 		 if (hwnd1) {
-			 MessageBox(hwnd, "Programm konnte nicht gefunden werden!", "Error!", MB_OK);
+			 SetForegroundWindow(hwnd1);
+			 keybd_event((BYTE)VkKeyScan('q'), 0, 0, 0);
 			 DestroyWindow(hwnd1);
 		 }
 		 hwnd2 = FindWindow(NULL,"Anzeige des Mess-Steins");
 		 if (hwnd2)
+			 SetForegroundWindow(hwnd2);
+		 keybd_event((BYTE)VkKeyScan('q'), 0, 0, 0);
 			 DestroyWindow(hwnd2);
+			 hwnd3 = FindWindow(NULL, "Anzeige Auswertung breite des Steins");
+			 if (hwnd3) {
+				 SetForegroundWindow(hwnd3);
+				 keybd_event((BYTE)VkKeyScan('q'), 0, 0, 0);
+				 DestroyWindow(hwnd3);
+			 }
+			 hwnd4 = FindWindow(NULL, "Anzeige Auswertung laenge des Steins");
+			 if (hwnd4) {
+				 SetForegroundWindow(hwnd4);
+				 keybd_event((BYTE)VkKeyScan('q'), 0, 0, 0);
+				 DestroyWindow(hwnd4);
+			 }
 		
 		break;
 	default:

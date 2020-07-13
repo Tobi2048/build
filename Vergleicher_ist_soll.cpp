@@ -28,11 +28,12 @@ int Auswertung(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_mess, pcl::PointCloud<p
     pcl::visualization::PCLVisualizer viewer1("Matrix einteilung gut schlecht");
     pcl::visualization::PointCloudColorHandlerCustom<pcl::PointXYZ> source_cloud_color_handler(cloud_mess, 255, 255, 255);// We add the point cloud to the viewer and pass the color handler
     viewer1.addPointCloud(cloud_mess, source_cloud_color_handler, "original_cloud");
-    viewer1.addCoordinateSystem(1.0, "cloud", 0);
+    viewer1.addCoordinateSystem(100.0, "cloud", 0);
     viewer1.setBackgroundColor(0.05, 0.05, 0.05, 0); // Setting background to a dark grey
     viewer1.setPointCloudRenderingProperties(pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 2, "original_cloud");
-    
-   
+    viewer1.setSize(475, 475);
+    viewer1.setPosition(2, 507);
+    viewer1.setWindowName("Anzeige Auswertung laenge des Steins");
    
 
     int gut = 5;
@@ -108,12 +109,7 @@ int Auswertung(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_mess, pcl::PointCloud<p
     
     
     
-    while (!viewer1.wasStopped())
-    { // Display the visualiser until 'q' key is pressed
-        viewer1.spinOnce();
-       // Sleep(1000);
-        //viewer1.close();
-    }
+ 
 
     std::cout << "es sind " << count_gut << "gute Rheien und" << std::endl
         << "es sind " << count_mangel << "mangelhafte Rheien und" << std::endl
@@ -148,11 +144,12 @@ int Auswertung(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_mess, pcl::PointCloud<p
     pcl::visualization::PCLVisualizer viewer2("Matrix einteilung gut schlecht");
     pcl::visualization::PointCloudColorHandlerCustom<pcl::PointXYZ> source_cloud_color_handler2(cloud_mess, 255, 255, 255);// We add the point cloud to the viewer and pass the color handler
     viewer2.addPointCloud(cloud_mess, source_cloud_color_handler2, "original_cloud");
-    viewer2.addCoordinateSystem(1.0, "cloud", 0);
+    viewer2.addCoordinateSystem(100.0, "cloud", 0);
     viewer2.setBackgroundColor(0.05, 0.05, 0.05, 0); // Setting background to a dark grey
     viewer2.setPointCloudRenderingProperties(pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 2, "original_cloud");
-    
-   
+    viewer2.setSize(475, 475);
+    viewer2.setPosition(477, 507);
+    viewer2.setWindowName("Anzeige Auswertung breite des Steins");
      
 
     int countery = 1;
@@ -222,12 +219,7 @@ int Auswertung(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_mess, pcl::PointCloud<p
     
     
     
-    while (!viewer2.wasStopped())
-    { // Display the visualiser until 'q' key is pressed
-        viewer2.spinOnce();
-      //Sleep(1000);
-       // viewer2.close();
-    }
+ 
 
     std::cout << "es sind " << count_guty << "gute Rheien und" << std::endl
         << "es sind " << count_mangely << "mangelhafte Rheien und" << std::endl
@@ -235,6 +227,18 @@ int Auswertung(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_mess, pcl::PointCloud<p
     
 
 
+    while (!viewer1.wasStopped())
+    { // Display the visualiser until 'q' key is pressed
+        viewer1.spinOnce();
+        // Sleep(1000);
+         //viewer1.close();
+    }
+    while (!viewer2.wasStopped())
+    { // Display the visualiser until 'q' key is pressed
+        viewer2.spinOnce();
+        // Sleep(1000);
+         //viewer1.close();
+    }
     
 
     

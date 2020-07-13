@@ -5,12 +5,16 @@ void AddListboxs(HWND hwnd);
 void AddText(HWND hwnd);
 
 
-#define button_id_open_soll 10 
-#define button_id_open_mess 11 
+#define button_id_open_soll 0
+#define button_id_open_mess 1 
 #define button_id_visu 2
 #define button_id_visu_2 3
+#define button_filter_stein_id 4
+#define button_auswerten_id 5
+
 #define list_soll_id 101
 #define list_mess_id 102
+
 
 HWND hwnd = nullptr;
 //HWND 
@@ -21,17 +25,20 @@ HWND button_open_soll = nullptr;
 HWND button_open_mess = nullptr;
 HWND button_visu = nullptr;
 HWND button_visu_2 = nullptr;
-
+HWND button_filter_stein = nullptr;
+HWND button_auswerten = nullptr;
 HWND list_soll = nullptr;
 HWND list_mess = nullptr;
 
 void AddControls(HWND hwnd) {
 	int size_x=99;
 	int size_y=49;
-	button_open_soll = CreateWindow("BUTTON", "Open", WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON, 276, 30, size_x*2, size_y, hwnd, (HMENU)button_id_open_soll, NULL, NULL);
-	button_open_mess = CreateWindow("BUTTON", "Open", WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON, 725, 30, size_x*2, size_y, hwnd, (HMENU)button_id_open_mess, NULL, NULL);
-	button_visu = CreateWindow("BUTTON", "View", WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON, 100, 250, size_x, size_y, hwnd, (HMENU)button_id_visu, NULL, NULL);
-	button_visu_2 = CreateWindow("BUTTON", "View", WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON, 100, 350, size_x, size_y, hwnd, (HMENU)button_id_visu_2, NULL, NULL);
+	button_open_soll = CreateWindow("BUTTON", "Open_soll", WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON, 276, 30, size_x*2, size_y, hwnd, (HMENU)button_id_open_soll, NULL, NULL);
+	button_open_mess = CreateWindow("BUTTON", "Open_mess", WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON, 725, 30, size_x*2, size_y, hwnd, (HMENU)button_id_open_mess, NULL, NULL);
+	button_visu = CreateWindow("BUTTON", "View_mess", WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON, 25, 210, size_x, size_y, hwnd, (HMENU)button_id_visu, NULL, NULL);
+	button_visu_2 = CreateWindow("BUTTON", "View_soll", WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON, 475, 210, size_x, size_y, hwnd, (HMENU)button_id_visu_2, NULL, NULL);
+	button_filter_stein= CreateWindow("BUTTON", "Stein_Filtern", WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON, 475+size_x, 210, size_x, size_y, hwnd, (HMENU)button_filter_stein_id, NULL, NULL);
+	button_auswerten= CreateWindow("BUTTON", "Stein_Filtern", WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON, 475 + 2*size_x, 210, size_x, size_y, hwnd, (HMENU)button_auswerten_id, NULL, NULL);
 	//-----------------------Texte----------------------------------------------------------------------------------
 
 

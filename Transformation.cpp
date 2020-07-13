@@ -5,7 +5,7 @@
 
 
 
-pcl::PointCloud<pcl::PointXYZ>::Ptr Ausrichten(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_mess,float soll_breite,float aufloesung)
+pcl::PointCloud<pcl::PointXYZ>::Ptr Ausrichten(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_mess,float soll_breite)
 {
     int gut = 5;
     int mangel = 5;
@@ -20,6 +20,7 @@ pcl::PointCloud<pcl::PointXYZ>::Ptr Ausrichten(pcl::PointCloud<pcl::PointXYZ>::P
     //------------------------schauen ob stein gerade ist--------------------------------------
     int minElementIndex_x = min_max(cloud_mess, "min", "index", "x");
     int minElementIndex_y = min_max(cloud_mess, "min", "index", "y");
+    int minElementIndex_z = min_max(cloud_mess, "min", "index", "z");
     float start = cloud_mess->points[minElementIndex_y].y;
    
     pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_fl = flaechen_filter(cloud_mess, start, "y", 0.4);//y min filtern um davon min max zu finden
@@ -28,10 +29,10 @@ pcl::PointCloud<pcl::PointXYZ>::Ptr Ausrichten(pcl::PointCloud<pcl::PointXYZ>::P
     int maxIndex_x = min_max(cloud_fl,"max","index","x");
     int minIndex_x = min_max(cloud_fl,"min","index","x");
 
-    if (cloud_fl->points[minIndex_x].x != 0 || cloud_fl->points[minIndex_x].y != 0)
+    if (cloud_fl->points[minIndex_x].x != 0 || cloud_fl->points[minIndex_x].y != 0||cloud_mess->points[minElementIndex_z].z!=0)
     {
         Eigen::Affine3f transform_to_0 = Eigen::Affine3f::Identity();
-        transform_to_0.translation() << -cloud_fl->points[minIndex_x].x, -cloud_fl->points[minIndex_x].y, 0.0;
+        transform_to_0.translation() << -cloud_fl->points[minIndex_x].x, -cloud_fl->points[minIndex_x].y, -cloud_mess->points[minElementIndex_z].z;
         pcl::transformPointCloud(*cloud_mess, *cloud_mess,transform_to_0);
         pcl::transformPointCloud(*cloud_fl, *cloud_fl, transform_to_0);
         std::cout<<"ruecke linke ecke zu 0,0" << cloud_mess->points[minElementIndex_x] << std::endl;

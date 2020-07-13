@@ -54,7 +54,7 @@ pcl::PointCloud<pcl::PointXYZ>::Ptr sollstein_erstellen(float aufloesung ,std::s
 
 }
 
-float soll_breite_txt()
+float soll_breite_txt( std::string dat)
 {//------------------------------------------------------------------------------------------solldaten eckpunkte laden---------------------------------------
 	pcl::PointCloud<pcl::PointXYZ>::Ptr point_cloud(new pcl::PointCloud<pcl::PointXYZ>);
 
@@ -62,8 +62,9 @@ float soll_breite_txt()
 	FILE* fp_txt;
 	points_txt_solll TxtPoint;
 	std::vector<points_txt_solll> vec_TxtPoints;
+	std::string pfad = ("C:/Users/tobia/Desktop/Masterarbeit_Qualitätskontrolle_Passsteinautomat/Point_Clouds/Soll_Daten/" + dat + ".txt");
 
-	fp_txt = fopen("C:/Users/tobia/Desktop/Masterarbeit_Qualitätskontrolle_Passsteinautomat/Point_Clouds/Soll_stein.txt", "r");// hier die txt datei eintragen<--------------------------------<-<-<-<-<-<-<-<-<
+	fp_txt = fopen(pfad.c_str(), "r");// hier die txt datei eintragen<--------------------------------<-<-<-<-<-<-<-<-<
 
 	if (fp_txt)//If File open, push points in Vector 
 	{
