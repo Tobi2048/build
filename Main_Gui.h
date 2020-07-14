@@ -31,14 +31,14 @@ HWND list_soll = nullptr;
 HWND list_mess = nullptr;
 
 void AddControls(HWND hwnd) {
-	int size_x=99;
-	int size_y=49;
-	button_open_soll = CreateWindow("BUTTON", "Open_soll", WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON, 276, 30, size_x*2, size_y, hwnd, (HMENU)button_id_open_soll, NULL, NULL);
-	button_open_mess = CreateWindow("BUTTON", "Open_mess", WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON, 725, 30, size_x*2, size_y, hwnd, (HMENU)button_id_open_mess, NULL, NULL);
-	button_visu = CreateWindow("BUTTON", "View_mess", WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON, 25, 210, size_x, size_y, hwnd, (HMENU)button_id_visu, NULL, NULL);
-	button_visu_2 = CreateWindow("BUTTON", "View_soll", WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON, 475, 210, size_x, size_y, hwnd, (HMENU)button_id_visu_2, NULL, NULL);
-	button_filter_stein= CreateWindow("BUTTON", "Stein_Filtern", WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON, 475+size_x, 210, size_x, size_y, hwnd, (HMENU)button_filter_stein_id, NULL, NULL);
-	button_auswerten= CreateWindow("BUTTON", "Stein_Filtern", WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON, 475 + 2*size_x, 210, size_x, size_y, hwnd, (HMENU)button_auswerten_id, NULL, NULL);
+	int size_x=149;
+	int size_y=69;
+	button_open_soll = CreateWindow("BUTTON", "Bestätigen ", WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON, 276, 30, 199, size_y, hwnd, (HMENU)button_id_open_soll, NULL, NULL);
+	button_open_mess = CreateWindow("BUTTON", "Bestätigen", WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON, 725, 30, 199, size_y, hwnd, (HMENU)button_id_open_mess, NULL, NULL);
+	button_visu = CreateWindow("BUTTON", "Anzeigen", WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON, 25, 210, size_x, size_y, hwnd, (HMENU)button_id_visu, NULL, NULL);
+	button_visu_2 = CreateWindow("BUTTON", "Anzeigen", WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON, 475, 210, size_x, size_y, hwnd, (HMENU)button_id_visu_2, NULL, NULL);
+	button_filter_stein= CreateWindow("BUTTON", "Stein filtern", WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON, 475+size_x, 210, size_x, size_y, hwnd, (HMENU)button_filter_stein_id, NULL, NULL);
+	button_auswerten= CreateWindow("BUTTON", "Auswerten", WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON, 475 + 2*size_x, 210, size_x, size_y, hwnd, (HMENU)button_auswerten_id, NULL, NULL);
 	//-----------------------Texte----------------------------------------------------------------------------------
 
 
@@ -65,9 +65,17 @@ void AddListboxs(HWND hwnd) {
 	SendMessage(list_mess, LB_ADDSTRING, 0, (LPARAM)"Jokarid.txt");
 }
 void AddText(HWND hwnd) {
-	text_edit = CreateWindow("Static", "", WS_VISIBLE | WS_CHILD | ES_LEFT, 100, 600, 800, 200, hwnd, 0, 0, 0);
-	CreateWindow("Static", "Soll-Stein Daten", WS_VISIBLE | WS_CHILD | ES_CENTER, 0, 0, 473, 29, hwnd, 0, 0, 0);
-	CreateWindow("Static", "Mess-Stein Daten", WS_VISIBLE | WS_CHILD | ES_CENTER, 476, 0, 473, 29, hwnd, 0, 0, 0);
+	int tabx = 100;  
+	int taby = 35;
+	text_edit = CreateWindow("Static", "", WS_VISIBLE | WS_CHILD | ES_LEFT, 25, 750, 900, 200, hwnd, 0, 0, 0);
+	CreateWindow("Static", "Soll-Stein Daten", WS_VISIBLE | WS_CHILD | ES_CENTER, 25, 0, 450, 29, hwnd, 0, 0, 0);
+	CreateWindow("Static", "Mess-Stein Daten", WS_VISIBLE | WS_CHILD | ES_CENTER, 476, 0, 450, 29, hwnd, 0, 0, 0);
+
+
+	CreateWindow("Static", "Sollwerte", WS_VISIBLE | WS_CHILD | ES_CENTER, 25+tabx, 350, tabx, taby, hwnd, 0, 0, 0);
+	CreateWindow("Static", "Länge", WS_VISIBLE | WS_CHILD | ES_CENTER, 25 , 350+taby, tabx, taby, hwnd, 0, 0, 0);
+	CreateWindow("Static", "Breite", WS_VISIBLE | WS_CHILD | ES_CENTER, 25, 350 + taby*2, tabx, taby, hwnd, 0, 0, 0);
+	CreateWindow("Static", "Höhe", WS_VISIBLE | WS_CHILD | ES_CENTER, 25, 350 + taby*3, tabx, taby, hwnd, 0, 0, 0);
 
 	soll_text=CreateWindow("Static", " ", WS_VISIBLE | WS_CHILD | ES_CENTER, 276, 100, 198, 110, hwnd, 0, 0, 0);
 	mess_text=CreateWindow("Static", " ", WS_VISIBLE | WS_CHILD | ES_CENTER, 726, 100, 198, 110, hwnd, 0, 0, 0);

@@ -5,7 +5,7 @@
 
 
 
-int Auswertung(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_mess, pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_soll, float aufloesung)
+std::vector<float> Auswertung(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_mess, pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_soll, float aufloesung)
 {
    
     //--------------Berechnung der startwerte ------------------------------------------------------
@@ -26,14 +26,14 @@ int Auswertung(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_mess, pcl::PointCloud<p
     //---------------------------Berechnung höhe in scheiben von -xmin bis +xmax einteilung in gut schlecht ------------------------------------------------------
     //viewer initialisierung
     pcl::visualization::PCLVisualizer viewer1("Matrix einteilung gut schlecht");
-    pcl::visualization::PointCloudColorHandlerCustom<pcl::PointXYZ> source_cloud_color_handler(cloud_mess, 255, 255, 255);// We add the point cloud to the viewer and pass the color handler
+    pcl::visualization::PointCloudColorHandlerCustom<pcl::PointXYZ> source_cloud_color_handler(cloud_mess, 0.05, 0.05, 0.05);// We add the point cloud to the viewer and pass the color handler
     viewer1.addPointCloud(cloud_mess, source_cloud_color_handler, "original_cloud");
     viewer1.addCoordinateSystem(100.0, "cloud", 0);
-    viewer1.setBackgroundColor(0.05, 0.05, 0.05, 0); // Setting background to a dark grey
+    viewer1.setBackgroundColor(255, 255, 255, 0); // Setting background to a dark grey
     viewer1.setPointCloudRenderingProperties(pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 2, "original_cloud");
     viewer1.setSize(475, 475);
     viewer1.setPosition(2, 507);
-    viewer1.setWindowName("Anzeige Auswertung laenge des Steins");
+    viewer1.setWindowName("Anzeige Auswertung Länge des Steins");
    
 
     int gut = 5;
@@ -142,14 +142,14 @@ int Auswertung(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_mess, pcl::PointCloud<p
     //---------------------------Berechnung höhe in scheiben von -xmin bis +xmax einteilung in gut schlecht ------------------------------------------------------
     //viewer initialisierung
     pcl::visualization::PCLVisualizer viewer2("Matrix einteilung gut schlecht");
-    pcl::visualization::PointCloudColorHandlerCustom<pcl::PointXYZ> source_cloud_color_handler2(cloud_mess, 255, 255, 255);// We add the point cloud to the viewer and pass the color handler
+    pcl::visualization::PointCloudColorHandlerCustom<pcl::PointXYZ> source_cloud_color_handler2(cloud_mess, 0.05, 0.05, 0.05);// We add the point cloud to the viewer and pass the color handler
     viewer2.addPointCloud(cloud_mess, source_cloud_color_handler2, "original_cloud");
     viewer2.addCoordinateSystem(100.0, "cloud", 0);
-    viewer2.setBackgroundColor(0.05, 0.05, 0.05, 0); // Setting background to a dark grey
+    viewer2.setBackgroundColor(255, 255, 255, 0); // Setting background to a dark grey
     viewer2.setPointCloudRenderingProperties(pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 2, "original_cloud");
     viewer2.setSize(475, 475);
     viewer2.setPosition(477, 507);
-    viewer2.setWindowName("Anzeige Auswertung breite des Steins");
+    viewer2.setWindowName("Anzeige Auswertung Breite des Steins");
      
 
     int countery = 1;
@@ -242,5 +242,5 @@ int Auswertung(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_mess, pcl::PointCloud<p
     
 
     
-return(0);
+   
 }

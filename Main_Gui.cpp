@@ -37,6 +37,31 @@ LRESULT CALLBACK AnzeigeProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPar
 
 	case WM_CLOSE:
 		// kreuz befehl
+		hwnd1 = FindWindow(NULL, "Anzeige des Soll-Steins");
+		if (hwnd1) {
+			SetForegroundWindow(hwnd1);
+			keybd_event((BYTE)VkKeyScan('q'), 0, 0, 0);
+			DestroyWindow(hwnd1);
+		}
+		hwnd2 = FindWindow(NULL, "Anzeige des Mess-Steins");
+		if (hwnd2) {
+			SetForegroundWindow(hwnd2);
+			keybd_event((BYTE)VkKeyScan('q'), 0, 0, 0);
+			DestroyWindow(hwnd2);
+			hwnd3 = FindWindow(NULL, "Anzeige Auswertung breite des Steins");
+		}
+		if (hwnd3) {
+			SetForegroundWindow(hwnd3);
+			keybd_event((BYTE)VkKeyScan('q'), 0, 0, 0);
+			DestroyWindow(hwnd3);
+		}
+		hwnd4 = FindWindow(NULL, "Anzeige Auswertung laenge des Steins");
+		if (hwnd4) {
+			SetForegroundWindow(hwnd4);
+			keybd_event((BYTE)VkKeyScan('q'), 0, 0, 0);
+			DestroyWindow(hwnd4);
+		}
+		
 		PostQuitMessage(0);
 		break;
 	default:
@@ -56,9 +81,9 @@ LRESULT CALLBACK MessageHandler(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 	case WM_COMMAND:
 		switch (LOWORD(wParam)) {
 		case button_id_open_mess:
-			if (SendMessage(list_mess, LB_GETSEL, 0 , 0) > 0) {
-				
-				str.insert(0, Verteiler('c',"Jokari"));
+			if (SendMessage(list_mess, LB_GETSEL, 0, 0) > 0) {
+
+				str.insert(0, Verteiler('c', "Jokari")[0]);
 				SetWindowText(mess_text, "Die Datei:\n ""Jokari""\nist ausgewählt");
 				lpcstr = str.c_str();
 				SetWindowText(text_edit, lpcstr);
@@ -70,39 +95,39 @@ LRESULT CALLBACK MessageHandler(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 			}
 		case button_id_open_soll:
 			if (SendMessage(list_soll, LB_GETSEL, 0, 0) > 0) {
-				str.insert(0, Verteiler('s', "Soll_A_gut"));
+				str.insert(0, Verteiler('s', "Soll_A_gut")[0]);
 				SetWindowText(soll_text, "Die Datei:\n ""Soll_A_gut"" \n ist  ausgewählt");
 			}
 			else if (SendMessage(list_soll, LB_GETSEL, 1, 0) > 0) {
-				str.insert(0, Verteiler('s', "Soll_A_kurz"));
+				str.insert(0, Verteiler('s', "Soll_A_kurz")[0]);
 				SetWindowText(soll_text, "Die Datei:\n ""Soll_A_kurz"" \nist  ausgewählt");
 			}
 			else if (SendMessage(list_soll, LB_GETSEL, 2, 0) > 0) {
-				str.insert(0, Verteiler('s', "Soll_A_lang"));
+				str.insert(0, Verteiler('s', "Soll_A_lang")[0]);
 				SetWindowText(soll_text, "Die Datei:\n ""Soll_A_lang""\n ist ausgewählt");
 			}
 			else if (SendMessage(list_soll, LB_GETSEL, 3, 0) > 0) {
-				str.insert(0, Verteiler('s', "Soll_B_gut"));
+				str.insert(0, Verteiler('s', "Soll_B_gut")[0]);
 				SetWindowText(soll_text, "Die Datei:\n ""Soll_B_gut"" \nist ausgewählt");
 			}
 			else if (SendMessage(list_soll, LB_GETSEL, 4, 0) > 0) {
-				str.insert(0, Verteiler('s', "Soll_B_kurz"));
+				str.insert(0, Verteiler('s', "Soll_B_kurz")[0]);
 				SetWindowText(soll_text, "Die Datei:\n ""Soll_B_kurz""\n ist ausgewählt");
 			}
 			else if (SendMessage(list_soll, LB_GETSEL, 5, 0) > 0) {
-				str.insert(0, Verteiler('s', "Soll_B_lang"));
+				str.insert(0, Verteiler('s', "Soll_B_lang")[0]);
 				SetWindowText(soll_text, "Die Datei:\n ""Soll_B_lang""\n ist ausgewählt");
 			}
 			else if (SendMessage(list_soll, LB_GETSEL, 6, 0) > 0) {
-				str.insert(0, Verteiler('s', "Soll_C_gut"));
+				str.insert(0, Verteiler('s', "Soll_C_gut")[0]);
 				SetWindowText(soll_text, "Die Datei:\n ""Soll_C_gut"" \nist ausgewählt");
 			}
 			else if (SendMessage(list_soll, LB_GETSEL, 7, 0) > 0) {
-				str.insert(0, Verteiler('s', "Soll_C_kurz"));
+				str.insert(0, Verteiler('s', "Soll_C_kurz")[0]);
 				SetWindowText(soll_text, "Die Datei:\n ""Soll_C_kurz"" \nist ausgewählt");
 			}
 			else if (SendMessage(list_soll, LB_GETSEL, 8, 0) > 0) {
-				str.insert(0, Verteiler('s', "Soll_C_lang"));
+				str.insert(0, Verteiler('s', "Soll_C_lang")[0]);
 				SetWindowText(soll_text, "Die Datei:\n ""Soll_C_lang""\n ist ausgewählt");
 			}
 			else {
@@ -118,7 +143,7 @@ LRESULT CALLBACK MessageHandler(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 				SetForegroundWindow(hwnd1);
 				keybd_event((BYTE)VkKeyScan('q'), 0, 0, 0);
 					DestroyWindow(hwnd1);
-				str.insert(0, Verteiler('v'));
+				str.insert(0, Verteiler('v')[0]);
 				lpcstr = str.c_str();
 				SetWindowText(text_edit, lpcstr);
 			break;
@@ -128,12 +153,12 @@ LRESULT CALLBACK MessageHandler(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 				SetForegroundWindow(hwnd2);
 				keybd_event((BYTE)VkKeyScan('q'), 0, 0, 0);
 				DestroyWindow(hwnd2);
-				str.insert(0, Verteiler('V'));
+				str.insert(0, Verteiler('V')[0]);
 				lpcstr = str.c_str();
 				SetWindowText(text_edit, lpcstr);
 			break;
 		case button_filter_stein_id:
-			str.insert(0, Verteiler('o'));
+			str.insert(0, Verteiler('o')[0]);
 			lpcstr = str.c_str();
 			SetWindowText(text_edit, lpcstr);
 			break;
@@ -150,7 +175,7 @@ LRESULT CALLBACK MessageHandler(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 				keybd_event((BYTE)VkKeyScan('q'), 0, 0, 0);
 				DestroyWindow(hwnd4);
 			}
-			str.insert(0, Verteiler('a'));
+			str.insert(0, Verteiler('a')[0]);
 			lpcstr = str.c_str();
 			SetWindowText(text_edit, lpcstr);
 			break;
@@ -158,7 +183,7 @@ LRESULT CALLBACK MessageHandler(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 		break;
 
 	case WM_CLOSE: // kreuz befehl
-		PostQuitMessage(0);
+		
 		hwnd1 = FindWindow(NULL, "Anzeige des Soll-Steins");
 		 if (hwnd1) {
 			 SetForegroundWindow(hwnd1);
@@ -166,29 +191,32 @@ LRESULT CALLBACK MessageHandler(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 			 DestroyWindow(hwnd1);
 		 }
 		 hwnd2 = FindWindow(NULL,"Anzeige des Mess-Steins");
-		 if (hwnd2)
+		 if (hwnd2) {
 			 SetForegroundWindow(hwnd2);
-		 keybd_event((BYTE)VkKeyScan('q'), 0, 0, 0);
+			 keybd_event((BYTE)VkKeyScan('q'), 0, 0, 0);
 			 DestroyWindow(hwnd2);
-			 hwnd3 = FindWindow(NULL, "Anzeige Auswertung breite des Steins");
-			 if (hwnd3) {
+			 hwnd3 = FindWindow(NULL, "Anzeige Auswertung Breite des Steins");
+		 }
+		 if (hwnd3) {
 				 SetForegroundWindow(hwnd3);
 				 keybd_event((BYTE)VkKeyScan('q'), 0, 0, 0);
 				 DestroyWindow(hwnd3);
-			 }
-			 hwnd4 = FindWindow(NULL, "Anzeige Auswertung laenge des Steins");
-			 if (hwnd4) {
+		 }
+		hwnd4 = FindWindow(NULL, "Anzeige Auswertung Länge des Steins");
+		 if (hwnd4) {
 				 SetForegroundWindow(hwnd4);
 				 keybd_event((BYTE)VkKeyScan('q'), 0, 0, 0);
 				 DestroyWindow(hwnd4);
-			 }
+		 }
+		 DestroyWindow(hhAnzeige);
+		 PostQuitMessage(0);
 		
 		break;
 	case WM_CREATE://Tastatureingabe
 		AddControls(hwnd);
 		AddListboxs(hwnd);
 		AddText(hwnd);
-		hhAnzeige = CreateWindow(szAnzeige,szAnzeige,WS_OVERLAPPEDWINDOW|WS_VISIBLE,1,1,1940,1000,0,NULL,((LPCREATESTRUCT)lParam)->hInstance,NULL);
+		hhAnzeige = CreateWindow(szAnzeige,szAnzeige,WS_OVERLAPPEDWINDOW|WS_VISIBLE,1,1,1940,1005,0,NULL,((LPCREATESTRUCT)lParam)->hInstance,NULL);
 		
 		
 		break;
@@ -202,22 +230,23 @@ LRESULT CALLBACK MessageHandler(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 			 DestroyWindow(hwnd1);
 		 }
 		 hwnd2 = FindWindow(NULL,"Anzeige des Mess-Steins");
-		 if (hwnd2)
+		 if (hwnd2) {
 			 SetForegroundWindow(hwnd2);
-		 keybd_event((BYTE)VkKeyScan('q'), 0, 0, 0);
+			 keybd_event((BYTE)VkKeyScan('q'), 0, 0, 0);
 			 DestroyWindow(hwnd2);
-			 hwnd3 = FindWindow(NULL, "Anzeige Auswertung breite des Steins");
-			 if (hwnd3) {
-				 SetForegroundWindow(hwnd3);
-				 keybd_event((BYTE)VkKeyScan('q'), 0, 0, 0);
-				 DestroyWindow(hwnd3);
-			 }
-			 hwnd4 = FindWindow(NULL, "Anzeige Auswertung laenge des Steins");
-			 if (hwnd4) {
-				 SetForegroundWindow(hwnd4);
-				 keybd_event((BYTE)VkKeyScan('q'), 0, 0, 0);
-				 DestroyWindow(hwnd4);
-			 }
+		 }
+		  hwnd3 = FindWindow(NULL, "Anzeige Auswertung Breite des Steins");
+		  if (hwnd3) {
+			SetForegroundWindow(hwnd3);
+			keybd_event((BYTE)VkKeyScan('q'), 0, 0, 0);
+			DestroyWindow(hwnd3);
+		  }
+		  hwnd4 = FindWindow(NULL, "Anzeige Auswertung Länge des Steins");
+		  if (hwnd4) {
+			SetForegroundWindow(hwnd4);
+			keybd_event((BYTE)VkKeyScan('q'), 0, 0, 0);
+			DestroyWindow(hwnd4);
+		  }
 		
 		break;
 	default:
@@ -250,7 +279,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	RegisterClass(&wc);
 	//--------------------------Hauptfenster-----------------------------------
 	hwnd = CreateWindow(
-		"WindowClass", "Erste Fenster", WS_VISIBLE | WS_OVERLAPPEDWINDOW,
+		"WindowClass", "Passstein Qualitätskontrolle", WS_VISIBLE | WS_OVERLAPPEDWINDOW,
 		955, 0, 980, 1005, NULL, NULL, hInstance, NULL);
 	
 	if (hwnd == nullptr) {

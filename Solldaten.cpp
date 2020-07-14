@@ -53,11 +53,10 @@ pcl::PointCloud<pcl::PointXYZ>::Ptr sollstein_erstellen(float aufloesung ,std::s
 		return point_cloud;
 
 }
-
-float soll_breite_txt( std::string dat)
+std::vector<float> soll_breite_txt(std::string dat)
 {//------------------------------------------------------------------------------------------solldaten eckpunkte laden---------------------------------------
 	pcl::PointCloud<pcl::PointXYZ>::Ptr point_cloud(new pcl::PointCloud<pcl::PointXYZ>);
-
+	std::vector<float> soll_w(3);
 	int number_Txt;
 	FILE* fp_txt;
 	points_txt_solll TxtPoint;
@@ -75,6 +74,10 @@ float soll_breite_txt( std::string dat)
 	}
 	else//wenn Datei nicht geöffnet wurde
 		std::cout << "could not open" << std::endl;
+	soll_w[0] = vec_TxtPoints[2].y - vec_TxtPoints[0].y;//länge links
+	soll_w[1] = vec_TxtPoints[3].y - vec_TxtPoints[1].y;//länge rechts
+	soll_w[2] = vec_TxtPoints[1].x - vec_TxtPoints[0].x;//breite
+	soll_w[3] = vec_TxtPoints[4].z - vec_TxtPoints[0].z;//höhe
 
-	return (vec_TxtPoints[1].x - vec_TxtPoints[0].x);
+	return (soll_w);
 }
