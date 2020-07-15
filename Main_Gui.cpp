@@ -8,9 +8,12 @@
 
 const char szAnzeige[] = "Bild Anzeige";
 //_______________________Fenster button ..  declarieren__________________________________
-
-std::string str;
+std::string datn = {};
+std::string str = {};
+std::string str2 = {};
+std::vector<std::string> vec(20);
 LPCSTR lpcstr = str.c_str();
+LPCSTR lpcstr2 = str2.c_str();
 std::string dat;
 
 HWND hwnd1;
@@ -82,60 +85,72 @@ LRESULT CALLBACK MessageHandler(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 		switch (LOWORD(wParam)) {
 		case button_id_open_mess:
 			if (SendMessage(list_mess, LB_GETSEL, 0, 0) > 0) {
-
-				str.insert(0, Verteiler('c', "Jokari")[0]);
-				SetWindowText(mess_text, "Die Datei:\n ""Jokari""\nist ausgewählt");
-				lpcstr = str.c_str();
-				SetWindowText(text_edit, lpcstr);
-				break;
+				datn = "Jokari";
+				
 			}
 			else {
 				SetWindowText(mess_text, "Bitte erst eine Datei \n auswählen");
 				break;
 			}
+			vec = Verteiler('c', datn);
+			str2 = ("Die Datei :\n\n" + datn + " \n\n ist ausgewählt");
+			lpcstr2 = str2.c_str();
+			SetWindowText(mess_text, lpcstr2); str2 = {};
+			str.insert(0, vec[0]);
+			lpcstr = str.c_str();
+			SetWindowText(text_edit, lpcstr);
+			break;
+
+
 		case button_id_open_soll:
 			if (SendMessage(list_soll, LB_GETSEL, 0, 0) > 0) {
-				str.insert(0, Verteiler('s', "Soll_A_gut")[0]);
-				SetWindowText(soll_text, "Die Datei:\n ""Soll_A_gut"" \n ist  ausgewählt");
+				datn = "Soll_A_gut";
+				
 			}
 			else if (SendMessage(list_soll, LB_GETSEL, 1, 0) > 0) {
-				str.insert(0, Verteiler('s', "Soll_A_kurz")[0]);
-				SetWindowText(soll_text, "Die Datei:\n ""Soll_A_kurz"" \nist  ausgewählt");
+				datn = "Soll_A_kurz";
 			}
 			else if (SendMessage(list_soll, LB_GETSEL, 2, 0) > 0) {
-				str.insert(0, Verteiler('s', "Soll_A_lang")[0]);
-				SetWindowText(soll_text, "Die Datei:\n ""Soll_A_lang""\n ist ausgewählt");
+				datn = "Soll_A_lang";
 			}
 			else if (SendMessage(list_soll, LB_GETSEL, 3, 0) > 0) {
-				str.insert(0, Verteiler('s', "Soll_B_gut")[0]);
-				SetWindowText(soll_text, "Die Datei:\n ""Soll_B_gut"" \nist ausgewählt");
+				datn = "Soll_B_gut";
 			}
 			else if (SendMessage(list_soll, LB_GETSEL, 4, 0) > 0) {
-				str.insert(0, Verteiler('s', "Soll_B_kurz")[0]);
-				SetWindowText(soll_text, "Die Datei:\n ""Soll_B_kurz""\n ist ausgewählt");
+				datn = "Soll_B_kurz";
 			}
 			else if (SendMessage(list_soll, LB_GETSEL, 5, 0) > 0) {
-				str.insert(0, Verteiler('s', "Soll_B_lang")[0]);
-				SetWindowText(soll_text, "Die Datei:\n ""Soll_B_lang""\n ist ausgewählt");
+				datn = "Soll_B_lang";
 			}
 			else if (SendMessage(list_soll, LB_GETSEL, 6, 0) > 0) {
-				str.insert(0, Verteiler('s', "Soll_C_gut")[0]);
-				SetWindowText(soll_text, "Die Datei:\n ""Soll_C_gut"" \nist ausgewählt");
+				datn = "Soll_C_gut";
 			}
 			else if (SendMessage(list_soll, LB_GETSEL, 7, 0) > 0) {
-				str.insert(0, Verteiler('s', "Soll_C_kurz")[0]);
-				SetWindowText(soll_text, "Die Datei:\n ""Soll_C_kurz"" \nist ausgewählt");
+				datn = "Soll_C_kurz";
 			}
 			else if (SendMessage(list_soll, LB_GETSEL, 8, 0) > 0) {
-				str.insert(0, Verteiler('s', "Soll_C_lang")[0]);
-				SetWindowText(soll_text, "Die Datei:\n ""Soll_C_lang""\n ist ausgewählt");
+				datn = "Soll_C_lang";
 			}
 			else {
 				SetWindowText(soll_text, "Bitte erst eine Datei \n auswählen");
+				break;
 			}
-
+			vec = Verteiler('s', datn);
+			str2 = ("Die Datei :\n\n" + datn + " \n\n ist ausgewählt");
+			lpcstr2 = str2.c_str();
+			SetWindowText(soll_text, lpcstr2); str2 = {};
+			str.insert(0, vec[0]);
 			lpcstr = str.c_str();
-			SetWindowText(text_edit, lpcstr);
+			SetWindowText(text_edit, lpcstr); 
+			str2.insert(0, vec[1]);
+			lpcstr2 = str2.c_str();
+			SetWindowText(soll_l, lpcstr2); str2 = {};
+			str2.insert(0, vec[2]);
+			lpcstr2 = str2.c_str();
+			SetWindowText(soll_b, lpcstr2); str2 = {};
+			str2.insert(0, vec[3]);
+			lpcstr2 = str2.c_str();
+			SetWindowText(soll_h, lpcstr2); str2 = {};
 			break;
 		case button_id_visu:
 			hwnd1 = FindWindow(NULL, "Anzeige des Soll-Steins");
@@ -163,21 +178,31 @@ LRESULT CALLBACK MessageHandler(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 			SetWindowText(text_edit, lpcstr);
 			break;
 		case button_auswerten_id:
-			hwnd3 = FindWindow(NULL, "Anzeige Auswertung breite des Steins");
+			hwnd3 = FindWindow(NULL, "Anzeige Auswertung Breite des Steins");
 			if (hwnd3) {
 				SetForegroundWindow(hwnd3);
-				keybd_event((BYTE)VkKeyScan('q'), 0, 0, 0);
+				//keybd_event((BYTE)VkKeyScan('q'), 0, 0, 0);
 				DestroyWindow(hwnd3);
 			}
-			hwnd4 = FindWindow(NULL, "Anzeige Auswertung laenge des Steins");
+			hwnd4 = FindWindow(NULL, "Anzeige Auswertung Länge des Steins");
 			if (hwnd4) {
 				SetForegroundWindow(hwnd4);
-				keybd_event((BYTE)VkKeyScan('q'), 0, 0, 0);
+				//keybd_event((BYTE)VkKeyScan('q'), 0, 0, 0);
 				DestroyWindow(hwnd4);
 			}
-			str.insert(0, Verteiler('a')[0]);
+			vec = Verteiler('a');
+			str.insert(0, vec[0]);
 			lpcstr = str.c_str();
 			SetWindowText(text_edit, lpcstr);
+			str2.insert(0, vec[4]);
+			lpcstr2 = str2.c_str();
+			SetWindowText(mess_l, lpcstr2); str2 = {};
+			str2.insert(0, vec[5]);
+			lpcstr2 = str2.c_str();
+			SetWindowText(mess_b, lpcstr2); str2 = {};
+			/*str.insert(0, vec[3]);
+			lpcstr = str.c_str();
+			SetWindowText(soll_h, lpcstr); str = {};*/
 			break;
 		}
 		break;
