@@ -200,9 +200,39 @@ LRESULT CALLBACK MessageHandler(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 			str2.insert(0, vec[5]);
 			lpcstr2 = str2.c_str();
 			SetWindowText(mess_b, lpcstr2); str2 = {};
-			/*str.insert(0, vec[3]);
+			/*str.insert(0, vec[6]);
 			lpcstr = str.c_str();
 			SetWindowText(soll_h, lpcstr); str = {};*/
+			str2.insert(0, vec[7]);
+			lpcstr2 = str2.c_str();
+			SetWindowText(ab_l, lpcstr2); str2 = {}; 
+			str2.insert(0, vec[8]);
+			lpcstr2 = str2.c_str();
+			SetWindowText(ab_b, lpcstr2); str2 = {};
+			str2.insert(0, vec[9]);
+			lpcstr2 = str2.c_str();
+			SetWindowText(ab_h, lpcstr2); str2 = {};
+
+			str2.insert(0, vec[10]);
+			lpcstr2 = str2.c_str();
+			SetWindowText(gut_l, lpcstr2); str2 = {};
+			str2.insert(0, vec[11]);
+			lpcstr2 = str2.c_str();
+			SetWindowText(mang_l, lpcstr2); str2 = {};
+			str2.insert(0, vec[12]);
+			lpcstr2 = str2.c_str();
+			SetWindowText(def_l, lpcstr2); str2 = {};
+
+			str2.insert(0, vec[13]);
+			lpcstr2 = str2.c_str();
+			SetWindowText(gut_b, lpcstr2); str2 = {};
+			str2.insert(0, vec[14]);
+			lpcstr2 = str2.c_str();
+			SetWindowText(mang_b, lpcstr2); str2 = {};
+			str2.insert(0, vec[15]);
+			lpcstr2 = str2.c_str();
+			SetWindowText(def_b, lpcstr2); str2 = {};
+			
 			break;
 		}
 		break;

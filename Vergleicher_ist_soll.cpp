@@ -7,7 +7,7 @@
 
 std::vector<float> Auswertung(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_mess, pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_soll, float aufloesung)
 {
-    std::vector<float> ret(12) ;
+    std::vector<float> ret(20) ;
     //--------------Berechnung der startwerte ------------------------------------------------------
   
     float grenzX = 0;
@@ -40,15 +40,15 @@ std::vector<float> Auswertung(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_mess, pc
    
     int defect = 15;
 
-    int counter = 0;
-    int count_gut = 0;
-    int count_mangel = 0;
-    int count_defect = 0;
-    int count = 1;
+    float counter = 0;
+    float count_gut = 0;
+    float count_mangel = 0;
+    float count_defect = 0;
+    float count = 1;
     float erg_mess = 0;
     float erg_soll = 0;
     float ergl_m = 0;
-   
+    float erg_abw = 0;
     for (int i = 0; i*aufloesung < grenzX ; i++)
     {
         pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_fl_a;
@@ -57,9 +57,10 @@ std::vector<float> Auswertung(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_mess, pc
             
             cloud_fl = flaechen_filter(cloud_mess, (start_mess + aufloesung * (i)), "x", aufloesung);
             erg_mess = cloud_fl->points[min_max(cloud_fl, "max", "index", "y")].y - cloud_fl->points[min_max(cloud_fl, "min", "index", "y")].y;
+           
         }else
         {
-            erg_mess = 0.00001;
+            erg_mess = 0.0001;
         }
         
         if (i*aufloesung <= grenz_x_soll) {
@@ -68,13 +69,13 @@ std::vector<float> Auswertung(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_mess, pc
         erg_soll = cloud_fl_a->points[min_max(cloud_fl_a, "max", "index", "y")].y - cloud_fl_a->points[min_max(cloud_fl_a, "min", "index", "y")].y;
         }else
         {
-            erg_soll = 0.00001;
+            erg_soll = 0.0001;
            
         }
        // std::cout<<counter<<"   "<< erg_mess << "=mess    soll= " << erg_soll << std::endl;
        
         ergl_m = ergl_m + erg_mess;
-        
+        erg_abw = erg_abw+(abs(erg_soll - erg_mess) / erg_soll) * 100;
  
         if (erg_soll > 0.0001) {
             if (abs(erg_mess - erg_soll) * 100 / erg_soll > defect)
@@ -101,9 +102,10 @@ std::vector<float> Auswertung(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_mess, pc
             else {
                 std::cout << "ups" << counter << std::endl;
             }
+            counter++;
         }
 
-        counter++;
+        
         //std::cout << "  " << count_mangel << "  " << count_defect << "  " << count_gut<<std::endl;
 
         
@@ -154,15 +156,15 @@ std::vector<float> Auswertung(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_mess, pc
     viewer2.setWindowName("Anzeige Auswertung Breite des Steins");
      
 
-    int countery = 0;
-    int count_guty = 0;
-    int count_mangely = 0;
-    int count_defecty = 0;
-    int county = 1;
+    float countery = 0;
+    float count_guty = 0;
+    float count_mangely = 0;
+    float count_defecty = 0;
+    float county = 1;
     float erg_messy = 0;
     float erg_solly = 0;
     float ergb_m = 0;
-
+    float ergb_abw = 0;
     for (int i = 0; i*aufloesung <= grenzy ; i++)
     {
         pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_fl_a;
@@ -170,6 +172,7 @@ std::vector<float> Auswertung(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_mess, pc
         if (i*aufloesung <= grenz_y) {
             cloud_fl = flaechen_filter(cloud_mess, (start_messy + aufloesung * (i)), "y", aufloesung);
              erg_messy = cloud_fl->points[min_max(cloud_fl, "max", "index", "x")].x - cloud_fl->points[min_max(cloud_fl, "min", "index", "x")].x;
+
         } else
         {
              erg_messy =0.0000001;
@@ -179,15 +182,15 @@ std::vector<float> Auswertung(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_mess, pc
                 cloud_fl_a = flaechen_filter(cloud_soll, (start_soll + aufloesung * (i)), "y", aufloesung);
                   erg_solly = cloud_fl_a->points[min_max(cloud_fl_a, "max", "index", "x")].x - cloud_fl_a->points[min_max(cloud_fl_a, "min", "index", "x")].x;
              }else {
-                erg_solly = 0.0000000001;
+                erg_solly = 0.0001;
             }
 
 
         //std::cout<<countery<<"   "<< erg_messy << "=mess    soll= " << erg_solly << std::endl;
             ergb_m = ergb_m + erg_messy;
-        
+            ergb_abw =ergb_abw+ (abs(erg_solly - erg_messy) / erg_solly) * 100;
  
-        if (erg_solly > 0.00001) {
+        if (erg_solly > 0.001) {
             if (abs(erg_messy - erg_solly) * 100 / erg_solly > defect)
             {
                 pcl::visualization::PointCloudColorHandlerCustom<pcl::PointXYZ> transformed_cloud_color_(cloud_fl_a, 230, 20, 20); // Red
@@ -212,23 +215,28 @@ std::vector<float> Auswertung(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_mess, pc
             else {
                 std::cout << "ups" << countery << std::endl;
             }
+            countery++;
         }
 
-        countery++;
+        
         //std::cout << "  " << count_mangel << "  " << count_defect << "  " << count_gut<<std::endl;
 
         //viewer.setPosition(800, 400); // Setting visualiser window position
     }
     
-    ret[3] = ergl_m / (grenzX / aufloesung);
-    ret[4] = ergb_m / (grenz_y / aufloesung);
+    ret[3] = ergl_m / (counter);
+    ret[4] = ergb_m / (countery);
   //  ret[5]= ergh_m
-    ret[6] = (count_defect/counter)*100;
-    ret[7] = (count_mangel / counter) * 100;
-    ret[8] = (count_gut / counter) * 100;
-    ret[9] = (count_defecty / countery) * 100;
-    ret[10] = (count_mangely / countery) * 100;
-    ret[11] = (count_guty / countery) * 100;
+    ret[6] = erg_abw / counter;//abw der 
+    ret[7] = ergb_abw / countery;//abw der 
+    //ret[8] 
+    ret[11]= ((count_defect/counter))*100;
+    ret[10] = ((count_mangel/counter)) *100;
+    ret[9] = ((count_gut/counter))*100;
+
+    ret[14] = ((count_defecty/countery))*100;
+    ret[13] = ((count_mangely/countery))*100;
+    ret[12] = ((count_guty/countery))*100;
  
     
 

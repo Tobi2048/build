@@ -74,7 +74,7 @@ std::vector<float> soll_breite_txt(std::string dat)
 	}
 	else//wenn Datei nicht geöffnet wurde
 		std::cout << "could not open" << std::endl;
-	soll_w[0] = vec_TxtPoints[2].y - vec_TxtPoints[0].y;//länge links
+	soll_w[0] =(( vec_TxtPoints[2].y - vec_TxtPoints[0].y)+ (vec_TxtPoints[3].y - vec_TxtPoints[1].y))/2;//länge links
 	soll_w[3]= vec_TxtPoints[3].y - vec_TxtPoints[1].y;//länge rechts
 	soll_w[1]= vec_TxtPoints[1].x - vec_TxtPoints[0].x;//breite
 	soll_w[2]=vec_TxtPoints[4].z - vec_TxtPoints[0].z;//höhe

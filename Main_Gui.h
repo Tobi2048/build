@@ -30,6 +30,12 @@ HWND mess_l = nullptr;
 HWND ab_h = nullptr;
 HWND ab_b = nullptr;
 HWND ab_l = nullptr;
+HWND gut_l = nullptr;
+HWND mang_l = nullptr;
+HWND def_l = nullptr;
+HWND gut_b = nullptr;
+HWND mang_b = nullptr;
+HWND def_b = nullptr;
 
 HWND button_open_soll = nullptr;
 HWND button_open_mess = nullptr;
@@ -83,9 +89,6 @@ void AddText(HWND hwnd) {
 
 
 	CreateWindow("Static", "Sollwerte\n [mm]", WS_VISIBLE | WS_CHILD | ES_CENTER, 25+tabx, 350, tabx-1, taby-1, hwnd, 0, 0, 0);
-	
-	
-
 	CreateWindow("Static", "Länge", WS_VISIBLE | WS_CHILD | ES_CENTER, 25 , 350+taby, tabx-1, taby-1, hwnd, 0, 0, 0);
 	CreateWindow("Static", "Breite", WS_VISIBLE | WS_CHILD | ES_CENTER, 25, 350 + taby*2, tabx-1, taby-1, hwnd, 0, 0, 0);
 	CreateWindow("Static", "Höhe", WS_VISIBLE | WS_CHILD | ES_CENTER, 25, 350 + taby*3, tabx-1, taby-1, hwnd, 0, 0, 0);
@@ -102,10 +105,15 @@ void AddText(HWND hwnd) {
 	ab_b = CreateWindow("Static", " ", WS_VISIBLE | WS_CHILD | ES_CENTER, 25 + tabx * 3, 350 + taby * 2, tabx - 1, taby - 1, hwnd, 0, 0, 0);
 	ab_l = CreateWindow("Static", " ", WS_VISIBLE | WS_CHILD | ES_CENTER, 25 + tabx * 3, 350 + taby, tabx - 1, taby - 1, hwnd, 0, 0, 0);
 	CreateWindow("Static", "Gut \n [%]", WS_VISIBLE | WS_CHILD | ES_CENTER, 25 + tabx * 4, 350, tabx - 1, taby - 1, hwnd, 0, 0, 0);
-
+	gut_l = CreateWindow("Static", " ", WS_VISIBLE | WS_CHILD | ES_CENTER, 25 + tabx * 4, 350 + taby , tabx - 1, taby - 1, hwnd, 0, 0, 0);
+	gut_b = CreateWindow("Static", " ", WS_VISIBLE | WS_CHILD | ES_CENTER, 25 + tabx * 4, 350 + taby*2, tabx - 1, taby - 1, hwnd, 0, 0, 0);
 	CreateWindow("Static", "Mangel \n [%]", WS_VISIBLE | WS_CHILD | ES_CENTER, 25 + tabx * 5, 350, tabx - 1, taby - 1, hwnd, 0, 0, 0);
-
+	mang_l = CreateWindow("Static", " ", WS_VISIBLE | WS_CHILD | ES_CENTER, 25 + tabx * 5, 350 + taby , tabx - 1, taby - 1, hwnd, 0, 0, 0);
+	mang_b = CreateWindow("Static", " ", WS_VISIBLE | WS_CHILD | ES_CENTER, 25 + tabx * 5, 350 + taby*2, tabx - 1, taby - 1, hwnd, 0, 0, 0);
 	CreateWindow("Static", "Defect \n [%]", WS_VISIBLE | WS_CHILD | ES_CENTER, 25 + tabx * 6, 350, tabx - 1, taby - 1, hwnd, 0, 0, 0);
+	def_l = CreateWindow("Static", " ", WS_VISIBLE | WS_CHILD | ES_CENTER, 25 + tabx * 6, 350 + taby , tabx - 1, taby - 1, hwnd, 0, 0, 0);
+	def_b = CreateWindow("Static", " ", WS_VISIBLE | WS_CHILD | ES_CENTER, 25 + tabx * 6, 350 + taby*2, tabx - 1, taby - 1, hwnd, 0, 0, 0);
+
 
 	soll_text=CreateWindow("Static", " ", WS_VISIBLE | WS_CHILD | ES_CENTER, 276, 100, 198, 110, hwnd, 0, 0, 0);
 	mess_text=CreateWindow("Static", " ", WS_VISIBLE | WS_CHILD | ES_CENTER, 726, 100, 198, 110, hwnd, 0, 0, 0);
