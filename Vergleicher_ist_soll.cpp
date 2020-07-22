@@ -5,7 +5,7 @@
 #include<numeric>
 #include<vector>
 
-std::vector<float> Auswertung(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_mess, pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_soll, float aufloesung)
+std::vector<float> Auswertung(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_mess, pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_soll, float aufloesung,double gut)
 {
     std::vector<float> ret(20) ;
     //--------------Berechnung der startwerte ------------------------------------------------------
@@ -36,9 +36,9 @@ std::vector<float> Auswertung(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_mess, pc
     viewer1.setWindowName("Anzeige Auswertung Länge des Steins");
    
 
-    int gut = 6;
    
-    int defect = 15;
+   
+    int defect =gut*2;
 
     float counter = 0;
     float count_gut = 0;
@@ -74,25 +74,24 @@ std::vector<float> Auswertung(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_mess, pc
         }
        // std::cout<<counter<<"   "<< erg_mess << "=mess    soll= " << erg_soll << std::endl;
        
-        ergl_m = ergl_m + erg_mess;
-        erg_abw = erg_abw+(abs(erg_soll - erg_mess) / erg_soll) * 100;
+       
  
         if (erg_soll > 0.0001) {
-            if (abs(erg_mess - erg_soll) * 100 / erg_soll > defect)
+            if ((abs(erg_mess - erg_soll) * 100 )/ erg_soll > defect)
             {
                 pcl::visualization::PointCloudColorHandlerCustom<pcl::PointXYZ> transformed_cloud_color_(cloud_fl_a, 230, 20, 20); // Red
                 viewer1.addPointCloud(cloud_fl_a, transformed_cloud_color_, "transformed_cloudd" + std::to_string(count_defect));
                 viewer1.setPointCloudRenderingProperties(pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 2, "transformed_cloudd" + std::to_string(count_defect));
                 count_defect++;
             }
-            else if (abs(erg_mess - erg_soll) * 100 / erg_soll > gut)
+            else if ((abs(erg_mess - erg_soll) * 100) / erg_soll > gut)
             {
                 pcl::visualization::PointCloudColorHandlerCustom<pcl::PointXYZ> transformed_cloud_color_(cloud_fl_a, 255, 165, 79); // gelb
                 viewer1.addPointCloud(cloud_fl_a, transformed_cloud_color_, "transformed_cloudm" + std::to_string(count_mangel));
                 viewer1.setPointCloudRenderingProperties(pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 2, "transformed_cloudm" + std::to_string(count_mangel));
                 count_mangel++;
             }
-            else if (abs(erg_mess - erg_soll) * 100 / erg_soll < gut)
+            else if ((abs(erg_mess - erg_soll) * 100 )/ erg_soll < gut)
             {
                 pcl::visualization::PointCloudColorHandlerCustom<pcl::PointXYZ> transformed_cloud_color_(cloud_fl_a, 0, 100, 0); // grün
                 viewer1.addPointCloud(cloud_fl_a, transformed_cloud_color_, "transformed_cloudg" + std::to_string(count_gut));
@@ -103,6 +102,10 @@ std::vector<float> Auswertung(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_mess, pc
                 std::cout << "ups" << counter << std::endl;
             }
             counter++;
+            if (erg_mess > 0.0001) {
+                ergl_m = ergl_m + erg_mess;
+                erg_abw = erg_abw + (abs(erg_soll - erg_mess) / erg_soll) * 100;
+            }
         }
 
         
@@ -165,6 +168,7 @@ std::vector<float> Auswertung(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_mess, pc
     float erg_solly = 0;
     float ergb_m = 0;
     float ergb_abw = 0;
+
     for (int i = 0; i*aufloesung <= grenzy ; i++)
     {
         pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_fl_a;
@@ -180,32 +184,31 @@ std::vector<float> Auswertung(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_mess, pc
 
             if (i*aufloesung <= grenz_y_soll) {
                 cloud_fl_a = flaechen_filter(cloud_soll, (start_soll + aufloesung * (i)), "y", aufloesung);
-                  erg_solly = cloud_fl_a->points[min_max(cloud_fl_a, "max", "index", "x")].x - cloud_fl_a->points[min_max(cloud_fl_a, "min", "index", "x")].x;
+                erg_solly = cloud_fl_a->points[min_max(cloud_fl_a, "max", "index", "x")].x - cloud_fl_a->points[min_max(cloud_fl_a, "min", "index", "x")].x;
              }else {
-                erg_solly = 0.0001;
+                erg_solly = 0.000001;
             }
 
 
         //std::cout<<countery<<"   "<< erg_messy << "=mess    soll= " << erg_solly << std::endl;
-            ergb_m = ergb_m + erg_messy;
-            ergb_abw =ergb_abw+ (abs(erg_solly - erg_messy) / erg_solly) * 100;
- 
-        if (erg_solly > 0.001) {
-            if (abs(erg_messy - erg_solly) * 100 / erg_solly > defect)
+           
+           
+        if (erg_solly > 0.0001) {
+            if ((abs(erg_solly - erg_messy) / erg_solly) * 100 > defect)
             {
                 pcl::visualization::PointCloudColorHandlerCustom<pcl::PointXYZ> transformed_cloud_color_(cloud_fl_a, 230, 20, 20); // Red
                 viewer2.addPointCloud(cloud_fl_a, transformed_cloud_color_, "transformed_cloudd" + std::to_string(count_defecty));
                 viewer2.setPointCloudRenderingProperties(pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 2, "transformed_cloudd" + std::to_string(count_defecty));
                 count_defecty++;
             }
-            else if (abs(erg_messy - erg_solly) * 100 / erg_solly > gut)
+            else if ((abs(erg_solly - erg_messy) / erg_solly) * 100 > gut)
             {
                 pcl::visualization::PointCloudColorHandlerCustom<pcl::PointXYZ> transformed_cloud_color_(cloud_fl_a, 255, 165, 79); // gelb
                 viewer2.addPointCloud(cloud_fl_a, transformed_cloud_color_, "transformed_cloudm" + std::to_string(count_mangely));
                 viewer2.setPointCloudRenderingProperties(pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 2, "transformed_cloudm" + std::to_string(count_mangely));
                 count_mangely++;
             }
-            else if (abs(erg_messy - erg_solly) * 100 / erg_solly < gut)
+            else if ((abs(erg_solly - erg_messy) / erg_solly) * 100 <= gut)
             {
                 pcl::visualization::PointCloudColorHandlerCustom<pcl::PointXYZ> transformed_cloud_color_(cloud_fl_a, 0, 100, 0); // grün
                 viewer2.addPointCloud(cloud_fl_a, transformed_cloud_color_, "transformed_cloudg" + std::to_string(count_guty));
@@ -216,6 +219,10 @@ std::vector<float> Auswertung(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_mess, pc
                 std::cout << "ups" << countery << std::endl;
             }
             countery++;
+            if (erg_messy > 0.0001) {
+                ergb_m = ergb_m + erg_messy;
+                ergb_abw = ergb_abw + (abs(erg_solly - erg_messy) / erg_solly) * 100;
+            }
         }
 
         

@@ -58,10 +58,10 @@ pcl::PointCloud<pcl::PointXYZ>::Ptr oberflaechen_filter(pcl::PointCloud<pcl::Poi
     pass.filter(*indices);
 
     pcl::RegionGrowing<pcl::PointXYZ, pcl::Normal> reg;
-    reg.setMinClusterSize(2000);
-    reg.setMaxClusterSize(10000000);
+    reg.setMinClusterSize(500);
+    reg.setMaxClusterSize(1000000);
     reg.setSearchMethod(tree);
-    reg.setNumberOfNeighbours(40);
+    reg.setNumberOfNeighbours(30);
     reg.setInputCloud(cloud);
     //reg.setIndices (indices);
     reg.setInputNormals(normals);

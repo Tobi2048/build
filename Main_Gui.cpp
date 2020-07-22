@@ -4,7 +4,8 @@
 
 #include"Main_Gui.h"
 #include"Master_prog.h"
-
+char sperr_soll = 'l';
+char sperr_mess = 'l';
 
 const char szAnzeige[] = "Bild Anzeige";
 //_______________________Fenster button ..  declarieren__________________________________
@@ -16,6 +17,11 @@ LPCSTR lpcstr = str.c_str();
 LPCSTR lpcstr2 = str2.c_str();
 std::string dat;
 
+
+float auf = 0;
+float gut_prw = 0;
+char buffer[1024];
+char buffer2[1024];
 HWND hwnd1;
 HWND hwnd2;
 HWND hwnd3; HWND hwnd4;
@@ -83,16 +89,25 @@ LRESULT CALLBACK MessageHandler(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 	switch (uMsg) {
 	case WM_COMMAND:
 		switch (LOWORD(wParam)) {
+			
+			
+			 //auf = (float)_wtof(s.c_str());
+			
 		case button_id_open_mess:
 			if (SendMessage(list_mess, LB_GETSEL, 0, 0) > 0) {
 				datn = "Jokari";
-				
+			}
+			else if (SendMessage(list_mess, LB_GETSEL, 1, 0) > 0) {
+				datn = "Mess_A_1_gut";
 			}
 			else {
 				SetWindowText(mess_text, "Bitte erst eine Datei \n auswählen");
 				break;
 			}
-			vec = Verteiler('c', datn);
+			GetWindowText(aufl, buffer, 1024);
+			auf = atof(buffer);
+			sperr_mess = 'g';
+			vec = Verteiler('c', datn,auf);
 			str2 = ("Die Datei :\n\n" + datn + " \n\n ist ausgewählt");
 			lpcstr2 = str2.c_str();
 			SetWindowText(mess_text, lpcstr2); str2 = {};
@@ -100,12 +115,9 @@ LRESULT CALLBACK MessageHandler(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 			lpcstr = str.c_str();
 			SetWindowText(text_edit, lpcstr);
 			break;
-
-
 		case button_id_open_soll:
 			if (SendMessage(list_soll, LB_GETSEL, 0, 0) > 0) {
-				datn = "Soll_A_gut";
-				
+				datn = "Soll_A_gut";	
 			}
 			else if (SendMessage(list_soll, LB_GETSEL, 1, 0) > 0) {
 				datn = "Soll_A_kurz";
@@ -135,7 +147,10 @@ LRESULT CALLBACK MessageHandler(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 				SetWindowText(soll_text, "Bitte erst eine Datei \n auswählen");
 				break;
 			}
-			vec = Verteiler('s', datn);
+			GetWindowText(aufl, buffer, 1024);
+			auf = atof(buffer);
+			sperr_soll = 'r';
+			vec = Verteiler('s', datn, auf);
 			str2 = ("Die Datei :\n\n" + datn + " \n\n ist ausgewählt");
 			lpcstr2 = str2.c_str();
 			SetWindowText(soll_text, lpcstr2); str2 = {};
@@ -173,66 +188,74 @@ LRESULT CALLBACK MessageHandler(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 				SetWindowText(text_edit, lpcstr);
 			break;
 		case button_filter_stein_id:
-			str.insert(0, Verteiler('o')[0]);
-			lpcstr = str.c_str();
-			SetWindowText(text_edit, lpcstr);
+			if (sperr_mess == 'g') {
+				sperr_mess = 'r';
+				str.insert(0, Verteiler('o',"leer",auf)[0]);
+				lpcstr = str.c_str();
+				SetWindowText(text_edit, lpcstr);
+			}
 			break;
 		case button_auswerten_id:
-			hwnd3 = FindWindow(NULL, "Anzeige Auswertung Breite des Steins");
-			if (hwnd3) {
-				SetForegroundWindow(hwnd3);
-				//keybd_event((BYTE)VkKeyScan('q'), 0, 0, 0);
-				DestroyWindow(hwnd3);
-			}
-			hwnd4 = FindWindow(NULL, "Anzeige Auswertung Länge des Steins");
-			if (hwnd4) {
-				SetForegroundWindow(hwnd4);
-				//keybd_event((BYTE)VkKeyScan('q'), 0, 0, 0);
-				DestroyWindow(hwnd4);
-			}
-			vec = Verteiler('a');
-			str.insert(0, vec[0]);
-			lpcstr = str.c_str();
-			SetWindowText(text_edit, lpcstr);
-			str2.insert(0, vec[4]);
-			lpcstr2 = str2.c_str();
-			SetWindowText(mess_l, lpcstr2); str2 = {};
-			str2.insert(0, vec[5]);
-			lpcstr2 = str2.c_str();
-			SetWindowText(mess_b, lpcstr2); str2 = {};
-			/*str.insert(0, vec[6]);
-			lpcstr = str.c_str();
-			SetWindowText(soll_h, lpcstr); str = {};*/
-			str2.insert(0, vec[7]);
-			lpcstr2 = str2.c_str();
-			SetWindowText(ab_l, lpcstr2); str2 = {}; 
-			str2.insert(0, vec[8]);
-			lpcstr2 = str2.c_str();
-			SetWindowText(ab_b, lpcstr2); str2 = {};
-			str2.insert(0, vec[9]);
-			lpcstr2 = str2.c_str();
-			SetWindowText(ab_h, lpcstr2); str2 = {};
+			if (sperr_mess == 'r') {
+				if (sperr_soll == 'r') {
+					GetWindowText(gut_pr, buffer2, 1024);
+					gut_prw = atof(buffer2);
+					hwnd3 = FindWindow(NULL, "Anzeige Auswertung Breite des Steins");
+					if (hwnd3) {
+						SetForegroundWindow(hwnd3);
+						//keybd_event((BYTE)VkKeyScan('q'), 0, 0, 0);
+						DestroyWindow(hwnd3);
+					}
+					hwnd4 = FindWindow(NULL, "Anzeige Auswertung Länge des Steins");
+					if (hwnd4) {
+						SetForegroundWindow(hwnd4);
+						//keybd_event((BYTE)VkKeyScan('q'), 0, 0, 0);
+						DestroyWindow(hwnd4);
+					}
+					vec = Verteiler('a',"leer",auf, gut_prw);
+					str.insert(0, vec[0]);
+					lpcstr = str.c_str();
+					SetWindowText(text_edit, lpcstr);
+					str2.insert(0, vec[4]);
+					lpcstr2 = str2.c_str();
+					SetWindowText(mess_l, lpcstr2); str2 = {};
+					str2.insert(0, vec[5]);
+					lpcstr2 = str2.c_str();
+					SetWindowText(mess_b, lpcstr2); str2 = {};
+					/*str.insert(0, vec[6]);
+					lpcstr = str.c_str();
+					SetWindowText(soll_h, lpcstr); str = {};*/
+					str2.insert(0, vec[7]);
+					lpcstr2 = str2.c_str();
+					SetWindowText(ab_l, lpcstr2); str2 = {};
+					str2.insert(0, vec[8]);
+					lpcstr2 = str2.c_str();
+					SetWindowText(ab_b, lpcstr2); str2 = {};
+					str2.insert(0, vec[9]);
+					lpcstr2 = str2.c_str();
+					SetWindowText(ab_h, lpcstr2); str2 = {};
 
-			str2.insert(0, vec[10]);
-			lpcstr2 = str2.c_str();
-			SetWindowText(gut_l, lpcstr2); str2 = {};
-			str2.insert(0, vec[11]);
-			lpcstr2 = str2.c_str();
-			SetWindowText(mang_l, lpcstr2); str2 = {};
-			str2.insert(0, vec[12]);
-			lpcstr2 = str2.c_str();
-			SetWindowText(def_l, lpcstr2); str2 = {};
+					str2.insert(0, vec[10]);
+					lpcstr2 = str2.c_str();
+					SetWindowText(gut_l, lpcstr2); str2 = {};
+					str2.insert(0, vec[11]);
+					lpcstr2 = str2.c_str();
+					SetWindowText(mang_l, lpcstr2); str2 = {};
+					str2.insert(0, vec[12]);
+					lpcstr2 = str2.c_str();
+					SetWindowText(def_l, lpcstr2); str2 = {};
 
-			str2.insert(0, vec[13]);
-			lpcstr2 = str2.c_str();
-			SetWindowText(gut_b, lpcstr2); str2 = {};
-			str2.insert(0, vec[14]);
-			lpcstr2 = str2.c_str();
-			SetWindowText(mang_b, lpcstr2); str2 = {};
-			str2.insert(0, vec[15]);
-			lpcstr2 = str2.c_str();
-			SetWindowText(def_b, lpcstr2); str2 = {};
-			
+					str2.insert(0, vec[13]);
+					lpcstr2 = str2.c_str();
+					SetWindowText(gut_b, lpcstr2); str2 = {};
+					str2.insert(0, vec[14]);
+					lpcstr2 = str2.c_str();
+					SetWindowText(mang_b, lpcstr2); str2 = {};
+					str2.insert(0, vec[15]);
+					lpcstr2 = str2.c_str();
+					SetWindowText(def_b, lpcstr2); str2 = {};
+				}
+			}
 			break;
 		}
 		break;
