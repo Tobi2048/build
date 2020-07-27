@@ -1,5 +1,6 @@
 #pragma once
 
+
 void AddControls(HWND hwnd);//prototyp
 void AddListboxs(HWND hwnd);
 void AddText(HWND hwnd);
@@ -11,6 +12,7 @@ void AddText(HWND hwnd);
 #define button_id_visu_2 3
 #define button_filter_stein_id 4
 #define button_auswerten_id 5
+#define button_id_ausreiﬂer 7
 
 #define list_soll_id 101
 #define list_mess_id 102
@@ -49,6 +51,7 @@ HWND button_visu = nullptr;
 HWND button_visu_2 = nullptr;
 HWND button_filter_stein = nullptr;
 HWND button_auswerten = nullptr;
+HWND button_ausreiﬂer = nullptr;
 
 HWND list_soll = nullptr;
 HWND list_mess = nullptr;
@@ -62,6 +65,7 @@ void AddControls(HWND hwnd) {
 	button_visu_2 = CreateWindow("BUTTON", "Anzeigen", WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON, 475, 210, size_x, size_y, hwnd, (HMENU)button_id_visu_2, NULL, NULL);
 	button_filter_stein= CreateWindow("BUTTON", "Stein filtern", WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON, 475+size_x, 210, size_x, size_y, hwnd, (HMENU)button_filter_stein_id, NULL, NULL);
 	button_auswerten= CreateWindow("BUTTON", "Auswerten", WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON, 475 + 2*size_x, 210, size_x, size_y, hwnd, (HMENU)button_auswerten_id, NULL, NULL);
+	button_ausreiﬂer= CreateWindow("BUTTON", "Ausreiﬂer entfernen", WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON, 475, 210 + size_y, size_x, size_y, hwnd, (HMENU)button_id_ausreiﬂer, NULL, NULL);
 	//-----------------------Texte----------------------------------------------------------------------------------
 
 
@@ -83,8 +87,18 @@ void AddListboxs(HWND hwnd) {
 	SendMessage(list_soll, LB_ADDSTRING, 0, (LPARAM)"Soll_C_lang");
 
 	list_mess = CreateWindowEx(WS_EX_CLIENTEDGE, "listbox", "", WS_VSCROLL | WS_VISIBLE | WS_CHILD, 475, 30, size_x, size_y, hwnd, (HMENU)list_mess_id, 0, 0);
-	SendMessage(list_mess, LB_ADDSTRING, 0, (LPARAM)"Jokari");
-	SendMessage(list_mess, LB_ADDSTRING, 0, (LPARAM)"Mess_A_1_gut");
+
+	SendMessage(list_mess, LB_ADDSTRING, 0, (LPARAM)"1_A_gut");
+	SendMessage(list_mess, LB_ADDSTRING, 0, (LPARAM)"2_A_schlecht");
+	SendMessage(list_mess, LB_ADDSTRING, 0, (LPARAM)"3_A_schlecht");
+	SendMessage(list_mess, LB_ADDSTRING, 0, (LPARAM)"4_A_gut");
+	SendMessage(list_mess, LB_ADDSTRING, 0, (LPARAM)"5_A_schlecht_form");
+	SendMessage(list_mess, LB_ADDSTRING, 0, (LPARAM)"6_B_gut");
+	SendMessage(list_mess, LB_ADDSTRING, 0, (LPARAM)"7_B_gut_l");
+	SendMessage(list_mess, LB_ADDSTRING, 0, (LPARAM)"8_C_gut");
+	SendMessage(list_mess, LB_ADDSTRING, 0, (LPARAM)"9_C_schlecht");
+	SendMessage(list_mess, LB_ADDSTRING, 0, (LPARAM)"10_B_schlecht");
+
 
 }
 void AddText(HWND hwnd) {
@@ -98,7 +112,7 @@ void AddText(HWND hwnd) {
 	gut_pr=CreateWindow("Edit", " 5 ", WS_VISIBLE | WS_CHILD | ES_CENTER | WS_BORDER, 225, 210, 99, 59, hwnd, 0, 0, 0);
 
 	CreateWindow("Static", " Eingabe der geforderten Auflˆsung \n Wertebereich (0-1) ", WS_VISIBLE | WS_CHILD | ES_CENTER, 25, 270, 200, 59, hwnd, 0, 0, 0);
-	aufl= CreateWindow("Edit", " 0.5 ", WS_VISIBLE | WS_CHILD | ES_CENTER | WS_BORDER, 225, 270, 99, 59, hwnd, 0, 0, 0);
+	aufl= CreateWindow("Edit", "0.2", WS_VISIBLE | WS_CHILD | ES_CENTER | WS_BORDER, 225, 270, 99, 59, hwnd, 0, 0, 0);
 
 	
 

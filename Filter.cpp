@@ -54,7 +54,7 @@ pcl::PointCloud<pcl::PointXYZ>::Ptr oberflaechen_filter(pcl::PointCloud<pcl::Poi
     pcl::PassThrough<pcl::PointXYZ> pass;
     pass.setInputCloud(cloud);
     pass.setFilterFieldName("z");
-    pass.setFilterLimits(0.0, 1.0);
+    pass.setFilterLimits(0.0, 2.0);
     pass.filter(*indices);
 
     pcl::RegionGrowing<pcl::PointXYZ, pcl::Normal> reg;
@@ -65,8 +65,8 @@ pcl::PointCloud<pcl::PointXYZ>::Ptr oberflaechen_filter(pcl::PointCloud<pcl::Poi
     reg.setInputCloud(cloud);
     //reg.setIndices (indices);
     reg.setInputNormals(normals);
-    reg.setSmoothnessThreshold(5.0 / 180.0 * M_PI);
-    reg.setCurvatureThreshold(2.0);
+    reg.setSmoothnessThreshold(3.0 / 180.0 * M_PI);
+    reg.setCurvatureThreshold(1.0);
 
     std::vector <pcl::PointIndices> clusters;
     reg.extract(clusters);
@@ -98,4 +98,16 @@ pcl::PointCloud<pcl::PointXYZ>::Ptr oberflaechen_filter(pcl::PointCloud<pcl::Poi
 
    
     return (cloud_stein);
+}
+pcl::PointCloud<pcl::PointXYZ>::Ptr ausreiﬂer_filter(pcl::PointCloud<pcl::PointXYZ>::Ptr cl_fl_in) {
+    pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_filtered(new pcl::PointCloud<pcl::PointXYZ>);
+
+    pcl::StatisticalOutlierRemoval<pcl::PointXYZ> sor;
+    sor.setInputCloud(cl_fl_in);
+    sor.setMeanK(30);
+    sor.setStddevMulThresh(1.0);
+    sor.filter(*cloud_filtered);
+
+    return(cloud_filtered);
+
 }

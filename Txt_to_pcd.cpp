@@ -8,7 +8,7 @@ pcl::PointCloud<pcl::PointXYZ>::Ptr Convert_txt_to_pcd(float fakt,std::string da
 	FILE* fp_txt;
 	points_txt TxtPoint;
 	std::vector<points_txt> vec_TxtPoints;
-	std::string ort = ("C:/Users/tobia/Desktop/Masterarbeit_Qualitätskontrolle_Passsteinautomat/Point_Clouds/"+dat+".txt");
+	std::string ort = ("C:/Users/tobia/Desktop/Masterarbeit_Qualitätskontrolle_Passsteinautomat/Point_Clouds/Mess_Daten/"+dat+".txt");
 	
 		fp_txt = fopen(ort.c_str(), "r");// hier die txt datei eintragen<--------------------------------<-<-<-<-<-<-<-<-<
 	
@@ -51,7 +51,7 @@ pcl::PointCloud<pcl::PointXYZ>::Ptr Convert_txt_to_pcd(float fakt,std::string da
 	*/
 
 
-	pcl::io::savePCDFileASCII(("C:/Users/tobia/Desktop/Masterarbeit_Qualitätskontrolle_Passsteinautomat/Point_Clouds/" + dat + "pcd"), *cloud);
+	pcl::io::savePCDFileASCII(("C:/Users/tobia/Desktop/Masterarbeit_Qualitätskontrolle_Passsteinautomat/Point_Clouds/Mess_Daten/" + dat + ".pcd"), *cloud);
 	std::cerr << "Saved " << cloud->points.size() << " data points to txt2pcd.pcd." << std::endl;
 
 	std::cout << "erstellt";

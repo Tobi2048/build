@@ -6,3 +6,4 @@
 
 
 pcl::PointCloud<pcl::PointXYZ>::Ptr Ausrichten(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_mess,  float soll_breite);
+pcl::PointCloud<pcl::PointXYZ>::Ptr Ausrichten_pos(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_mess);

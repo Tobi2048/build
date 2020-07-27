@@ -7,9 +7,6 @@
 
 pcl::PointCloud<pcl::PointXYZ>::Ptr Ausrichten(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_mess,float soll_breite)
 {
-    int gut = 5;
-    int mangel = 5;
-    int defect = 20;
 
 
     //--------------Berechnung der Eckpunkte für die drehung ------------------------------------------------------
@@ -29,16 +26,15 @@ pcl::PointCloud<pcl::PointXYZ>::Ptr Ausrichten(pcl::PointCloud<pcl::PointXYZ>::P
     int maxIndex_x = min_max(cloud_fl,"max","index","x");
     int minIndex_x = min_max(cloud_fl,"min","index","x");
 
-    if (cloud_fl->points[minIndex_x].x != 0 || cloud_fl->points[minIndex_x].y != 0||cloud_mess->points[minElementIndex_z].z!=0)
+    if (cloud_fl->points[minIndex_x].x != 0 || cloud_fl->points[minIndex_x].y != 0)
     {
         Eigen::Affine3f transform_to_0 = Eigen::Affine3f::Identity();
-        transform_to_0.translation() << -cloud_fl->points[minIndex_x].x, -cloud_fl->points[minIndex_x].y, -cloud_mess->points[minElementIndex_z].z;
+        transform_to_0.translation() << -cloud_fl->points[minIndex_x].x, -cloud_fl->points[minIndex_x].y, 0;
         pcl::transformPointCloud(*cloud_mess, *cloud_mess,transform_to_0);
         pcl::transformPointCloud(*cloud_fl, *cloud_fl, transform_to_0);
-        std::cout<<"ruecke linke ecke zu 0,0" << cloud_mess->points[minElementIndex_x] << std::endl;
+
     }
-    std::cout << "linke ecke " << cloud_mess->points[minElementIndex_x] << std::endl;
-    std::cout << (cloud_fl->points[maxIndex_x].x - cloud_fl->points[minIndex_x].x) << std::endl;// gibt die breite der gefilterten fläche
+
         
 
     if ((cloud_fl->points[maxIndex_x].x - cloud_fl->points[minIndex_x].x) < soll_breite*0.8)//wenn gefilterte Fläche kleiner als 0.8 mal solllbreite ist 
@@ -117,4 +113,22 @@ pcl::PointCloud<pcl::PointXYZ>::Ptr Ausrichten(pcl::PointCloud<pcl::PointXYZ>::P
    
     return(cloud_mess);
    
+}
+pcl::PointCloud<pcl::PointXYZ>::Ptr Ausrichten_pos(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_mess) {
+    float z_start = 0;
+    z_start = cloud_mess->points[min_max(cloud_mess, "min", "index", "z")].z;
+    pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_fl = flaechen_filter(cloud_mess, z_start, "z", 0.3);
+    double z_w = 0;
+    for (int i = 0; i < cloud_fl->points.size(); i++) {
+        z_w = z_w +cloud_fl->points[i].z;
+
+    }
+   
+
+    Eigen::Affine3f transform_to_0 = Eigen::Affine3f::Identity();
+    transform_to_0.translation() << -cloud_mess->points[min_max(cloud_mess, "min", "index", "x")].x, -cloud_mess->points[min_max(cloud_mess, "min", "index", "y")].y,-( z_w / cloud_fl->points.size());
+    pcl::transformPointCloud(*cloud_mess, *cloud_mess, transform_to_0);
+
+    return(cloud_mess);
+
 }

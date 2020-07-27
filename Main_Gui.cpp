@@ -4,6 +4,7 @@
 
 #include"Main_Gui.h"
 #include"Master_prog.h"
+
 char sperr_soll = 'l';
 char sperr_mess = 'l';
 
@@ -89,16 +90,38 @@ LRESULT CALLBACK MessageHandler(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 	switch (uMsg) {
 	case WM_COMMAND:
 		switch (LOWORD(wParam)) {
-			
-			
-			 //auf = (float)_wtof(s.c_str());
+	
 			
 		case button_id_open_mess:
 			if (SendMessage(list_mess, LB_GETSEL, 0, 0) > 0) {
-				datn = "Jokari";
+				datn = "1_A_gut";
 			}
 			else if (SendMessage(list_mess, LB_GETSEL, 1, 0) > 0) {
-				datn = "Mess_A_1_gut";
+				datn = "2_A_schlecht";
+			}
+			else if (SendMessage(list_mess, LB_GETSEL, 2, 0) > 0) {
+				datn = "3_A_schlecht";
+			}
+			else if (SendMessage(list_mess, LB_GETSEL, 3, 0) > 0) {
+				datn = "4_A_gut";
+			}
+			else if (SendMessage(list_mess, LB_GETSEL, 4, 0) > 0) {
+				datn = "5_A_schlecht_form";
+			}
+			else if (SendMessage(list_mess, LB_GETSEL, 5, 0) > 0) {
+				datn = "6_B_gut";
+			}
+			else if (SendMessage(list_mess, LB_GETSEL, 6, 0) > 0) {
+				datn = "7_B_gut_l";
+			}
+			else if (SendMessage(list_mess, LB_GETSEL, 7, 0) > 0) {
+				datn = "8_C_gut";
+			}
+			else if (SendMessage(list_mess, LB_GETSEL, 8, 0) > 0) {
+				datn = "9_C_schlecht";
+			}
+			else if (SendMessage(list_mess, LB_GETSEL, 9, 0) > 0) {
+				datn = "10_B_schlecht";
 			}
 			else {
 				SetWindowText(mess_text, "Bitte erst eine Datei \n ausw‰hlen");
@@ -195,6 +218,13 @@ LRESULT CALLBACK MessageHandler(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 				SetWindowText(text_edit, lpcstr);
 			}
 			break;
+
+		case button_id_ausreiﬂer:
+			str.insert(0, Verteiler('n', "leer", auf)[0]);
+			lpcstr = str.c_str();
+			SetWindowText(text_edit, lpcstr);
+			break;
+
 		case button_auswerten_id:
 			if (sperr_mess == 'r') {
 				if (sperr_soll == 'r') {
