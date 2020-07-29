@@ -112,7 +112,7 @@ void AddText(HWND hwnd) {
 	gut_pr=CreateWindow("Edit", " 5 ", WS_VISIBLE | WS_CHILD | ES_CENTER | WS_BORDER, 225, 210, 99, 59, hwnd, 0, 0, 0);
 
 	CreateWindow("Static", " Eingabe der geforderten Auflösung \n Wertebereich (0-1) ", WS_VISIBLE | WS_CHILD | ES_CENTER, 25, 270, 200, 59, hwnd, 0, 0, 0);
-	aufl= CreateWindow("Edit", "0.2", WS_VISIBLE | WS_CHILD | ES_CENTER | WS_BORDER, 225, 270, 99, 59, hwnd, 0, 0, 0);
+	aufl= CreateWindow("Edit", "0.4", WS_VISIBLE | WS_CHILD | ES_CENTER | WS_BORDER, 225, 270, 99, 59, hwnd, 0, 0, 0);
 
 	
 

@@ -36,8 +36,8 @@ pcl::PointCloud<pcl::PointXYZ>::Ptr sollstein_erstellen(float aufloesung ,std::s
 	float my = ((vec_TxtPoints[3].y - vec_TxtPoints[2].y) / (vec_TxtPoints[3].x - vec_TxtPoints[2].x));
 	
 
-		for (float z = vec_TxtPoints[0].z; z <= vec_TxtPoints[5].z - vec_TxtPoints[0].z; z += vec_TxtPoints[5].z - vec_TxtPoints[0].z)
-		{
+		float z = vec_TxtPoints[5].z - vec_TxtPoints[0].z; 
+		
 			for (float x = vec_TxtPoints[0].x; x <= vec_TxtPoints[1].x - vec_TxtPoints[0].x; x += aufloesung)//auflösung
 			{
 				for (float y = vec_TxtPoints[0].y; y <= (vec_TxtPoints[2].y - vec_TxtPoints[0].y)+my*x; y += aufloesung)
@@ -48,7 +48,7 @@ pcl::PointCloud<pcl::PointXYZ>::Ptr sollstein_erstellen(float aufloesung ,std::s
 				}
 			}
 			point_cloud->width = (int)point_cloud->points.size();  point_cloud->height = 1;
-		}
+		
 		
 		return point_cloud;
 

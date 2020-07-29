@@ -5,22 +5,93 @@
 
 
 
-pcl::PointCloud<pcl::PointXYZ>::Ptr Ausrichten(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_mess,float soll_breite)
+pcl::PointCloud<pcl::PointXYZ>::Ptr Ausrichten(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud,float soll_breite)
 {
-
-
-    //--------------Berechnung der Eckpunkte für die drehung ------------------------------------------------------
-                //berechnung des eckpunktes mit dem kleinsten x wert
     int count = 1;
     float theta = 0;
+    
+  // -----------------------------------------------------------------------Aufteilen der Punktwolke in obere und untere hälfte 
+    int min_y = min_max(cloud, "min", "index", "y");
+    int max_y = min_max(cloud, "max", "index", "y");
+    int min_x = min_max(cloud, "min", "index", "x");
+    int max_x = min_max(cloud, "max", "index", "x");
 
+
+
+
+    Eigen::Affine3f transform_to_0_0 = Eigen::Affine3f::Identity();
+    transform_to_0_0.translation() << -cloud->points[min_x].x, -cloud->points[min_y].y, 0;
+    pcl::transformPointCloud(*cloud, *cloud, transform_to_0_0);
+
+
+
+
+
+
+    float mitte = ((cloud->points[max_y].y - cloud->points[min_y].y) / 2);
+
+    pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_fl_unten = flaechen_filter(cloud, cloud->points[min_y].y, "y", mitte);
+    pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_fl_oben = flaechen_filter(cloud, cloud->points[min_y].y + mitte, "y", cloud->points[max_y].y);
+
+    for (int i = 0; i < 3; i++) {
+        //In beiden hälften den min x wert finden 
+
+        int min_x_oben = min_max(cloud_fl_oben, "min", "index", "x");
+        int min_x_unten = min_max(cloud_fl_unten, "min", "index", "x");
+        float oben_min_x = cloud_fl_oben->points[min_x_oben].x;
+        float unten_min_x = cloud_fl_unten->points[min_x_unten].x;
+
+
+
+        while (bool abrfrage = oben_min_x != unten_min_x)
+        {
+            Eigen::Affine3f transform_dreh = Eigen::Affine3f::Identity();
+            oben_min_x = cloud_fl_oben->points[min_x_oben].x;
+            unten_min_x = cloud_fl_unten->points[min_x_unten].x;
+            theta = 0;
+
+            if (oben_min_x < unten_min_x) {// links
+                theta = -((float)M_PI / (4 * count)); // The angle of rotation in radians
+                transform_dreh.rotate(Eigen::AngleAxisf(theta, Eigen::Vector3f::UnitZ()));
+                pcl::transformPointCloud(*cloud, *cloud, transform_dreh);
+                pcl::transformPointCloud(*cloud_fl_oben, *cloud_fl_oben, transform_dreh);
+                pcl::transformPointCloud(*cloud_fl_unten, *cloud_fl_unten, transform_dreh);
+            }
+            if (oben_min_x > unten_min_x) {//rechts
+                theta = +((float)M_PI / (4 * count)); // The angle of rotation in radians
+                transform_dreh.rotate(Eigen::AngleAxisf(theta, Eigen::Vector3f::UnitZ()));
+                pcl::transformPointCloud(*cloud, *cloud, transform_dreh);
+                pcl::transformPointCloud(*cloud_fl_oben, *cloud_fl_oben, transform_dreh);
+                pcl::transformPointCloud(*cloud_fl_unten, *cloud_fl_unten, transform_dreh);
+            }
+            count++;
+        }
+        
+    }
+  
+    int min_y_a = min_max(cloud, "min", "index", "y");
+    int min_x_a = min_max(cloud, "min", "index", "x");
+    if (cloud->points[min_y_a].y != 0 || cloud->points[min_x_a].x != 0) {
+
+        Eigen::Affine3f transform_to_0 = Eigen::Affine3f::Identity();
+        transform_to_0.translation() << -cloud->points[min_x_a].x, -cloud->points[min_y_a].y, 0;
+        pcl::transformPointCloud(*cloud, *cloud, transform_to_0);
+        //       pcl::transformPointCloud(*cloud_fl, *cloud_fl, transform_to_0);
+
+    }
+    return(cloud);
+    
+
+
+   
+    /*
     //------------------------schauen ob stein gerade ist--------------------------------------
     int minElementIndex_x = min_max(cloud_mess, "min", "index", "x");
     int minElementIndex_y = min_max(cloud_mess, "min", "index", "y");
     int minElementIndex_z = min_max(cloud_mess, "min", "index", "z");
     float start = cloud_mess->points[minElementIndex_y].y;
    
-    pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_fl = flaechen_filter(cloud_mess, start, "y", 0.4);//y min filtern um davon min max zu finden
+    pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_fl = flaechen_filter(cloud_mess, start, "y", 0.8);//y min filtern um davon min max zu finden //0,4
     
   
     int maxIndex_x = min_max(cloud_fl,"max","index","x");
@@ -31,7 +102,7 @@ pcl::PointCloud<pcl::PointXYZ>::Ptr Ausrichten(pcl::PointCloud<pcl::PointXYZ>::P
         Eigen::Affine3f transform_to_0 = Eigen::Affine3f::Identity();
         transform_to_0.translation() << -cloud_fl->points[minIndex_x].x, -cloud_fl->points[minIndex_x].y, 0;
         pcl::transformPointCloud(*cloud_mess, *cloud_mess,transform_to_0);
-        pcl::transformPointCloud(*cloud_fl, *cloud_fl, transform_to_0);
+ //       pcl::transformPointCloud(*cloud_fl, *cloud_fl, transform_to_0);
 
     }
 
@@ -39,7 +110,7 @@ pcl::PointCloud<pcl::PointXYZ>::Ptr Ausrichten(pcl::PointCloud<pcl::PointXYZ>::P
 
     if ((cloud_fl->points[maxIndex_x].x - cloud_fl->points[minIndex_x].x) < soll_breite*0.8)//wenn gefilterte Fläche kleiner als 0.8 mal solllbreite ist 
     {
-        // ----------------wenn der stein schreg liegt dreh ihn gerade
+        // ----------------wenn der stein schräg liegt dreh ihn gerade
         if (cloud_mess->points[min_max(cloud_mess, "min", "index", "x")].y - cloud_mess->points[min_max(cloud_mess, "min", "index", "y")].y >soll_breite * 0.8)//defi wirum der stein liegt
         {
             std::cout << "bin linksrum\n";
@@ -112,8 +183,13 @@ pcl::PointCloud<pcl::PointXYZ>::Ptr Ausrichten(pcl::PointCloud<pcl::PointXYZ>::P
     }
    
     return(cloud_mess);
-   
+   */
 }
+
+
+
+
+
 pcl::PointCloud<pcl::PointXYZ>::Ptr Ausrichten_pos(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_mess) {
     float z_start = 0;
     z_start = cloud_mess->points[min_max(cloud_mess, "min", "index", "z")].z;

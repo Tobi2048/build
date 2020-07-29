@@ -105,7 +105,7 @@ pcl::PointCloud<pcl::PointXYZ>::Ptr ausreiﬂer_filter(pcl::PointCloud<pcl::PointX
     pcl::StatisticalOutlierRemoval<pcl::PointXYZ> sor;
     sor.setInputCloud(cl_fl_in);
     sor.setMeanK(30);
-    sor.setStddevMulThresh(1.0);
+    sor.setStddevMulThresh(2.0);
     sor.filter(*cloud_filtered);
 
     return(cloud_filtered);
