@@ -13,9 +13,6 @@
     <ClCompile Include="Txt_to_pcd.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Vergleicher_ist_soll.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Viewer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -26,6 +23,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Main_Gui.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Auswertung.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -47,9 +47,6 @@
     <ClInclude Include="Txt_to_pcd.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="Vergleicher_ist_soll.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="Viewer.h">
       <Filter>Source Files</Filter>
     </ClInclude>
@@ -63,6 +60,9 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="Main_Gui.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Auswertung.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

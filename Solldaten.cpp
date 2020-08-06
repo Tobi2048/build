@@ -53,7 +53,7 @@ pcl::PointCloud<pcl::PointXYZ>::Ptr sollstein_erstellen(float aufloesung ,std::s
 		return point_cloud;
 
 }
-std::vector<float> soll_breite_txt(std::string dat)
+std::vector<float> ausgabe_solldaten(std::string dat)
 {//------------------------------------------------------------------------------------------solldaten eckpunkte laden---------------------------------------
 	pcl::PointCloud<pcl::PointXYZ>::Ptr point_cloud(new pcl::PointCloud<pcl::PointXYZ>);
 	std::vector<float> soll_w(3);

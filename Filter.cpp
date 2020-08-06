@@ -1,7 +1,7 @@
 #include"Filter.h"
 
 
-pcl::PointCloud<pcl::PointXYZ>::Ptr vox(pcl::PointCloud<pcl::PointXYZ>::Ptr cl_vox_in, float fakt) {
+pcl::PointCloud<pcl::PointXYZ>::Ptr verdichten(pcl::PointCloud<pcl::PointXYZ>::Ptr cl_vox_in, float fakt) {
 
     pcl::PointCloud<pcl::PointXYZ>::Ptr cl_vox_out(new pcl::PointCloud<pcl::PointXYZ>);
 

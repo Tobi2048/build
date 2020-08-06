@@ -5,4 +5,4 @@
 
 
 
-std::vector<std::string> Verteiler(char anw, std::string = "leer", float aufloesung=0.5,double gut_p=5);
+std::vector<std::string> Manager(char anw, std::string , float aufloesung, float gut);

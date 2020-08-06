@@ -130,7 +130,7 @@ LRESULT CALLBACK MessageHandler(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 			GetWindowText(aufl, buffer, 1024);
 			auf = atof(buffer);
 			sperr_mess = 'g';
-			vec = Verteiler('c', datn,auf);
+			vec = Manager('c', datn,auf,0);
 			str2 = ("Die Datei :\n\n" + datn + " \n\n ist ausgew‰hlt");
 			lpcstr2 = str2.c_str();
 			SetWindowText(mess_text, lpcstr2); str2 = {};
@@ -173,7 +173,7 @@ LRESULT CALLBACK MessageHandler(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 			GetWindowText(aufl, buffer, 1024);
 			auf = atof(buffer);
 			sperr_soll = 'r';
-			vec = Verteiler('s', datn, auf);
+			vec = Manager('s', datn, auf,0);
 			str2 = ("Die Datei :\n\n" + datn + " \n\n ist ausgew‰hlt");
 			lpcstr2 = str2.c_str();
 			SetWindowText(soll_text, lpcstr2); str2 = {};
@@ -196,7 +196,7 @@ LRESULT CALLBACK MessageHandler(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 				SetForegroundWindow(hwnd1);
 				keybd_event((BYTE)VkKeyScan('q'), 0, 0, 0);
 					DestroyWindow(hwnd1);
-				str.insert(0, Verteiler('v')[0]);
+				str.insert(0, Manager('v', datn, auf, 0)[0]);
 				lpcstr = str.c_str();
 				SetWindowText(text_edit, lpcstr);
 			break;
@@ -206,21 +206,21 @@ LRESULT CALLBACK MessageHandler(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 				SetForegroundWindow(hwnd2);
 				keybd_event((BYTE)VkKeyScan('q'), 0, 0, 0);
 				DestroyWindow(hwnd2);
-				str.insert(0, Verteiler('V')[0]);
+				str.insert(0, Manager('V', datn, auf, 0)[0]);
 				lpcstr = str.c_str();
 				SetWindowText(text_edit, lpcstr);
 			break;
 		case button_filter_stein_id:
 			if (sperr_mess == 'g') {
 				sperr_mess = 'r';
-				str.insert(0, Verteiler('o',"leer",auf)[0]);
+				str.insert(0, Manager('o',"leer",auf,0)[0]);
 				lpcstr = str.c_str();
 				SetWindowText(text_edit, lpcstr);
 			}
 			break;
 
 		case button_id_ausreiﬂer:
-			str.insert(0, Verteiler('n', "leer", auf)[0]);
+			str.insert(0, Manager('n', "leer", auf,0)[0]);
 			lpcstr = str.c_str();
 			SetWindowText(text_edit, lpcstr);
 			break;
@@ -242,7 +242,7 @@ LRESULT CALLBACK MessageHandler(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 						//keybd_event((BYTE)VkKeyScan('q'), 0, 0, 0);
 						DestroyWindow(hwnd4);
 					}
-					vec = Verteiler('a',"leer",auf, gut_prw);
+					vec = Manager('a',"leer",auf, gut_prw);
 					str.insert(0, vec[0]);
 					lpcstr = str.c_str();
 					SetWindowText(text_edit, lpcstr);
@@ -252,9 +252,9 @@ LRESULT CALLBACK MessageHandler(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 					str2.insert(0, vec[5]);
 					lpcstr2 = str2.c_str();
 					SetWindowText(mess_b, lpcstr2); str2 = {};
-					/*str.insert(0, vec[6]);
-					lpcstr = str.c_str();
-					SetWindowText(soll_h, lpcstr); str = {};*/
+					str2.insert(0, vec[6]);
+					lpcstr = str2.c_str();
+					SetWindowText(mess_h, lpcstr); str2 = {};
 					str2.insert(0, vec[7]);
 					lpcstr2 = str2.c_str();
 					SetWindowText(ab_l, lpcstr2); str2 = {};
@@ -284,6 +284,7 @@ LRESULT CALLBACK MessageHandler(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 					str2.insert(0, vec[15]);
 					lpcstr2 = str2.c_str();
 					SetWindowText(def_b, lpcstr2); str2 = {};
+					break;
 				}
 			}
 			break;

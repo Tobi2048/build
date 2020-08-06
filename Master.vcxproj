@@ -323,7 +323,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="Solldaten.cpp" />
     <ClCompile Include="Transformation.cpp" />
     <ClCompile Include="Txt_to_pcd.cpp" />
-    <ClCompile Include="Vergleicher_ist_soll.cpp" />
+    <ClCompile Include="Auswertung.cpp" />
     <ClCompile Include="Viewer.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -342,7 +342,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="Solldaten.h" />
     <ClInclude Include="Transformation.h" />
     <ClInclude Include="Txt_to_pcd.h" />
-    <ClInclude Include="Vergleicher_ist_soll.h" />
+    <ClInclude Include="Auswertung.h" />
     <ClInclude Include="Viewer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
