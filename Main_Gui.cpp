@@ -19,8 +19,8 @@ LPCSTR lpcstr2 = str2.c_str();
 std::string dat;
 
 
-float auf = 0;
-float gut_prw = 0;
+double auf = 0;
+double gut_prw = 0;
 char buffer[1024];
 char buffer2[1024];
 HWND hwnd1;
@@ -284,6 +284,15 @@ LRESULT CALLBACK MessageHandler(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 					str2.insert(0, vec[15]);
 					lpcstr2 = str2.c_str();
 					SetWindowText(def_b, lpcstr2); str2 = {};
+					str2.insert(0, vec[16]);
+					lpcstr2 = str2.c_str();
+					SetWindowText(gut_h, lpcstr2); str2 = {};
+					str2.insert(0, vec[17]);
+					lpcstr2 = str2.c_str();
+					SetWindowText(mang_h, lpcstr2); str2 = {};
+					str2.insert(0, vec[18]);
+					lpcstr2 = str2.c_str();
+					SetWindowText(def_h, lpcstr2); str2 = {};
 					break;
 				}
 			}
