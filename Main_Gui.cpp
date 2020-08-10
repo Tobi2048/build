@@ -116,9 +116,11 @@ LRESULT CALLBACK MessageHandler(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 			}
 			else if (SendMessage(list_mess, LB_GETSEL, 7, 0) > 0) {
 				datn = "8_C_gut";
+				SetWindowText(gut_pr, "19");
 			}
 			else if (SendMessage(list_mess, LB_GETSEL, 8, 0) > 0) {
 				datn = "9_C_schlecht";
+				SetWindowText(gut_pr, "19");
 			}
 			else if (SendMessage(list_mess, LB_GETSEL, 9, 0) > 0) {
 				datn = "10_B_schlecht";
@@ -159,6 +161,7 @@ LRESULT CALLBACK MessageHandler(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 			}
 			else if (SendMessage(list_soll, LB_GETSEL, 6, 0) > 0) {
 				datn = "Soll_C_gut";
+				
 			}
 			else if (SendMessage(list_soll, LB_GETSEL, 7, 0) > 0) {
 				datn = "Soll_C_kurz";
