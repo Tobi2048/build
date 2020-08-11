@@ -250,13 +250,13 @@ LRESULT CALLBACK MessageHandler(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 					hwnd3 = FindWindow(NULL, "Anzeige Auswertung Breite des Steins");
 					if (hwnd3) {
 						SetForegroundWindow(hwnd3);
-						//keybd_event((BYTE)VkKeyScan('q'), 0, 0, 0);
+						keybd_event((BYTE)VkKeyScan('q'), 0, 0, 0);
 						DestroyWindow(hwnd3);
 					}
 					hwnd4 = FindWindow(NULL, "Anzeige Auswertung Länge des Steins");
 					if (hwnd4) {
 						SetForegroundWindow(hwnd4);
-						//keybd_event((BYTE)VkKeyScan('q'), 0, 0, 0);
+						keybd_event((BYTE)VkKeyScan('q'), 0, 0, 0);
 						DestroyWindow(hwnd4);
 					}
 					

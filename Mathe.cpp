@@ -3,7 +3,9 @@
 
 int min_max(pcl::PointCloud<pcl::PointXYZ>::Ptr cl_in, std::string anw, std::string var , std::string achse ) {
     //std::cout << cl_in->points.size() << std::endl;
-    if (cl_in->points.size() != 0) {
+    if (cl_in->size() == 0) {
+        return -1;
+    }
         std::vector< long long> point(cl_in->points.size());//laden der gefilterten zange in vector 
         for (int i = 0; i < point.size(); ++i)
         {
@@ -44,6 +46,5 @@ int min_max(pcl::PointCloud<pcl::PointXYZ>::Ptr cl_in, std::string anw, std::str
             std::cout << " der 2 Eingabewert muss min oder max sein" << std::endl << std::endl;
         return -1;
 
-    }
-    return -1;
+    
 }

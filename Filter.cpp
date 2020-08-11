@@ -4,7 +4,7 @@
 pcl::PointCloud<pcl::PointXYZ>::Ptr verdichten(pcl::PointCloud<pcl::PointXYZ>::Ptr cl_vox_in, float fakt) {
 
     pcl::PointCloud<pcl::PointXYZ>::Ptr cl_vox_out(new pcl::PointCloud<pcl::PointXYZ>);
-
+   
     std::cout << " erstelle vox \n";
 
     // voxel grid erstellen -> Punktdichte verringern
@@ -19,8 +19,13 @@ pcl::PointCloud<pcl::PointXYZ>::Ptr verdichten(pcl::PointCloud<pcl::PointXYZ>::P
 }
 
 pcl::PointCloud<pcl::PointXYZ>::Ptr flaechen_filter(pcl::PointCloud<pcl::PointXYZ>::Ptr cl_fl_in, float grenzw, std::string achse, double aufloesung) {
-
     pcl::PointCloud<pcl::PointXYZ>::Ptr cl_fl_out(new pcl::PointCloud<pcl::PointXYZ>);
+    if (cl_fl_in->size() == 0) {
+        cl_fl_out->points[0] = { 0,0,0 };
+       
+        return(cl_fl_out);
+    }
+    
     // Flächenfilter in der 
     pcl::PassThrough<pcl::PointXYZ> pass;
     pass.setInputCloud(cl_fl_in);

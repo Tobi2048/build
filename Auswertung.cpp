@@ -7,16 +7,17 @@
 
 
 
-std::vector<float> Auswertung(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_soll, double aufloesung, double gut, char cst)
+std::vector<float> Auswertung(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_soll, double aufloesung, double gut_p, char cst)
 {
+   float gut = gut_p;
     int abst = 1;
     if (cst == 'c') {
-        gut = 15;
+        gut = gut_p*3;
         abst = 3;
 
     }
     float defect = gut * 2;
-    std::vector<float> ret(20);
+    std::vector<float> ret(22);
 
 
     //-------------------------------------------------Berechnung der mittleren höhe und dessen Stand.abweichung----------------------------------------------------
@@ -289,16 +290,5 @@ std::vector<float> Auswertung(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, pcl::Po
     ret[15] = ((count_gut_h / counter_h) * 100);
     return(ret);
 
-    while (!viewer1.wasStopped())
-    { // Display the visualiser until 'q' key is pressed
-        viewer1.spinOnce();
-        // Sleep(1000);
-         //viewer1.close();
-    }
-    while (!viewer1_y.wasStopped())
-    { // Display the visualiser until 'q' key is pressed
-        viewer1_y.spinOnce();
-        // Sleep(1000);
-         //viewer1.close();
-    }
+   
 }
