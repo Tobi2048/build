@@ -5,4 +5,4 @@
 
 
 
-std::vector<std::string> Manager(char anw, std::string , double aufloesung, double gut);
+std::vector<std::string> Manager(char anw, std::string , double aufloesung, double gut,char cst);

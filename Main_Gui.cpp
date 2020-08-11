@@ -4,7 +4,7 @@
 
 #include"Main_Gui.h"
 #include"Master_prog.h"
-
+char cst = 'l';
 char sperr_soll = 'l';
 char sperr_mess = 'l';
 
@@ -95,35 +95,46 @@ LRESULT CALLBACK MessageHandler(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 		case button_id_open_mess:
 			if (SendMessage(list_mess, LB_GETSEL, 0, 0) > 0) {
 				datn = "1_A_gut";
+				SetWindowText(gut_pr, "5");
 			}
 			else if (SendMessage(list_mess, LB_GETSEL, 1, 0) > 0) {
 				datn = "2_A_schlecht";
+				SetWindowText(gut_pr, "5");
 			}
 			else if (SendMessage(list_mess, LB_GETSEL, 2, 0) > 0) {
 				datn = "3_A_schlecht";
+				SetWindowText(gut_pr, "5");
 			}
 			else if (SendMessage(list_mess, LB_GETSEL, 3, 0) > 0) {
 				datn = "4_A_gut";
+				SetWindowText(gut_pr, "5");
 			}
 			else if (SendMessage(list_mess, LB_GETSEL, 4, 0) > 0) {
 				datn = "5_A_schlecht_form";
+				SetWindowText(gut_pr, "5");
 			}
 			else if (SendMessage(list_mess, LB_GETSEL, 5, 0) > 0) {
 				datn = "6_B_gut";
+				SetWindowText(gut_pr, "5");
 			}
 			else if (SendMessage(list_mess, LB_GETSEL, 6, 0) > 0) {
 				datn = "7_B_gut_l";
+				SetWindowText(gut_pr, "5");
 			}
 			else if (SendMessage(list_mess, LB_GETSEL, 7, 0) > 0) {
 				datn = "8_C_gut";
-				SetWindowText(gut_pr, "19");
+				SetWindowText(gut_pr, "10");
+				
 			}
 			else if (SendMessage(list_mess, LB_GETSEL, 8, 0) > 0) {
 				datn = "9_C_schlecht";
-				SetWindowText(gut_pr, "19");
+				SetWindowText(gut_pr, "15");
+				 cst = 'c';
+
 			}
 			else if (SendMessage(list_mess, LB_GETSEL, 9, 0) > 0) {
 				datn = "10_B_schlecht";
+				SetWindowText(gut_pr, "5");
 			}
 			else {
 				SetWindowText(mess_text, "Bitte erst eine Datei \n ausw‰hlen");
@@ -131,8 +142,8 @@ LRESULT CALLBACK MessageHandler(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 			}
 			GetWindowText(aufl, buffer, 1024);
 			auf = atof(buffer);
-			sperr_mess = 'g';
-			vec = Manager('c', datn,auf,0);
+			sperr_mess = 'o';
+			vec = Manager('c', datn,auf,0,cst);
 			str2 = ("Die Datei :\n\n" + datn + " \n\n ist ausgew‰hlt");
 			lpcstr2 = str2.c_str();
 			SetWindowText(mess_text, lpcstr2); str2 = {};
@@ -176,7 +187,7 @@ LRESULT CALLBACK MessageHandler(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 			GetWindowText(aufl, buffer, 1024);
 			auf = atof(buffer);
 			sperr_soll = 'r';
-			vec = Manager('s', datn, auf,0);
+			vec = Manager('s', datn, auf,0,cst);
 			str2 = ("Die Datei :\n\n" + datn + " \n\n ist ausgew‰hlt");
 			lpcstr2 = str2.c_str();
 			SetWindowText(soll_text, lpcstr2); str2 = {};
@@ -199,7 +210,7 @@ LRESULT CALLBACK MessageHandler(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 				SetForegroundWindow(hwnd1);
 				keybd_event((BYTE)VkKeyScan('q'), 0, 0, 0);
 					DestroyWindow(hwnd1);
-				str.insert(0, Manager('v', datn, auf, 0)[0]);
+				str.insert(0, Manager('v', datn, auf, 0,cst)[0]);
 				lpcstr = str.c_str();
 				SetWindowText(text_edit, lpcstr);
 			break;
@@ -209,23 +220,26 @@ LRESULT CALLBACK MessageHandler(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 				SetForegroundWindow(hwnd2);
 				keybd_event((BYTE)VkKeyScan('q'), 0, 0, 0);
 				DestroyWindow(hwnd2);
-				str.insert(0, Manager('V', datn, auf, 0)[0]);
+				str.insert(0, Manager('V', datn, auf, 0,cst)[0]);
 				lpcstr = str.c_str();
 				SetWindowText(text_edit, lpcstr);
 			break;
 		case button_filter_stein_id:
 			if (sperr_mess == 'g') {
 				sperr_mess = 'r';
-				str.insert(0, Manager('o',"leer",auf,0)[0]);
+				str.insert(0, Manager('o',"leer",auf,0,cst)[0]);
 				lpcstr = str.c_str();
 				SetWindowText(text_edit, lpcstr);
 			}
 			break;
 
 		case button_id_ausreiﬂer:
-			str.insert(0, Manager('n', "leer", auf,0)[0]);
-			lpcstr = str.c_str();
-			SetWindowText(text_edit, lpcstr);
+			if (sperr_mess == 'o') {
+				str.insert(0, Manager('n', "leer", auf, 0, cst)[0]);
+				lpcstr = str.c_str();
+				SetWindowText(text_edit, lpcstr);
+				sperr_mess = 'g';
+			}
 			break;
 
 		case button_auswerten_id:
@@ -245,7 +259,8 @@ LRESULT CALLBACK MessageHandler(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 						//keybd_event((BYTE)VkKeyScan('q'), 0, 0, 0);
 						DestroyWindow(hwnd4);
 					}
-					vec = Manager('a',"leer",auf, gut_prw);
+					
+					vec = Manager('a',"leer",auf, gut_prw,cst);
 					str.insert(0, vec[0]);
 					lpcstr = str.c_str();
 					SetWindowText(text_edit, lpcstr);

@@ -67,18 +67,19 @@ pcl::PointCloud<pcl::PointXYZ>::Ptr ausrichten_stein(pcl::PointCloud<pcl::PointX
             }
             count++;
         }
-        
-    }
-  
-    int min_y_a = min_max(cloud, "min", "index", "y");
-    int min_x_a = min_max(cloud, "min", "index", "x");
-    if (cloud->points[min_y_a].y != 0 || cloud->points[min_x_a].x != 0) {
 
-        Eigen::Affine3f transform_to_0 = Eigen::Affine3f::Identity();
-        transform_to_0.translation() << -cloud->points[min_x_a].x, -cloud->points[min_y_a].y, 0;
-        pcl::transformPointCloud(*cloud, *cloud, transform_to_0);
-        //       pcl::transformPointCloud(*cloud_fl, *cloud_fl, transform_to_0);
 
+
+        int min_y_a = min_max(cloud, "min", "index", "y");
+        int min_x_a = min_max(cloud, "min", "index", "x");
+        if (cloud->points[min_y_a].y != 0 || cloud->points[min_x_a].x != 0) {
+
+            Eigen::Affine3f transform_to_0 = Eigen::Affine3f::Identity();
+            transform_to_0.translation() << -cloud->points[min_x_a].x, -cloud->points[min_y_a].y, 0;
+            pcl::transformPointCloud(*cloud, *cloud, transform_to_0);
+            //       pcl::transformPointCloud(*cloud_fl, *cloud_fl, transform_to_0);
+
+        }
     }
     return(cloud);
     
