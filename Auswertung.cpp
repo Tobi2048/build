@@ -5,12 +5,14 @@
 #include<numeric>
 #include<vector>
 
-
+#ifdef _DEBUG
+#define DEBUG
+#endif
 
 std::vector<double> Auswertung(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_soll, double aufloesung, double gut_p)
 {
    float gut = gut_p;
-    int abst = 1;
+    int abst = 0;
     
     float defect = gut * 2;
     std::vector<double> ret(22);
@@ -93,8 +95,11 @@ std::vector<double> Auswertung(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, pcl::P
     {
         if (i * aufloesung <= grenz_x_mess - abst) {
             cloud_fl_mess = flaechen_filter(cloud_mess, (start_x_mess + aufloesung * (i)), "x", aufloesung * 2);
+            if (!cloud_fl_mess->empty()) {
             erg_mess = cloud_fl_mess->points[min_max(cloud_fl_mess, "max", "index", "y")].y - cloud_fl_mess->points[min_max(cloud_fl_mess, "min", "index", "y")].y;
-
+            }
+            else
+                erg_mess = 0.001;
         }
         else
             erg_mess = 0.001;
@@ -145,7 +150,11 @@ std::vector<double> Auswertung(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, pcl::P
     float erg_abw_x = 0;
     for (int i = 0; i * aufloesung < grenz_x_mess - abst; i++) {
         cloud_fl_mess = flaechen_filter(cloud_mess, (start_x_mess + aufloesung * (i)), "x", aufloesung * 2);
+        if (!cloud_fl_mess->empty()) {
         erg_mess = cloud_fl_mess->points[min_max(cloud_fl_mess, "max", "index", "y")].y - cloud_fl_mess->points[min_max(cloud_fl_mess, "min", "index", "y")].y;
+    }
+    else
+        erg_mess = 0.001;
         zw_er = zw_er + ((erg_mess - erg_mess_mittel_x) * (erg_mess - erg_mess_mittel_x));
         counter_mess++;
     }
@@ -264,8 +273,8 @@ std::vector<double> Auswertung(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, pcl::P
 
 
 
-
-    /*
+#ifdef DEBUG
+    
     while (!viewer1.wasStopped())
     { // Display the visualiser until 'q' key is pressed
         viewer1.spinOnce();
@@ -278,8 +287,8 @@ std::vector<double> Auswertung(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, pcl::P
         //Sleep(1000);
          // viewer2.close();
     }
-
-    */
+#endif
+    
 
 
 

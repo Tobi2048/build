@@ -9,7 +9,7 @@
 #include"Main_Gui.h"
 #include"Master_prog.h"
 
-char cst = 'l';
+
 char sperr_soll = 'l';
 char sperr_mess = 'l';
 
@@ -128,13 +128,13 @@ LRESULT CALLBACK MessageHandler(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 			}
 			else if (SendMessage(list_mess, LB_GETSEL, 7, 0) > 0) {
 				datn = "8_C_gut";
-				SetWindowText(gut_pr, "10");
+				SetWindowText(gut_pr, "5");
 				
 			}
 			else if (SendMessage(list_mess, LB_GETSEL, 8, 0) > 0) {
 				datn = "9_C_schlecht";
-				SetWindowText(gut_pr, "15");
-				 cst = 'c';
+				SetWindowText(gut_pr, "5");
+				 
 
 			}
 			else if (SendMessage(list_mess, LB_GETSEL, 9, 0) > 0) {
@@ -148,7 +148,7 @@ LRESULT CALLBACK MessageHandler(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 			GetWindowText(aufl, buffer, 1024);
 			auf = atof(buffer);
 			sperr_mess = 'o';
-			vec = Manager('c', datn,auf,0,cst);
+			vec = Manager('c', datn,auf,0);
 			str2 = ("Die Datei :\n\n" + datn + " \n\n ist ausgew‰hlt");
 			lpcstr2 = str2.c_str();
 			SetWindowText(mess_text, lpcstr2); str2 = {};
@@ -192,7 +192,7 @@ LRESULT CALLBACK MessageHandler(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 			GetWindowText(aufl, buffer, 1024);
 			auf = atof(buffer);
 			sperr_soll = 'r';
-			vec = Manager('s', datn, auf,0,cst);
+			vec = Manager('s', datn, auf,0);
 			str2 = ("Die Datei :\n\n" + datn + " \n\n ist ausgew‰hlt");
 			lpcstr2 = str2.c_str();
 			SetWindowText(soll_text, lpcstr2); str2 = {};
@@ -215,7 +215,7 @@ LRESULT CALLBACK MessageHandler(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 				SetForegroundWindow(hwnd1);
 				keybd_event((BYTE)VkKeyScan('q'), 0, 0, 0);
 					DestroyWindow(hwnd1);
-				str.insert(0, Manager('v', datn, auf, 0,cst)[0]);
+				str.insert(0, Manager('v', datn, auf, 0)[0]);
 				lpcstr = str.c_str();
 				SetWindowText(text_edit, lpcstr);
 			break;
@@ -225,14 +225,14 @@ LRESULT CALLBACK MessageHandler(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 				SetForegroundWindow(hwnd2);
 				keybd_event((BYTE)VkKeyScan('q'), 0, 0, 0);
 				DestroyWindow(hwnd2);
-				str.insert(0, Manager('V', datn, auf, 0,cst)[0]);
+				str.insert(0, Manager('V', datn, auf, 0)[0]);
 				lpcstr = str.c_str();
 				SetWindowText(text_edit, lpcstr);
 			break;
 		case button_filter_stein_id:
 			if (sperr_mess == 'g') {
 				sperr_mess = 'r';
-				str.insert(0, Manager('o',"leer",auf,0,cst)[0]);
+				str.insert(0, Manager('o',"leer",auf,0)[0]);
 				lpcstr = str.c_str();
 				SetWindowText(text_edit, lpcstr);
 			}
@@ -240,7 +240,7 @@ LRESULT CALLBACK MessageHandler(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 
 		case button_id_ausreiﬂer:
 			if (sperr_mess == 'o') {
-				str.insert(0, Manager('n', "leer", auf, 0, cst)[0]);
+				str.insert(0, Manager('n', "leer", auf, 0)[0]);
 				lpcstr = str.c_str();
 				SetWindowText(text_edit, lpcstr);
 				sperr_mess = 'g';
@@ -255,17 +255,17 @@ LRESULT CALLBACK MessageHandler(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 					hwnd3 = FindWindow(NULL, "Anzeige Auswertung Breite des Steins");
 					if (hwnd3) {
 						SetForegroundWindow(hwnd3);
-						keybd_event((BYTE)VkKeyScan('q'), 0, 0, 0);
+						//keybd_event((BYTE)VkKeyScan('q'), 0, 0, 0);
 						DestroyWindow(hwnd3);
 					}
 					hwnd4 = FindWindow(NULL, "Anzeige Auswertung L‰nge des Steins");
 					if (hwnd4) {
 						SetForegroundWindow(hwnd4);
-						keybd_event((BYTE)VkKeyScan('q'), 0, 0, 0);
+						//keybd_event((BYTE)VkKeyScan('q'), 0, 0, 0);
 						DestroyWindow(hwnd4);
 					}
 					
-					vec = Manager('a',"leer",auf, gut_prw,cst);
+					vec = Manager('a',"leer",auf, gut_prw);
 					str.insert(0, vec[0]);
 					lpcstr = str.c_str();
 					SetWindowText(text_edit, lpcstr);
