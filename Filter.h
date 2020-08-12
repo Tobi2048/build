@@ -13,6 +13,7 @@
 #include <pcl/visualization/cloud_viewer.h>
 #include <pcl/segmentation/region_growing.h>
 
-pcl::PointCloud<pcl::PointXYZ>::Ptr oberflaechen_filter(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, int num, int showcloud);
-pcl::PointCloud<pcl::PointXYZ>::Ptr flaechen_filter(pcl::PointCloud<pcl::PointXYZ>::Ptr cl_fl_in, float grenzw, std::string achse, float aufloesung);
-pcl::PointCloud<pcl::PointXYZ>::Ptr vox(pcl::PointCloud<pcl::PointXYZ>::Ptr cl_vox_in, float fakt);
+pcl::PointCloud<pcl::PointXYZ>::Ptr oberflaechen_filter(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, int num);
+pcl::PointCloud<pcl::PointXYZ>::Ptr flaechen_filter(pcl::PointCloud<pcl::PointXYZ>::Ptr cl_fl_in, float grenzw, std::string achse, double aufloesung);
+pcl::PointCloud<pcl::PointXYZ>::Ptr verdichten(pcl::PointCloud<pcl::PointXYZ>::Ptr cl_vox_in, float fakt);
+pcl::PointCloud<pcl::PointXYZ>::Ptr ausreiﬂer_filter(pcl::PointCloud<pcl::PointXYZ>::Ptr cl_fl_in);

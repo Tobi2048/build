@@ -89,10 +89,10 @@
       <AdditionalIncludeDirectories>C:\Users\tobia\Desktop\Masterarbeit_Qualitätskontrolle_Passsteinautomat\build;C:\Program Files\PCL 1.11.0\3rdParty\VTK\include\vtk-8.2;C:\Program Files\PCL 1.11.0\include\pcl-1.11;C:\Program Files\PCL 1.11.0\3rdParty\Eigen\eigen3;C:\Program Files\PCL 1.11.0\3rdParty\Boost\include\boost-1_73;C:\Program Files\OpenNI2\Include;C:\Program Files\PCL 1.11.0\3rdParty\Qhull\include;C:\Program Files\PCL 1.11.0\3rdParty\FLANN\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
-      <CompileAs>CompileAsCpp</CompileAs>
+      <CompileAs>Default</CompileAs>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <ExceptionHandling>Sync</ExceptionHandling>
-      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
       <Optimization>Disabled</Optimization>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -166,7 +166,7 @@
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <ImportLibrary>C:/Users/tobia/Desktop/Masterarbeit_Qualitätskontrolle_Passsteinautomat/build/Release/Master.lib</ImportLibrary>
       <ProgramDataBaseFile>C:/Users/tobia/Desktop/Masterarbeit_Qualitätskontrolle_Passsteinautomat/build/Release/Master.pdb</ProgramDataBaseFile>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
     </Link>
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
@@ -210,7 +210,7 @@
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <ImportLibrary>C:/Users/tobia/Desktop/Masterarbeit_Qualitätskontrolle_Passsteinautomat/build/MinSizeRel/Master.lib</ImportLibrary>
       <ProgramDataBaseFile>C:/Users/tobia/Desktop/Masterarbeit_Qualitätskontrolle_Passsteinautomat/build/MinSizeRel/Master.pdb</ProgramDataBaseFile>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
     </Link>
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
@@ -253,7 +253,7 @@
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <ImportLibrary>C:/Users/tobia/Desktop/Masterarbeit_Qualitätskontrolle_Passsteinautomat/build/RelWithDebInfo/Master.lib</ImportLibrary>
       <ProgramDataBaseFile>C:/Users/tobia/Desktop/Masterarbeit_Qualitätskontrolle_Passsteinautomat/build/RelWithDebInfo/Master.pdb</ProgramDataBaseFile>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
     </Link>
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
@@ -318,11 +318,12 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
   <ItemGroup>
     <ClCompile Include="C:\Users\tobia\Desktop\Masterarbeit_Qualitätskontrolle_Passsteinautomat\Master_prog.cpp" />
     <ClCompile Include="Filter.cpp" />
+    <ClCompile Include="Main_Gui.cpp" />
     <ClCompile Include="Mathe.cpp" />
     <ClCompile Include="Solldaten.cpp" />
     <ClCompile Include="Transformation.cpp" />
     <ClCompile Include="Txt_to_pcd.cpp" />
-    <ClCompile Include="Vergleicher_ist_soll.cpp" />
+    <ClCompile Include="Auswertung.cpp" />
     <ClCompile Include="Viewer.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -335,11 +336,13 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Filter.h" />
+    <ClInclude Include="Main_Gui.h" />
+    <ClInclude Include="Master_prog.h" />
     <ClInclude Include="Mathe.h" />
     <ClInclude Include="Solldaten.h" />
     <ClInclude Include="Transformation.h" />
     <ClInclude Include="Txt_to_pcd.h" />
-    <ClInclude Include="Vergleicher_ist_soll.h" />
+    <ClInclude Include="Auswertung.h" />
     <ClInclude Include="Viewer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

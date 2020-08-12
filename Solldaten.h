@@ -12,11 +12,12 @@
 #include <string>
 #include <vector>
 #include <pcl/point_types.h>
+#include<stdlib.h>
+#include <cassert>
 
 
-
-pcl::PointCloud<pcl::PointXYZ>::Ptr sollstein_erstellen(float aufloesung = 0.1);
-float soll_breite_txt();
+pcl::PointCloud<pcl::PointXYZ>::Ptr sollstein_erstellen(double aufloesung = 0.1, std::string dat="leer");
+std::vector<double> ausgabe_solldaten(std::string dat);
 
 typedef struct points_txt_soll
 {

@@ -1,15 +1,17 @@
 #include"Txt_to_pcd.h"
+#include<stdlib.h>
 
-
-pcl::PointCloud<pcl::PointXYZ>::Ptr Convert_txt_to_pcd(float fakt)
+pcl::PointCloud<pcl::PointXYZ>::Ptr Convert_txt_to_pcd(float fakt,std::string dat)
 {
 
 	int number_Txt;
 	FILE* fp_txt;
 	points_txt TxtPoint;
 	std::vector<points_txt> vec_TxtPoints;
-
-	fp_txt = fopen("C:/Users/tobia/Desktop/Masterarbeit_Qualitätskontrolle_Passsteinautomat/Point_Clouds/Jokari.txt", "r");// hier die txt datei eintragen<--------------------------------<-<-<-<-<-<-<-<-<
+	std::string ort = ("C:/Users/tobia/Desktop/Masterarbeit_Qualitätskontrolle_Passsteinautomat/Point_Clouds/Mess_Daten/"+dat+".txt");
+	
+		fp_txt = fopen(ort.c_str(), "r");// hier die txt datei eintragen<--------------------------------<-<-<-<-<-<-<-<-<
+	
 
 	if (fp_txt)//If File open, push points in Vector 
 	{
@@ -17,9 +19,7 @@ pcl::PointCloud<pcl::PointXYZ>::Ptr Convert_txt_to_pcd(float fakt)
 		{
 			vec_TxtPoints.push_back(TxtPoint);
 		}
-	}
-	else//wenn Datei nicht geöffnet wurde
-		std::cout << "ups /n";
+	
 
 
 	number_Txt = vec_TxtPoints.size();// Anzahl der xyz Punkte 
@@ -51,12 +51,15 @@ pcl::PointCloud<pcl::PointXYZ>::Ptr Convert_txt_to_pcd(float fakt)
 	*/
 
 
-	pcl::io::savePCDFileASCII("C:/Users/tobia/Desktop/Masterarbeit_Qualitätskontrolle_Passsteinautomat/Point_Clouds/jokari.pcd", *cloud);
+	pcl::io::savePCDFileASCII(("C:/Users/tobia/Desktop/Masterarbeit_Qualitätskontrolle_Passsteinautomat/Point_Clouds/Mess_Daten/" + dat + ".pcd"), *cloud);
 	std::cerr << "Saved " << cloud->points.size() << " data points to txt2pcd.pcd." << std::endl;
 
 	std::cout << "erstellt";
 
 	return cloud;
+	}
+	else//wenn Datei nicht geöffnet wurde
+		std::cout << "ups /n";
 
 
 }

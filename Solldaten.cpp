@@ -3,7 +3,7 @@
 #include"Solldaten.h"
 
 
-pcl::PointCloud<pcl::PointXYZ>::Ptr sollstein_erstellen(float aufloesung)
+pcl::PointCloud<pcl::PointXYZ>::Ptr sollstein_erstellen(double aufloesung ,std::string dat)
 {//------------------------------------------------------------------------------------------solldaten eckpunkte laden---------------------------------------
 	pcl::PointCloud<pcl::PointXYZ>::Ptr point_cloud(new pcl::PointCloud<pcl::PointXYZ>);
 
@@ -11,8 +11,9 @@ pcl::PointCloud<pcl::PointXYZ>::Ptr sollstein_erstellen(float aufloesung)
 	FILE* fp_txt;
 	points_txt_soll TxtPoint;
 	std::vector<points_txt_soll> vec_TxtPoints;
+	std::string pfad = ("C:/Users/tobia/Desktop/Masterarbeit_Qualitätskontrolle_Passsteinautomat/Point_Clouds/Soll_Daten/"+dat+".txt");
 
-	fp_txt = fopen("C:/Users/tobia/Desktop/Masterarbeit_Qualitätskontrolle_Passsteinautomat/Point_Clouds/Soll_stein.txt", "r");// hier die txt datei eintragen<--------------------------------<-<-<-<-<-<-<-<-<
+	fp_txt = fopen(pfad.c_str(), "r");// hier die txt datei eintragen<--------------------------------<-<-<-<-<-<-<-<-<
 
 	if (fp_txt)//If File open, push points in Vector 
 	{
@@ -35,8 +36,8 @@ pcl::PointCloud<pcl::PointXYZ>::Ptr sollstein_erstellen(float aufloesung)
 	float my = ((vec_TxtPoints[3].y - vec_TxtPoints[2].y) / (vec_TxtPoints[3].x - vec_TxtPoints[2].x));
 	
 
-		for (float z = vec_TxtPoints[0].z; z <= vec_TxtPoints[5].z - vec_TxtPoints[0].z; z += vec_TxtPoints[5].z - vec_TxtPoints[0].z)
-		{
+		float z = vec_TxtPoints[5].z - vec_TxtPoints[0].z; 
+		
 			for (float x = vec_TxtPoints[0].x; x <= vec_TxtPoints[1].x - vec_TxtPoints[0].x; x += aufloesung)//auflösung
 			{
 				for (float y = vec_TxtPoints[0].y; y <= (vec_TxtPoints[2].y - vec_TxtPoints[0].y)+my*x; y += aufloesung)
@@ -47,22 +48,22 @@ pcl::PointCloud<pcl::PointXYZ>::Ptr sollstein_erstellen(float aufloesung)
 				}
 			}
 			point_cloud->width = (int)point_cloud->points.size();  point_cloud->height = 1;
-		}
+		
 		
 		return point_cloud;
 
 }
-
-float soll_breite_txt()
+std::vector<double> ausgabe_solldaten(std::string dat)
 {//------------------------------------------------------------------------------------------solldaten eckpunkte laden---------------------------------------
 	pcl::PointCloud<pcl::PointXYZ>::Ptr point_cloud(new pcl::PointCloud<pcl::PointXYZ>);
-
+	std::vector<double> soll_w(4);
 	int number_Txt;
 	FILE* fp_txt;
 	points_txt_solll TxtPoint;
 	std::vector<points_txt_solll> vec_TxtPoints;
+	std::string pfad = ("C:/Users/tobia/Desktop/Masterarbeit_Qualitätskontrolle_Passsteinautomat/Point_Clouds/Soll_Daten/" + dat + ".txt");
 
-	fp_txt = fopen("C:/Users/tobia/Desktop/Masterarbeit_Qualitätskontrolle_Passsteinautomat/Point_Clouds/Soll_stein.txt", "r");// hier die txt datei eintragen<--------------------------------<-<-<-<-<-<-<-<-<
+	fp_txt = fopen(pfad.c_str(), "r");// hier die txt datei eintragen<--------------------------------<-<-<-<-<-<-<-<-<
 
 	if (fp_txt)//If File open, push points in Vector 
 	{
@@ -73,6 +74,10 @@ float soll_breite_txt()
 	}
 	else//wenn Datei nicht geöffnet wurde
 		std::cout << "could not open" << std::endl;
+	soll_w[0] =(( vec_TxtPoints[2].y - vec_TxtPoints[0].y)+ (vec_TxtPoints[3].y - vec_TxtPoints[1].y))/2;//länge links
+	soll_w[3]= vec_TxtPoints[3].y - vec_TxtPoints[1].y;//länge rechts
+	soll_w[1]= vec_TxtPoints[1].x - vec_TxtPoints[0].x;//breite
+	soll_w[2]=vec_TxtPoints[4].z - vec_TxtPoints[0].z;//höhe
 
-	return (vec_TxtPoints[1].x - vec_TxtPoints[0].x);
+	return (soll_w);
 }

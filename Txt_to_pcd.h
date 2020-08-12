@@ -23,4 +23,4 @@ typedef struct points_txt
 
 
 
-pcl::PointCloud<pcl::PointXYZ>::Ptr Convert_txt_to_pcd(float fakt);
+pcl::PointCloud<pcl::PointXYZ>::Ptr Convert_txt_to_pcd(float fakt, std::string dat);
