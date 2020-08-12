@@ -1,5 +1,5 @@
 #include"Filter.h"
-
+#include<iostream>
 
 pcl::PointCloud<pcl::PointXYZ>::Ptr verdichten(pcl::PointCloud<pcl::PointXYZ>::Ptr cl_vox_in, float fakt) {
 
@@ -21,7 +21,7 @@ pcl::PointCloud<pcl::PointXYZ>::Ptr verdichten(pcl::PointCloud<pcl::PointXYZ>::P
 pcl::PointCloud<pcl::PointXYZ>::Ptr flaechen_filter(pcl::PointCloud<pcl::PointXYZ>::Ptr cl_fl_in, float grenzw, std::string achse, double aufloesung) {
     pcl::PointCloud<pcl::PointXYZ>::Ptr cl_fl_out(new pcl::PointCloud<pcl::PointXYZ>);
     if (cl_fl_in->size() == 0) {
-        cl_fl_out->points[0] = { 0,0,0 };
+        cl_fl_out->points[1] = { 0,0,0 };
        
         return(cl_fl_out);
     }
@@ -36,9 +36,13 @@ pcl::PointCloud<pcl::PointXYZ>::Ptr flaechen_filter(pcl::PointCloud<pcl::PointXY
     if (cl_fl_out->points.size() > 0)
         return(cl_fl_out);
     else {
-        cl_fl_out->points[0] = { 0,0,0 };
-        std::cout << "lade 0 0 0\n";
+        for (int i = 0; i < 1000; i++) {
+            std::cout << cl_fl_in->points[i] << std::endl;
+        }
+       
         return(cl_fl_out);
+        
+        
     }
 }
 

@@ -1,9 +1,14 @@
+#ifdef _DEBUG
+#define DEBUG
+#endif
+#ifndef DEBUG
 #include <windows.h>
 #include<stdlib.h>
 #include <cassert>
 
 #include"Main_Gui.h"
 #include"Master_prog.h"
+
 char cst = 'l';
 char sperr_soll = 'l';
 char sperr_mess = 'l';
@@ -441,5 +446,5 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	}
 }
 
-
+#endif
 

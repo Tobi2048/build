@@ -26,6 +26,6 @@
 
 
 
-std::vector<float> Auswertung(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_mess, pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_soll, double aufloesung, double gut,char cst);
+std::vector<double> Auswertung(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_mess, pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_soll, double aufloesung, double gut);
 
 

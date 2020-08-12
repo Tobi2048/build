@@ -3,9 +3,7 @@
 
 int min_max(pcl::PointCloud<pcl::PointXYZ>::Ptr cl_in, std::string anw, std::string var , std::string achse ) {
     //std::cout << cl_in->points.size() << std::endl;
-    if (cl_in->size() == 0) {
-        return -1;
-    }
+    
         std::vector< long long> point(cl_in->points.size());//laden der gefilterten zange in vector 
         for (int i = 0; i < point.size(); ++i)
         {
@@ -19,6 +17,7 @@ int min_max(pcl::PointCloud<pcl::PointXYZ>::Ptr cl_in, std::string anw, std::str
                 std::cout << "der vierte Eingabewert muss x / y / z  sein " << std::endl;
 
         }
+       
 
         if (anw == "min") {
             int minElementIndex = std::min_element(point.begin(), point.end()) - point.begin();
@@ -32,6 +31,7 @@ int min_max(pcl::PointCloud<pcl::PointXYZ>::Ptr cl_in, std::string anw, std::str
                 std::cout << " der dritte wert muss index oder elem sein" << std::endl;
         }
         else if (anw == "max") {
+
             int maxElementIndex = std::max_element(point.begin(), point.end()) - point.begin();
             float maxElement = *std::max_element(point.begin(), point.end());
             //std::cout << " xmax ecke punktindex " << maxElementIndex << "      " << maxElement << std::endl << std::endl;

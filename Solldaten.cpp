@@ -53,10 +53,10 @@ pcl::PointCloud<pcl::PointXYZ>::Ptr sollstein_erstellen(double aufloesung ,std::
 		return point_cloud;
 
 }
-std::vector<float> ausgabe_solldaten(std::string dat)
+std::vector<double> ausgabe_solldaten(std::string dat)
 {//------------------------------------------------------------------------------------------solldaten eckpunkte laden---------------------------------------
 	pcl::PointCloud<pcl::PointXYZ>::Ptr point_cloud(new pcl::PointCloud<pcl::PointXYZ>);
-	std::vector<float> soll_w(3);
+	std::vector<double> soll_w(4);
 	int number_Txt;
 	FILE* fp_txt;
 	points_txt_solll TxtPoint;

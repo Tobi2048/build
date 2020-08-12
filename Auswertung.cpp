@@ -7,17 +7,13 @@
 
 
 
-std::vector<float> Auswertung(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_soll, double aufloesung, double gut_p, char cst)
+std::vector<double> Auswertung(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_soll, double aufloesung, double gut_p)
 {
    float gut = gut_p;
     int abst = 1;
-    if (cst == 'c') {
-        gut = gut_p*3;
-        abst = 3;
-
-    }
+    
     float defect = gut * 2;
-    std::vector<float> ret(22);
+    std::vector<double> ret(22);
 
 
     //-------------------------------------------------Berechnung der mittleren höhe und dessen Stand.abweichung----------------------------------------------------
@@ -28,7 +24,7 @@ std::vector<float> Auswertung(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, pcl::Po
     float count_mangel_h = 0;
     float count_defect_h = 0;
     int counter_h = 0;
-    for (int i = 0; i <= cloud->points.size(); i++)
+    for (int i = 0; i < cloud->points.size(); i++)
     {
         hoehe_m = hoehe_m + cloud->points[i].z;
         if (erg_soll_h == 0) {
@@ -50,7 +46,7 @@ std::vector<float> Auswertung(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, pcl::Po
     }
     double hoehe_mittel = hoehe_m / cloud->points.size();
     double v = 0;
-    for (int i = 0; i <= cloud->points.size(); i++) {
+    for (int i = 0; i < cloud->points.size(); i++) {
         v = v + ((cloud->points[i].z - hoehe_mittel) * (cloud->points[i].z - hoehe_mittel));
     }
     float stand_abw = sqrt(v / (cloud->points.size() - 1));
@@ -194,8 +190,11 @@ std::vector<float> Auswertung(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, pcl::Po
     {
         if (i * aufloesung <= grenz_y_mess - abst) {
             cloud_fl_mess_y = flaechen_filter(cloud_mess, (start_y_mess + aufloesung * (i)), "y", aufloesung * 2);
-            erg_mess_y = cloud_fl_mess_y->points[min_max(cloud_fl_mess_y, "max", "index", "x")].x - cloud_fl_mess_y->points[min_max(cloud_fl_mess_y, "min", "index", "x")].x;
-
+            if (!cloud_fl_mess_y->empty()) {
+                erg_mess_y = cloud_fl_mess_y->points[min_max(cloud_fl_mess_y, "max", "index", "x")].x - cloud_fl_mess_y->points[min_max(cloud_fl_mess_y, "min", "index", "x")].x;
+            }
+            else
+                erg_mess_y = 0.001;
         }
         else
             erg_mess_y = 0.001;
@@ -248,8 +247,13 @@ std::vector<float> Auswertung(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, pcl::Po
     counter_mess_y = 0;
     float erg_abw_y = 0;
     for (int i = 0; i * aufloesung < grenz_y_mess - abst; i++) {
+
         cloud_fl_mess_y = flaechen_filter(cloud_mess, (start_y_mess + aufloesung * (i)), "y", aufloesung * 2);
+        if (!cloud_fl_mess_y->empty()) {
         erg_mess_y = cloud_fl_mess_y->points[min_max(cloud_fl_mess_y, "max", "index", "x")].x - cloud_fl_mess_y->points[min_max(cloud_fl_mess_y, "min", "index", "x")].x;
+        }
+        else
+            erg_mess_y = 0.001;
         zw_er_y = zw_er_y + ((erg_mess_y - erg_mess_mittel_y) * (erg_mess_y - erg_mess_mittel_y));
         counter_mess_y++;
     }
@@ -261,10 +265,21 @@ std::vector<float> Auswertung(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, pcl::Po
 
 
 
+    /*
+    while (!viewer1.wasStopped())
+    { // Display the visualiser until 'q' key is pressed
+        viewer1.spinOnce();
+        //Sleep(1000);
+         // viewer2.close();
+    }
+    while (!viewer1_y.wasStopped())
+    { // Display the visualiser until 'q' key is pressed
+        viewer1_y.spinOnce();
+        //Sleep(1000);
+         // viewer2.close();
+    }
 
-
-
-
+    */
 
 
 

@@ -1,6 +1,9 @@
 #pragma once
+#ifdef _DEBUG
+#define DEBUG
+#endif
 
-
+#ifndef DEBUG
 void AddControls(HWND hwnd);//prototyp
 void AddListboxs(HWND hwnd);
 void AddText(HWND hwnd);
@@ -150,3 +153,4 @@ void AddText(HWND hwnd) {
 	soll_text=CreateWindow("Static", " ", WS_VISIBLE | WS_CHILD | ES_CENTER, 276, 90, 198, 120, hwnd, 0, 0, 0);
 	mess_text=CreateWindow("Static", " ", WS_VISIBLE | WS_CHILD | ES_CENTER, 726, 90, 198, 120, hwnd, 0, 0, 0);
 }
+#endif
