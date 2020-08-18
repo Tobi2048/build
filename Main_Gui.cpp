@@ -316,6 +316,15 @@ LRESULT CALLBACK MessageHandler(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 					str2.insert(0, vec[18]);
 					lpcstr2 = str2.c_str();
 					SetWindowText(def_h, lpcstr2); str2 = {};
+					str2.insert(0, vec[19]);
+					lpcstr2 = str2.c_str();
+					SetWindowText(sab_h, lpcstr2); str2 = {};
+					str2.insert(0, vec[20]);
+					lpcstr2 = str2.c_str();
+					SetWindowText(sab_b, lpcstr2); str2 = {};
+					str2.insert(0, vec[21]);
+					lpcstr2 = str2.c_str();
+					SetWindowText(sab_l, lpcstr2); str2 = {};
 					break;
 				}
 			}

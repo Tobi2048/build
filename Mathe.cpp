@@ -48,3 +48,12 @@ int min_max(pcl::PointCloud<pcl::PointXYZ>::Ptr cl_in, std::string anw, std::str
 
     
 }
+float mittel_wert(std::vector<float>&vec) {
+    double zw_wert=0;
+    for (int i = 0; i < vec.size(); i++) {
+       
+            zw_wert = zw_wert + vec[i];
+        
+    }
+    return(zw_wert / vec.size());
+}
