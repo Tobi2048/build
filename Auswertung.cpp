@@ -153,25 +153,28 @@ std::vector<double> Auswertung(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, pcl::P
         }
         counter++;
 
-        std::cout << i << "::  gemessener  =" << erg_mess << ": soll =" << erg_soll << "breite=" << std::endl;
+        
         
     }
     float erg_mess_mittel_x = mittel_wert(vec_mess_x);
     float abw_mitt_x = mittel_wert(vec_abw_x);
-    
-  
-
+    for (int i = 0; i < vec_abw_x.size(); i++) {
+        std::cout<<"länge des vectors  ....."    << "messungen =" << vec_mess_x[i] << "  abweichung =" << vec_abw_x[i]<<std::endl;
+    }
    
     
     double zw_er = 0;
-
+    int step=0;
     float erg_abw_x = 0;
     for (int i = 0; i<vec_abw_x.size(); i++) {
-            zw_er = zw_er + ((abs(vec_abw_x[i] - abw_mitt_x)) *(abs(vec_abw_x[i] - abw_mitt_x)));
-       
+        if (abs(vec_abw_x[i] - abw_mitt_x) < 0.6 * erg_mess_mittel_x) {
+            zw_er = zw_er + ((abs(vec_abw_x[i] - abw_mitt_x)) * (abs(vec_abw_x[i] - abw_mitt_x)));
+            step++;
+            std::cout << "zw_er=" << zw_er << std::endl;
+        }
     }
-    erg_abw_x = sqrt(zw_er / (vec_abw_x.size() - 1));
-    std::cout << "gemessener mittelwert =" << erg_mess_mittel_x << "   die abweichung ist=" << abw_mitt_x << "   dessen stand.abw ist =" << erg_abw_x << std::endl;
+    erg_abw_x = sqrt(zw_er / (step - 1));
+   
 
     //------------------------------------------------Berechnung der breite y und dessen Stand.abweichung------------------------------------------------------------------------------------
 
@@ -264,23 +267,29 @@ std::vector<double> Auswertung(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, pcl::P
         }
         counter_y++;
 
-        std::cout<< i << "::  gemessener  =" << erg_mess_y << " soll ="<<erg_soll_y<<  "breite="<< std::endl;
+        
 
 
+    }
+    for (int i = 0; i < vec_abw_x.size(); i++) {
+        std::cout << "breite des vectors  ....." << "messungen =" << vec_mess_y[i] << "  abweichung =" << vec_abw_y[i] << std::endl;
     }
     float erg_mess_mittel_y = mittel_wert(vec_mess_y);
     float abw_mitt_y = mittel_wert(vec_abw_y);
 
- 
+    step = 0;
     double zw_er_y = 0;
     counter_mess_y = 0;
     float erg_abw_y = 0;
     for (int i = 0; i < vec_abw_y.size(); i++) {
-        std::cout << i << ":: zw_sume  =" << zw_er_y << std::endl;
-        zw_er_y = zw_er_y + ((abs(vec_abw_y[i] - abw_mitt_y)) * (abs(vec_abw_y[i] - abw_mitt_y)));
-        std::cout << i +1<< ":: zw_sume  =" << zw_er_y << std::endl;
+        if (abs(vec_abw_y[i] - abw_mitt_y) < 0.6 * erg_mess_mittel_y) {
+            std::cout << i << ":: zw_sume  =" << zw_er_y << std::endl;
+            zw_er_y = zw_er_y + ((abs(vec_abw_y[i] - abw_mitt_y)) * (abs(vec_abw_y[i] - abw_mitt_y)));
+            std::cout << i + 1 << ":: zw_sume  =" << zw_er_y << std::endl;
+            step++;
+        }
     }
-    erg_abw_y = sqrt(zw_er_y / (vec_abw_y.size() -1));
+    erg_abw_y = sqrt(zw_er_y / (step -1));
 
     std::cout << "gemessener mittelwert =" << erg_mess_mittel_y << "   die abweichung ist=" << abw_mitt_y << "   dessen stand.abw ist =" << erg_abw_y << std::endl;
 
