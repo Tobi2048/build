@@ -5,9 +5,13 @@
 #include <windows.h>
 #include<stdlib.h>
 #include <cassert>
-
+#include<vector>
+#include<numeric>
+#include<vector>
 #include"Main_Gui.h"
 #include"Master_prog.h"
+
+std::vector<float> üb_abw (3);
 
 
 char sperr_soll = 'l';
@@ -100,46 +104,46 @@ LRESULT CALLBACK MessageHandler(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 		case button_id_open_mess:
 			if (SendMessage(list_mess, LB_GETSEL, 0, 0) > 0) {
 				datn = "1_A_gut";
-				SetWindowText(gut_pr, "5");
+		
 			}
 			else if (SendMessage(list_mess, LB_GETSEL, 1, 0) > 0) {
 				datn = "2_A_schlecht";
-				SetWindowText(gut_pr, "5");
+			
 			}
 			else if (SendMessage(list_mess, LB_GETSEL, 2, 0) > 0) {
 				datn = "3_A_schlecht";
-				SetWindowText(gut_pr, "5");
+			
 			}
 			else if (SendMessage(list_mess, LB_GETSEL, 3, 0) > 0) {
 				datn = "4_A_gut";
-				SetWindowText(gut_pr, "5");
+			
 			}
 			else if (SendMessage(list_mess, LB_GETSEL, 4, 0) > 0) {
 				datn = "5_A_schlecht_form";
-				SetWindowText(gut_pr, "5");
+			
 			}
 			else if (SendMessage(list_mess, LB_GETSEL, 5, 0) > 0) {
 				datn = "6_B_gut";
-				SetWindowText(gut_pr, "5");
+			
 			}
 			else if (SendMessage(list_mess, LB_GETSEL, 6, 0) > 0) {
 				datn = "7_B_gut_l";
-				SetWindowText(gut_pr, "5");
+				
 			}
 			else if (SendMessage(list_mess, LB_GETSEL, 7, 0) > 0) {
 				datn = "8_C_gut";
-				SetWindowText(gut_pr, "5");
+				
 				
 			}
 			else if (SendMessage(list_mess, LB_GETSEL, 8, 0) > 0) {
 				datn = "9_C_schlecht";
-				SetWindowText(gut_pr, "5");
+				
 				 
 
 			}
 			else if (SendMessage(list_mess, LB_GETSEL, 9, 0) > 0) {
 				datn = "10_B_schlecht";
-				SetWindowText(gut_pr, "5");
+				
 			}
 			else {
 				SetWindowText(mess_text, "Bitte erst eine Datei \n auswählen");
@@ -148,7 +152,7 @@ LRESULT CALLBACK MessageHandler(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 			GetWindowText(aufl, buffer, 1024);
 			auf = atof(buffer);
 			sperr_mess = 'o';
-			vec = Manager('c', datn,auf,0);
+			vec = Manager('c', datn, auf, üb_abw);
 			str2 = ("Die Datei :\n\n" + datn + " \n\n ist ausgewählt");
 			lpcstr2 = str2.c_str();
 			SetWindowText(mess_text, lpcstr2); str2 = {};
@@ -192,7 +196,7 @@ LRESULT CALLBACK MessageHandler(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 			GetWindowText(aufl, buffer, 1024);
 			auf = atof(buffer);
 			sperr_soll = 'r';
-			vec = Manager('s', datn, auf,0);
+			vec = Manager('s', datn, auf, üb_abw);
 			str2 = ("Die Datei :\n\n" + datn + " \n\n ist ausgewählt");
 			lpcstr2 = str2.c_str();
 			SetWindowText(soll_text, lpcstr2); str2 = {};
@@ -218,7 +222,7 @@ LRESULT CALLBACK MessageHandler(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 				SetForegroundWindow(hwnd1);
 				keybd_event((BYTE)VkKeyScan('q'), 0, 0, 0);
 					DestroyWindow(hwnd1);
-				str.insert(0, Manager('v', datn, auf, 0)[0]);
+				str.insert(0, Manager('v', datn, auf, üb_abw)[0]);
 				lpcstr = str.c_str();
 				SetWindowText(text_edit, lpcstr);
 			break;
@@ -228,14 +232,14 @@ LRESULT CALLBACK MessageHandler(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 				SetForegroundWindow(hwnd2);
 				keybd_event((BYTE)VkKeyScan('q'), 0, 0, 0);
 				DestroyWindow(hwnd2);
-				str.insert(0, Manager('V', datn, auf, 0)[0]);
+				str.insert(0, Manager('V', datn, auf, üb_abw)[0]);
 				lpcstr = str.c_str();
 				SetWindowText(text_edit, lpcstr);
 			break;
 		case button_filter_stein_id:
 			if (sperr_mess == 'g') {
 				sperr_mess = 'r';
-				str.insert(0, Manager('o',"leer",auf,0)[0]);
+				str.insert(0, Manager('o',"leer",auf, üb_abw)[0]);
 				lpcstr = str.c_str();
 				SetWindowText(text_edit, lpcstr);
 			}
@@ -243,7 +247,7 @@ LRESULT CALLBACK MessageHandler(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 
 		case button_id_ausreißer:
 			if (sperr_mess == 'o') {
-				str.insert(0, Manager('n', "leer", auf, 0)[0]);
+				str.insert(0, Manager('n', "leer", auf, üb_abw)[0]);
 				lpcstr = str.c_str();
 				SetWindowText(text_edit, lpcstr);
 				sperr_mess = 'g';
@@ -253,8 +257,12 @@ LRESULT CALLBACK MessageHandler(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 		case button_auswerten_id:
 			if (sperr_mess == 'r') {
 				if (sperr_soll == 'r') {
-					GetWindowText(gut_pr, buffer2, 1024);
-					gut_prw = atof(buffer2);
+					GetWindowText(gutb_l, buffer2, 1024);
+					üb_abw[0] = atof(buffer2);
+					GetWindowText(gutb_b, buffer2, 1024);
+					üb_abw[1] = atof(buffer2);
+					GetWindowText(gutb_h, buffer2, 1024);
+					üb_abw[2] = atof(buffer2);
 					hwnd3 = FindWindow(NULL, "Anzeige Auswertung Breite des Steins");
 					if (hwnd3) {
 						SetForegroundWindow(hwnd3);
@@ -268,7 +276,7 @@ LRESULT CALLBACK MessageHandler(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 						DestroyWindow(hwnd4);
 					}
 					
-					vec = Manager('a',"leer",auf, gut_prw);
+					vec = Manager('a',datn,auf, üb_abw);
 					str.insert(0, vec[0]);
 					lpcstr = str.c_str();
 					SetWindowText(text_edit, lpcstr);
@@ -315,6 +323,7 @@ LRESULT CALLBACK MessageHandler(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 					str2.erase(str2.find(find, 0) + 3, 5);
 					lpcstr2 = str2.c_str();
 					SetWindowText(gut_b, lpcstr2); str2 = {};
+					
 					str2.insert(0, vec[14]);
 					str2.erase(str2.find(find, 0) + 3, 5);
 					lpcstr2 = str2.c_str();
@@ -347,6 +356,10 @@ LRESULT CALLBACK MessageHandler(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 					str2.erase(str2.find(find, 0) + 3, 5);
 					lpcstr2 = str2.c_str();
 					SetWindowText(sab_l, lpcstr2); str2 = {};
+					str2.insert(0, vec[22]);
+					
+					lpcstr2 = str2.c_str();
+					SetWindowText(auswertung, lpcstr2); str2 = {};
 					break;
 				}
 			}
@@ -388,7 +401,7 @@ LRESULT CALLBACK MessageHandler(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 		AddControls(hwnd);
 		AddListboxs(hwnd);
 		AddText(hwnd);
-		hhAnzeige = CreateWindow(szAnzeige,szAnzeige,WS_OVERLAPPEDWINDOW|WS_VISIBLE,1,1,1940,1005,0,NULL,((LPCREATESTRUCT)lParam)->hInstance,NULL);
+		hhAnzeige = CreateWindow(szAnzeige,szAnzeige,WS_OVERLAPPEDWINDOW|WS_VISIBLE,1,1,1940,1055,0,NULL,((LPCREATESTRUCT)lParam)->hInstance,NULL);
 		
 		
 		break;
@@ -452,7 +465,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	//--------------------------Hauptfenster-----------------------------------
 	hwnd = CreateWindow(
 		"WindowClass", "Passstein Qualitätskontrolle", WS_VISIBLE | WS_OVERLAPPEDWINDOW,
-		955, 0, 980, 1005, NULL, NULL, hInstance, NULL);
+		955, 0, 980, 1055, NULL, NULL, hInstance, NULL);
 	
 	if (hwnd == nullptr) {
 		DWORD errVal = GetLastError();

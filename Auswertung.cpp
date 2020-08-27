@@ -9,13 +9,12 @@
 #define DEBUG
 #endif
 
-std::vector<double> Auswertung(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_soll, double aufloesung, double gut_p)
+std::vector<double> auswerten(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_soll, double aufloesung, std::vector<float> &üb_ab)
 {
-    float gut = gut_p;
+  //  std::cout << üb_abw[0] << "   " << üb_abw[1] << "   " << üb_abw[2] << std::endl;
     
-
-    float defect = gut * 2;
-    std::vector<double> ret(22);
+    float gut_l=üb_ab[0], gut_b= üb_ab[1], gut_h= üb_ab[2];
+    std::vector<double> ret(24);
 
 
     //-------------------------------------------------Berechnung der mittleren höhe und dessen Stand.abweichung----------------------------------------------------
@@ -35,15 +34,15 @@ std::vector<double> Auswertung(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, pcl::P
         if (erg_soll_h == 0) {
             erg_soll_h = 0.001;
         }
-        if ((abs(cloud->points[i].z - erg_soll_h) * 100) / erg_soll_h > defect)
+        if (abs(cloud->points[i].z - erg_soll_h) > gut_h*2)
         {
             count_defect_h++;
         }
-        else if ((abs(cloud->points[i].z - erg_soll_h) * 100) / erg_soll_h > gut)
+        else if (abs(cloud->points[i].z - erg_soll_h)> gut_h)
         {
             count_mangel_h++;
         }
-        else if ((abs(cloud->points[i].z - erg_soll_h) * 100) / erg_soll_h < gut)
+        else if (abs(cloud->points[i].z - erg_soll_h) < gut_h)
         {
             count_gut_h++;
         }
@@ -60,10 +59,10 @@ std::vector<double> Auswertung(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, pcl::P
     for (int i = 0; i < vec_h.size() ; i++) {
         v = v + ((vec_h[i] - mitt_abw_h) * (vec_h[i] - mitt_abw_h));
     }
-    float stand_abw_h = sqrt(v / (vec_h.size() - 1));
+    float stand_abw_h = 2*sqrt(v / (vec_h.size() - 1));
     std::cout << " Soll =" << erg_soll_h << "  ´gemessener mittelwert =" << hoehe_mittel << "   die abweichung ist=" << mitt_abw_h << "   dessen stand.abw ist =" << stand_abw_h << std::endl;
 
-    pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_mess = flaechen_filter(cloud, hoehe_mittel - ((hoehe_mittel * gut * 0.01) / 2), "z", hoehe_mittel * gut * 0.01);
+    pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_mess = flaechen_filter(cloud, hoehe_mittel - (gut_h/ 2), "z", gut_h);
 
 
     //-------------------------------------------------Berechnung der mittleren länge und dessen Stand.abweichung----------------------------------------------------
@@ -130,21 +129,21 @@ std::vector<double> Auswertung(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, pcl::P
             }
         }
 
-        if ((abs(erg_mess - erg_soll) * 100) / erg_soll > defect)
+        if (abs(erg_mess - erg_soll)  >gut_l*2)
         {
             pcl::visualization::PointCloudColorHandlerCustom<pcl::PointXYZ> transformed_cloud_color_(cloud_fl_mess, 230, 20, 20); // Red
             viewer1.addPointCloud(cloud_fl_mess, transformed_cloud_color_, "transformed_cloudd" + std::to_string(count_defect));
             viewer1.setPointCloudRenderingProperties(pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 2, "transformed_cloudd" + std::to_string(count_defect));
             count_defect++;
         }
-        else if ((abs(erg_mess - erg_soll) * 100) / erg_soll > gut)
+        else if (abs(erg_mess - erg_soll) > gut_l)
         {
             pcl::visualization::PointCloudColorHandlerCustom<pcl::PointXYZ> transformed_cloud_color_(cloud_fl_mess, 255, 165, 79); // gelb
             viewer1.addPointCloud(cloud_fl_mess, transformed_cloud_color_, "transformed_cloudm" + std::to_string(count_mangel));
             viewer1.setPointCloudRenderingProperties(pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 2, "transformed_cloudm" + std::to_string(count_mangel));
             count_mangel++;
         }
-        else if ((abs(erg_mess - erg_soll) * 100) / erg_soll < gut)
+        else if (abs(erg_mess - erg_soll) < gut_l)
         {
             pcl::visualization::PointCloudColorHandlerCustom<pcl::PointXYZ> transformed_cloud_color_(cloud_fl_mess, 0, 100, 0); // grün
             viewer1.addPointCloud(cloud_fl_mess, transformed_cloud_color_, "transformed_cloudg" + std::to_string(count_gut));
@@ -173,7 +172,7 @@ std::vector<double> Auswertung(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, pcl::P
             std::cout << "zw_er=" << zw_er << std::endl;
         }
     }
-    erg_abw_x = sqrt(zw_er / (step - 1));
+    erg_abw_x = 2*sqrt(zw_er / (step - 1));
    
 
     //------------------------------------------------Berechnung der breite y und dessen Stand.abweichung------------------------------------------------------------------------------------
@@ -210,7 +209,7 @@ std::vector<double> Auswertung(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, pcl::P
     viewer1_y.addCoordinateSystem(100.0, "cloud", 0);
     viewer1_y.setBackgroundColor(255, 255, 255, 0); // Setting background to a dark grey
     viewer1_y.setSize(475, 475);
-    viewer1_y.setPosition(475, 507);
+    viewer1_y.setPosition(478, 507);
     viewer1_y.setWindowName("Anzeige Auswertung Breite des Steins");
 
     for (int i = 0; i * aufloesung < grenz_y_max ; i++)
@@ -244,21 +243,21 @@ std::vector<double> Auswertung(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, pcl::P
         }
 
 
-        if ((abs(erg_mess_y - erg_soll_y) * 100) / erg_soll_y > defect)
+        if (abs(erg_mess_y - erg_soll_y)  > gut_b*2)
         {
             pcl::visualization::PointCloudColorHandlerCustom<pcl::PointXYZ> transformed_cloud_color_y(cloud_fl_mess_y, 230, 20, 20); // Red
             viewer1_y.addPointCloud(cloud_fl_mess_y, transformed_cloud_color_y, "transformed_cloudd" + std::to_string(count_defect_y));
             viewer1_y.setPointCloudRenderingProperties(pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 2, "transformed_cloudd" + std::to_string(count_defect_y));
             count_defect_y++;
         }
-        else if ((abs(erg_mess_y - erg_soll_y) * 100) / erg_soll_y > gut)
+        else if (abs(erg_mess_y - erg_soll_y) > gut_b)
         {
             pcl::visualization::PointCloudColorHandlerCustom<pcl::PointXYZ> transformed_cloud_color_y(cloud_fl_mess_y, 255, 165, 79); // gelb
             viewer1_y.addPointCloud(cloud_fl_mess_y, transformed_cloud_color_y, "transformed_cloudm" + std::to_string(count_mangel_y));
             viewer1_y.setPointCloudRenderingProperties(pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 2, "transformed_cloudm" + std::to_string(count_mangel_y));
             count_mangel_y++;
         }
-        else if ((abs(erg_mess_y - erg_soll_y) * 100) / erg_soll_y < gut)
+        else if (abs(erg_mess_y - erg_soll_y) < gut_b)
         {
             pcl::visualization::PointCloudColorHandlerCustom<pcl::PointXYZ> transformed_cloud_color_y(cloud_fl_mess_y, 0, 100, 0); // grün
             viewer1_y.addPointCloud(cloud_fl_mess_y, transformed_cloud_color_y, "transformed_cloudg" + std::to_string(count_gut_y));
@@ -289,7 +288,7 @@ std::vector<double> Auswertung(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, pcl::P
             step++;
         }
     }
-    erg_abw_y = sqrt(zw_er_y / (step -1));
+    erg_abw_y =2* sqrt(zw_er_y / (step -1));
 
     std::cout << "gemessener mittelwert =" << erg_mess_mittel_y << "   die abweichung ist=" << abw_mitt_y << "   dessen stand.abw ist =" << erg_abw_y << std::endl;
 
@@ -315,7 +314,7 @@ std::vector<double> Auswertung(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, pcl::P
 
 
 
-
+    int grenz_ok = 95;
 
 
     ret[3] = erg_mess_mittel_x;
@@ -340,7 +339,105 @@ std::vector<double> Auswertung(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, pcl::P
     ret[18] = stand_abw_h;
     ret[19] = erg_abw_x;
     ret[20] = erg_abw_y;
+    ret[21] = 1;
+
+    if (((count_gut / counter) * 100) < grenz_ok) {
+        ret[21] = 0;
+    }
+    if (((count_gut_y / counter_y)) * 100 < grenz_ok) {
+        ret[21] = 0;
+    }
+    if (((count_gut_h / counter_h)*100) < grenz_ok) {
+        ret[21] = 0;
+    }
+    if(((count_defect / counter) * 100) >100-grenz_ok) {
+        ret[21] = 0;
+    }
+    if (((count_defect_y / counter_y) * 100 )> 100 - grenz_ok) {
+        ret[21] = 0;
+    }
+    if (((count_defect_h / counter_h) * 100 )> 100 - grenz_ok) {
+        ret[21] = 0;
+    }
+
     return(ret);
 
 
+}
+
+
+
+void stein_position(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud,std::string dat) {
+   
+
+    typedef struct points_txt
+    {
+        float x;  //mm world coordinate x
+        float y;  //mm world coordinate y
+        float z;  //mm world coordinate z
+
+
+
+    }POINT_WORLD;
+    points_txt TxtPoint;
+    std::vector<points_txt> vec_TxtPoints;
+
+
+    float grenz_h = cloud->points[min_max(cloud, "max", "index", "z")].z;
+
+    cloud = flaechen_filter(cloud, grenz_h / 2, "z", grenz_h);
+
+    int min_y = min_max(cloud, "min", "index", "y");
+    int max_y = min_max(cloud, "max", "index", "y");
+
+    float mitte = ((cloud->points[max_y].y - cloud->points[min_y].y) / 2);
+
+    pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_fl_unten = flaechen_filter(cloud, cloud->points[min_y].y, "y", mitte);
+    pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_fl_oben = flaechen_filter(cloud, cloud->points[min_y].y + mitte, "y", mitte);
+
+    float oben_min_x = cloud_fl_oben->points[min_max(cloud_fl_oben, "min", "index", "x")].x;
+    float unten_min_x = cloud_fl_unten->points[min_max(cloud_fl_unten, "min", "index", "x")].x;
+    int index = 0;
+    if (oben_min_x < unten_min_x) {// links
+
+        index = min_max(cloud, "min", "index", "y");
+        TxtPoint.x = cloud->points[index].x; TxtPoint.y = cloud->points[index].y; TxtPoint.z = cloud->points[index].z;
+        vec_TxtPoints.push_back(TxtPoint);
+        index = min_max(cloud, "max", "index", "x");
+        TxtPoint.x = cloud->points[index].x; TxtPoint.y = cloud->points[index].y; TxtPoint.z = cloud->points[index].z;
+        vec_TxtPoints.push_back(TxtPoint);
+         index = min_max(cloud, "min", "index", "x");
+        TxtPoint.x = cloud->points[index].x; TxtPoint.y = cloud->points[index].y; TxtPoint.z = cloud->points[index].z;
+        vec_TxtPoints.push_back(TxtPoint);
+        index = min_max(cloud, "max", "index", "y");
+        TxtPoint.x = cloud->points[index].x; TxtPoint.y = cloud->points[index].y; TxtPoint.z = cloud->points[index].z;
+        vec_TxtPoints.push_back(TxtPoint);
+
+    }
+    if (oben_min_x > unten_min_x) {//rechts
+         index = min_max(cloud, "min", "index", "x");
+        TxtPoint.x = cloud->points[index].x; TxtPoint.y = cloud->points[index].y; TxtPoint.z = cloud->points[index].z;
+        vec_TxtPoints.push_back(TxtPoint);
+        index = min_max(cloud, "min", "index", "y");
+        TxtPoint.x = cloud->points[index].x; TxtPoint.y = cloud->points[index].y; TxtPoint.z = cloud->points[index].z;
+        vec_TxtPoints.push_back(TxtPoint);
+         index = min_max(cloud, "max", "index", "y");
+        TxtPoint.x = cloud->points[index].x; TxtPoint.y = cloud->points[index].y; TxtPoint.z = cloud->points[index].z;
+        vec_TxtPoints.push_back(TxtPoint);
+        index = min_max(cloud, "max", "index", "x");
+        TxtPoint.x = cloud->points[index].x; TxtPoint.y = cloud->points[index].y; TxtPoint.z = cloud->points[index].z;
+        vec_TxtPoints.push_back(TxtPoint);
+    }
+
+
+    
+    std::string ort = ("C:/Users/tobia/Desktop/Masterarbeit_Qualitätskontrolle_Passsteinautomat/Point_Clouds/Positions_Daten/" + dat + "_position.txt");
+    std::fstream file;
+     file.open(ort.c_str(),std::ios::out);
+     for (int i = 0; i < vec_TxtPoints.size(); i++) {
+
+         file<< vec_TxtPoints[i].x <<"  "<< vec_TxtPoints[i].y << "  " << vec_TxtPoints[i].z << std::endl;
+
+     }
+     file.close();
 }

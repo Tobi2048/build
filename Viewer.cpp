@@ -2,7 +2,7 @@
 
 
 
-void visual_app_soll(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud)
+void view_soll(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud)
 {
     //--------------------------------------------------------------------------zeigt die punktwolke an -------------------------------
     pcl::visualization::PCLVisualizer viewer("Matrix transformation example");
@@ -25,7 +25,7 @@ void visual_app_soll(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud)
 
     }
 }
-void visual_app_mess(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud)
+void view_mess(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud)
 {
 
     //--------------------------------------------------------------------------zeigt die punktwolke an -------------------------------

@@ -5,5 +5,5 @@
 
 
 #ifndef DEBUG
-std::vector<std::string> Manager(char anw, std::string , double aufloesung, double gut);
+std::vector<std::string> Manager(char anw, std::string , double aufloesung, std::vector<float> &);
 #endif

@@ -26,6 +26,6 @@
 
 
 
-std::vector<double> Auswertung(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_mess, pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_soll, double aufloesung, double gut);
+std::vector<double> auswerten(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_mess, pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_soll, double aufloesung, std::vector<float> &);
 
-
+void stein_position(pcl::PointCloud<pcl::PointXYZ>::Ptr , std::string );

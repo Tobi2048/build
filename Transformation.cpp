@@ -5,7 +5,7 @@
 
 
 
-pcl::PointCloud<pcl::PointXYZ>::Ptr ausrichten_stein(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud,float soll_breite)
+pcl::PointCloud<pcl::PointXYZ>::Ptr ausrichten_stein(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud)
 {
     int count = 1;
     float theta = 0;
@@ -93,7 +93,7 @@ pcl::PointCloud<pcl::PointXYZ>::Ptr ausrichten_stein(pcl::PointCloud<pcl::PointX
 
 
 
-pcl::PointCloud<pcl::PointXYZ>::Ptr ausrichten_cloud(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_mess) {
+pcl::PointCloud<pcl::PointXYZ>::Ptr ausrichten(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_mess) {
     float z_start = 0;
     z_start = cloud_mess->points[min_max(cloud_mess, "min", "index", "z")].z;
     pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_fl = flaechen_filter(cloud_mess, z_start, "z", 0.3);
