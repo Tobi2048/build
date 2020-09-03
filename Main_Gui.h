@@ -1,9 +1,4 @@
-#pragma once
-#ifdef _DEBUG
-#define DEBUG
-#endif
 
-#ifndef DEBUG
 void AddControls(HWND hwnd);//prototyp
 void AddListboxs(HWND hwnd);
 void AddText(HWND hwnd);
@@ -128,7 +123,7 @@ void AddText(HWND hwnd) {
 	gutb_h = CreateWindow("Edit", " 3 ", WS_VISIBLE | WS_CHILD | ES_CENTER | WS_BORDER, x + 120, y + 270, 120, 20, hwnd, 0, 0, 0);
 
 	CreateWindow("Static", " Eingabe der geforderten Auflösung \n Wertebereich (0-1) ", WS_VISIBLE | WS_CHILD | ES_CENTER, 25, y + 210, 200, 80, hwnd, 0, 0, 0);
-	aufl= CreateWindow("Edit", " 0.4", WS_VISIBLE | WS_CHILD | ES_CENTER | WS_BORDER|ES_CENTER, 225, y + 210, 121, 80, hwnd, 0, 0, 0);
+	aufl= CreateWindow("Edit", " 0.3", WS_VISIBLE | WS_CHILD | ES_CENTER | WS_BORDER|ES_CENTER, 225, y + 210, 121, 80, hwnd, 0, 0, 0);
 
 	int x_start =25;
 	tabx = 109;
@@ -177,4 +172,3 @@ void AddText(HWND hwnd) {
 	CreateWindow("Static", "Der Stein ist : ", WS_VISIBLE | WS_CHILD | ES_CENTER, 428, 620, 150, 50, hwnd, 0, 0, 0);
 	auswertung = CreateWindow("Static", " ", WS_VISIBLE | WS_CHILD | ES_CENTER | WS_BORDER, 578, 620, 150, 50, hwnd, 0, 0, 0);
 }
-#endif

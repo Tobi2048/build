@@ -1,5 +1,8 @@
 #include"Mathe.h"
 #include"viewer.h"
+#include <pcl/io/pcd_io.h>
+#include <pcl/point_types.h>
+#include <pcl/common/time.h>
 
 int min_max(pcl::PointCloud<pcl::PointXYZ>::Ptr cl_in, std::string anw, std::string var , std::string achse ) {
     //std::cout << cl_in->points.size() << std::endl;
@@ -56,4 +59,48 @@ float mittel_wert(std::vector<float>&vec) {
         
     }
     return(zw_wert / vec.size());
+}
+
+float min_max_cloud(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, std::string anw, std::string achse) {
+    float min_x = cloud->points[0].x, min_y = cloud->points[0].y, min_z = cloud->points[0].z, max_x = cloud->points[0].x, max_y = cloud->points[0].y, max_z = cloud->points[0].z;
+    
+    for (size_t i = 1; i < cloud->points.size(); ++i) {
+        if (cloud->points[i].x <= min_x)
+            min_x = cloud->points[i].x;
+        else if (cloud->points[i].y <= min_y)
+            min_y = cloud->points[i].y;
+        else if (cloud->points[i].z <= min_z)
+            min_z = cloud->points[i].z;
+        else if (cloud->points[i].x >= max_x)
+            max_x = cloud->points[i].x;
+        else if (cloud->points[i].y >= max_y)
+            max_y = cloud->points[i].y;
+        else if (cloud->points[i].z >= max_z)
+            max_z = cloud->points[i].z;
+    }
+    
+    if (achse == "x") {
+        if (anw == "min") {
+            return (min_x);
+        }
+        if (anw == "max") {
+            return (max_x);
+        }
+    }
+    if (achse == "y") {
+        if (anw == "min") {
+            return (min_y);
+        }
+        if (anw == "max") {
+            return (max_y);
+        }
+    }
+    if (achse == "z") {
+        if (anw == "min") {
+            return (min_z);
+        }
+        if (anw == "max") {
+            return (max_z);
+        }
+    }
 }

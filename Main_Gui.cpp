@@ -1,6 +1,10 @@
 #ifdef _DEBUG
 #define DEBUG
 #endif
+//#define ausw
+#ifdef ausw
+#define DEBUG
+#endif
 #ifndef DEBUG
 #include <windows.h>
 #include<stdlib.h>

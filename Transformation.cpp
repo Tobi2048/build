@@ -42,7 +42,7 @@ pcl::PointCloud<pcl::PointXYZ>::Ptr ausrichten_stein(pcl::PointCloud<pcl::PointX
         float oben_min_x = cloud_fl_oben->points[min_x_oben].x;
         float unten_min_x = cloud_fl_unten->points[min_x_unten].x;
 
-
+       
 
         while (bool abrfrage = oben_min_x != unten_min_x)
         {
@@ -70,16 +70,27 @@ pcl::PointCloud<pcl::PointXYZ>::Ptr ausrichten_stein(pcl::PointCloud<pcl::PointX
 
 
 
-        int min_y_a = min_max(cloud, "min", "index", "y");
-        int min_x_a = min_max(cloud, "min", "index", "x");
-        if (cloud->points[min_y_a].y != 0 || cloud->points[min_x_a].x != 0) {
+        float min_y_a = min_max_cloud(cloud, "min", "y");
+        float min_x_a = min_max_cloud(cloud, "min", "x");
+        if (min_y_a != 0 ){
 
             Eigen::Affine3f transform_to_0 = Eigen::Affine3f::Identity();
-            transform_to_0.translation() << -cloud->points[min_x_a].x, -cloud->points[min_y_a].y, 0;
+            transform_to_0.translation() << 0, -min_y_a, 0;
             pcl::transformPointCloud(*cloud, *cloud, transform_to_0);
             //       pcl::transformPointCloud(*cloud_fl, *cloud_fl, transform_to_0);
 
         }
+        if (min_x_a != 0) {
+
+            Eigen::Affine3f transform_to_0 = Eigen::Affine3f::Identity();
+            transform_to_0.translation() << -min_x_a, 0, 0;
+            pcl::transformPointCloud(*cloud, *cloud, transform_to_0);
+            //       pcl::transformPointCloud(*cloud_fl, *cloud_fl, transform_to_0);
+
+        }
+        min_y_a = min_max_cloud(cloud, "min", "y");
+        min_x_a = min_max_cloud(cloud, "min", "x");
+        std::cout << min_x_a << " x min und min y " << min_y_a << std::endl;
     }
     return(cloud);
     
