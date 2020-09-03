@@ -1,7 +1,7 @@
 #ifdef _DEBUG
 #define DEBUG
 #endif
-//#define ausw
+#define ausw
 #ifdef ausw
 #define DEBUG
 #endif

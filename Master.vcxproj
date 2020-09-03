@@ -166,7 +166,7 @@
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <ImportLibrary>C:/Users/tobia/Desktop/Masterarbeit_Qualitätskontrolle_Passsteinautomat/build/Release/Master.lib</ImportLibrary>
       <ProgramDataBaseFile>C:/Users/tobia/Desktop/Masterarbeit_Qualitätskontrolle_Passsteinautomat/build/Release/Master.pdb</ProgramDataBaseFile>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
     </Link>
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>

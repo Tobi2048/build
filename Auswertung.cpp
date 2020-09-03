@@ -22,12 +22,13 @@
 std::vector<double> auswerten(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_solll, double aufloesung, std::vector<float>& üb_ab)
 {
    
+   
     pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_soll = cloud_solll;
     float gut_l = üb_ab[0], gut_b = üb_ab[1], gut_h = üb_ab[2];
     std::vector<double> ret(24);
 
 
-    float erg_soll_h = cloud_soll->points[min_max(cloud_soll, "max", "index", "z")].z;
+    float erg_soll_h = min_max(cloud_soll, "max", "elem", "z");
 
     float count_gut_h = 0;
     float count_mangel_h = 0;
@@ -36,13 +37,8 @@ std::vector<double> auswerten(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, pcl::Po
     std::vector<float> vec_h;
     std::vector<float> vec_h_mitt;
     float hoehe_mittel = 0;
-    for (int i = 0; i < cloud->points.size(); i++)
+    for (int i = 0; i < cloud->size(); i++)
     {
-
-        if (erg_soll_h == 0) {
-            erg_soll_h = 0.001;
-        }
-
 
         if (abs(cloud->points[i].z - erg_soll_h) > gut_h * 2)
         {
@@ -66,13 +62,15 @@ std::vector<double> auswerten(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, pcl::Po
 
     double v = 0;
     float mitt_abw_h = mittel_wert(vec_h);
-    for (int i = 0; i < vec_h.size(); i++) {
-        v = v + ((vec_h[i] - mitt_abw_h) * (vec_h[i] - mitt_abw_h));
+    for (int i = 0; i < vec_h_mitt.size(); i++) {
+        v = v + ((vec_h_mitt[i] - hoehe_mittel) * (vec_h_mitt[i] - hoehe_mittel));
     }
-    float stand_abw_h = 2 * sqrt(v / (vec_h.size() - 1));
+
+
+    float stand_abw_h = 2 * sqrt(v /( vec_h_mitt.size() - 1));
     // std::cout << " Soll =" << erg_soll_h << "  ´gemessener mittelwert =" << hoehe_mittel << "   die abweichung ist=" << mitt_abw_h << "   dessen stand.abw ist =" << stand_abw_h << std::endl;
     std::cout << " höhe fertig" << std::endl;
-    pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_mess = flaechen_filter(cloud, hoehe_mittel - (gut_h / 2), "z", gut_h * 1.2);
+    pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_mess = flaechen_filter(cloud, hoehe_mittel - (gut_h / 2), "z", gut_h * 1.4);
    
     //------------------------------------------------------------------------------------------------------------------------------------------auswertung der Breite _________________------------------------------------------
 #ifdef DEBUG
@@ -82,12 +80,13 @@ std::vector<double> auswerten(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, pcl::Po
     file1.open(ort.c_str(), std::ios::out | std::ifstream::app);
 #endif
    
-    float grenz_x_soll = cloud_soll->points[min_max(cloud_soll, "max", "index", "x")].x;
-    float start_x_soll = cloud_soll->points[min_max(cloud_soll, "min", "index", "x")].x;
-    float grenz_x_mess_alt = cloud_mess->points[min_max(cloud_mess, "max", "index", "x")].x;
-    float grenz_x_mess = min_max_cloud(cloud_mess, "max", "x");
-    float start_x_mess = min_max_cloud(cloud_mess, "min", "x");
-    std::cout <<grenz_x_mess_alt<<"alt   neu" <<grenz_x_mess << "  mess grenzen soll " << grenz_x_soll << std::endl;
+    float grenz_x_soll = min_max(cloud_soll, "max", "elem", "x");
+    float start_x_soll = min_max(cloud_soll, "min", "elem", "x");
+    
+    float grenz_x_mess = min_max(cloud_mess, "max", "elem", "x");
+    float start_x_mess = min_max(cloud_mess, "min", "elem", "x");
+    
+    std::cout <<"alt   neu" <<grenz_x_mess << "  mess grenzen soll " << grenz_x_soll << std::endl;
     std::cout <<start_x_mess << "  mess grenzen soll " << start_x_soll << std::endl;
     float counter_mess = 0;
     float count_gut = 0;
@@ -119,7 +118,7 @@ std::vector<double> auswerten(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, pcl::Po
     {
         cloud_fl_mess = flaechen_filter(cloud_mess, (start_x_mess + aufloesung * (i)), "x", aufloesung * 2);
         if (!cloud_fl_mess->empty()) {
-            erg_mess = min_max_cloud(cloud_fl_mess, "max", "y") - min_max_cloud(cloud_fl_mess, "min", "y");
+            erg_mess = min_max(cloud_fl_mess, "max","elem", "y") - min_max(cloud_fl_mess, "min","elem" ,"y");
         }
         else
             erg_mess = 0.0001;
@@ -215,8 +214,8 @@ std::vector<double> auswerten(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, pcl::Po
     float grenz_y_soll = cloud_soll->points[min_max(cloud_soll, "max", "index", "y")].y;
     float start_y_soll = cloud_soll->points[min_max(cloud_soll, "min", "index", "y")].y;
 
-    float grenz_y_mess = min_max_cloud(cloud_mess, "max", "y");
-    float start_y_mess = min_max_cloud(cloud_mess, "min", "y");
+    float grenz_y_mess = min_max(cloud_mess, "max","elem", "y");
+    float start_y_mess = min_max(cloud_mess, "min","elem" ,"y");
     std::cout << grenz_y_mess << "  mess grenzen soll " << grenz_y_soll << std::endl;
     std::cout << start_y_mess << "  mess grenzen soll " << start_y_soll << std::endl;
     float counter_mess_y = 0;
@@ -246,7 +245,7 @@ std::vector<double> auswerten(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, pcl::Po
     {
         cloud_fl_mess = flaechen_filter(cloud_mess, (start_y_mess + aufloesung * (i)), "y", aufloesung * 2);
         if (!cloud_fl_mess->empty()) {
-            erg_messy = min_max_cloud(cloud_fl_mess, "max", "x") - min_max_cloud(cloud_fl_mess, "min", "x");
+            erg_messy = min_max(cloud_fl_mess, "max","elem" ,"x") - min_max(cloud_fl_mess, "min","elem", "x");
         }
         else
             erg_messy = 0.0001;
@@ -289,8 +288,8 @@ std::vector<double> auswerten(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, pcl::Po
         {
 #ifndef DEBUG
             pcl::visualization::PointCloudColorHandlerCustom<pcl::PointXYZ> transformed_cloud_color_(cloud_fl_mess, 230, 20, 20); // Red
-            viewer1.addPointCloud(cloud_fl_mess, transformed_cloud_color_, "transformed_cloudd" + std::to_string(count_defect));
-            viewer1.setPointCloudRenderingProperties(pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 2, "transformed_cloudd" + std::to_string(count_defect));
+            viewer1.addPointCloud(cloud_fl_mess, transformed_cloud_color_, "transformed_clouddd" + std::to_string(count_defect_y));
+            viewer1.setPointCloudRenderingProperties(pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 2, "transformed_clouddd" + std::to_string(count_defect_y));
 #endif
             count_defect_y++;
         }
@@ -298,8 +297,8 @@ std::vector<double> auswerten(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, pcl::Po
         {
 #ifndef DEBUG
             pcl::visualization::PointCloudColorHandlerCustom<pcl::PointXYZ> transformed_cloud_color_(cloud_fl_mess, 255, 165, 79); // gelb
-            viewer1.addPointCloud(cloud_fl_mess, transformed_cloud_color_, "transformed_cloudm" + std::to_string(count_mangel));
-            viewer1.setPointCloudRenderingProperties(pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 2, "transformed_cloudm" + std::to_string(count_mangel));
+            viewer1.addPointCloud(cloud_fl_mess, transformed_cloud_color_, "transformed_cloudmm" + std::to_string(count_mangel_y));
+            viewer1.setPointCloudRenderingProperties(pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 2, "transformed_cloudmm" + std::to_string(count_mangel_y));
 #endif
             count_mangel_y++;
         }
@@ -307,8 +306,8 @@ std::vector<double> auswerten(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, pcl::Po
         {
 #ifndef DEBUG
             pcl::visualization::PointCloudColorHandlerCustom<pcl::PointXYZ> transformed_cloud_color_(cloud_fl_mess, 0, 100, 0); // grün
-            viewer1.addPointCloud(cloud_fl_mess, transformed_cloud_color_, "transformed_cloudg" + std::to_string(count_gut));
-            viewer1.setPointCloudRenderingProperties(pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 2, "transformed_cloudg" + std::to_string(count_gut));
+            viewer1.addPointCloud(cloud_fl_mess, transformed_cloud_color_, "transformed_cloudgg" + std::to_string(count_gut_y));
+            viewer1.setPointCloudRenderingProperties(pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 2, "transformed_cloudgg" + std::to_string(count_gut_y));
 #endif
             count_gut_y++;
         }
@@ -386,8 +385,8 @@ std::vector<double> auswerten(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, pcl::Po
         ret[21] = 0;
     }
 
-    return(ret);
-#ifndef DEBUG
+    
+#ifdef DEBUG
 
     while (!viewer1.wasStopped())
     { // Display the visualiser until 'q' key is pressed
@@ -402,6 +401,7 @@ std::vector<double> auswerten(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, pcl::Po
          // viewer2.close();
     }
 #endif
+return(ret);
 }
 void stein_position(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, std::string dat) {
 
