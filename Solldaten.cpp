@@ -6,12 +6,7 @@
 pcl::PointCloud<pcl::PointXYZ>::Ptr sollstein_erstellen(double aufloesung ,std::string dat)
 {//------------------------------------------------------------------------------------------solldaten eckpunkte laden---------------------------------------
 	pcl::PointCloud<pcl::PointXYZ>::Ptr point_cloud(new pcl::PointCloud<pcl::PointXYZ>);
-	if (aufloesung > 0.1)
-		aufloesung = 0.1;
-	else
-	{
-		aufloesung = 0.01;
-	}
+	
 	
 	int number_Txt;
 	FILE* fp_txt;

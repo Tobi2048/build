@@ -11,4 +11,5 @@
 #include <pcl/io/pcd_io.h>
 
 float min_max(pcl::PointCloud<pcl::PointXYZ>::Ptr cl_in, std::string anw, std::string var = " h", std::string achse = " h");
+float min_maxx(pcl::PointCloud<pcl::PointXYZ>::Ptr cl_in, std::string anw, std::string var = " h", std::string achse = " h");
 float mittel_wert(std::vector<float>& vec);
