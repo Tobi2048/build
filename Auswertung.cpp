@@ -1,5 +1,3 @@
-#define ausw
-
 
 #include"Auswertung.h"
 #include"Transformation.h"
@@ -10,7 +8,7 @@
 #include<vector>
 #include <iostream>
 #include<fstream>
-
+//#define ausw
 #ifdef _DEBUG
 #define DEBUG
 #endif
@@ -23,7 +21,7 @@ std::vector<double> auswerten(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, pcl::Po
 {
     int zaheler = 0;
     std::cout << zaheler++ << std::endl;
-   
+    aufloesung = 1;
     pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_soll = cloud_solll;
     float gut_l = üb_ab[0], gut_b = üb_ab[1], gut_h = üb_ab[2];
     std::vector<double> ret(24);
@@ -70,13 +68,13 @@ std::vector<double> auswerten(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, pcl::Po
 
     float stand_abw_h = 2 * sqrt(v /( vec_h_mitt.size() - 1));
     
-    pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_mess = flaechen_filter(cloud, hoehe_mittel - (gut_h / 2), "z", gut_h * 1.4);
+    pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_mess = flaechen_filter(cloud, hoehe_mittel - (gut_h / 2), "z", gut_h * 1.6);
    
     //------------------------------------------------------------------------------------------------------------------------------------------auswertung der Breite _________________------------------------------------------
-#ifndef DEBUG
+#ifdef DEBUG
     std::fstream file1;
     std::string ort = " ";
-    ort = ("C:/Users/tobia/Desktop/Masterarbeit_Qualitätskontrolle_Passsteinautomat/Auswertung/scheibchen/stein_A_erg_b.txt");
+    ort = ("C:/Users/tobia/Desktop/Masterarbeit_Qualitätskontrolle_Passsteinautomat/Auswertung/scheibchen/Stein_B_breite_schl.txt");
     file1.open(ort.c_str(), std::ios::out | std::ifstream::app);
 #endif
     std::cout << zaheler++ << std::endl;
@@ -123,7 +121,7 @@ std::vector<double> auswerten(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, pcl::Po
     for (int i = 0; i < grenz_x / aufloesung; i++)
     {
         if (i < grenz_x_mess / aufloesung) {
-            cloud_fl_mess = flaechen_filter(cloud_mess, (start_x_mess + aufloesung * (i)), "x", aufloesung * 2);
+            cloud_fl_mess = flaechen_filter(cloud_mess, (start_x_mess + aufloesung * (i)), "x", aufloesung );
             
             if (!cloud_fl_mess->empty()) {
                 erg_mess = min_max(cloud_fl_mess, "max", "elem", "y") - min_max(cloud_fl_mess, "min", "elem", "y");
@@ -134,13 +132,12 @@ std::vector<double> auswerten(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, pcl::Po
             vec_mess_x.push_back(erg_mess);
         }else
             erg_mess = 0.0001;
-        if (i == 188)
-            std::cout << "bla";
+        
     
 
         if (i < grenz_x_soll / aufloesung)
         {
-            cloud_fl_soll = flaechen_filter(cloud_soll, (start_x_soll + aufloesung * (i)), "x", aufloesung * 1.5);
+            cloud_fl_soll = flaechen_filter(cloud_soll, (start_x_soll + aufloesung * (i)), "x", aufloesung );
             erg_soll = min_max(cloud_fl_soll, "max", "elem", "y") - min_max(cloud_fl_soll, "min", "elem", "y");
             vec_soll_x.push_back(erg_soll);
         }
@@ -148,7 +145,7 @@ std::vector<double> auswerten(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, pcl::Po
             erg_soll= 0.0001;
         vec_abw_x.push_back(abs(erg_mess - erg_soll));
 
-#ifndef DEBUG
+#ifdef DEBUG
         file1 << std::to_string(i * aufloesung) << "  " << std::to_string(erg_soll) <<"  " << std::to_string(erg_mess) << std::endl;
 #endif
         if (abs(erg_soll - erg_mess) > gut_l * 2)
@@ -182,7 +179,7 @@ std::vector<double> auswerten(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, pcl::Po
 
     }
     std::cout << zaheler++ << std::endl;
-#ifndef DEBUG
+#ifdef DEBUG
     file1.close();
 #endif
     float erg_mess_mittel_x = mittel_wert(vec_mess_x);
@@ -201,10 +198,10 @@ std::vector<double> auswerten(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, pcl::Po
     erg_sabw_x = 2 * sqrt(zw_er / (step - 1));
     std::cout << zaheler++ << std::endl;
   //--------------------------------------------------------------------------------------------------länge---------------------------------------------------------------------------
-#ifndef DEBUG
+#ifdef DEBUG
     
      ort = " ";
-    ort = ("C:/Users/tobia/Desktop/Masterarbeit_Qualitätskontrolle_Passsteinautomat/Auswertung/scheibchen/stein_A_erg_l.txt");
+    ort = ("C:/Users/tobia/Desktop/Masterarbeit_Qualitätskontrolle_Passsteinautomat/Auswertung/scheibchen/Stein_B_laenge_schl.txt");
     file1.open(ort.c_str(), std::ios::out | std::ifstream::app);
 #endif
     float grenz_y_soll = cloud_soll->points[min_max(cloud_soll, "max", "index", "y")].y;
@@ -238,6 +235,7 @@ std::vector<double> auswerten(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, pcl::Po
     viewer1_y.setSize(475, 475);
     viewer1_y.setPosition(478, 507);
     viewer1_y.setWindowName("Anzeige Auswertung Breite des Steins");
+   
 #endif
   
     pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_fl_soll_y(new pcl::PointCloud<pcl::PointXYZ>);
@@ -246,7 +244,7 @@ std::vector<double> auswerten(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, pcl::Po
     for (int i = 0; i < grenz_y / aufloesung; i++)
     {
         if (i < grenz_y_mess / aufloesung) {
-            cloud_fl_mess_y = flaechen_filter(cloud_mess, (start_y_mess + aufloesung * (i)), "y", aufloesung * 2);
+            cloud_fl_mess_y = flaechen_filter(cloud_mess, (start_y_mess + aufloesung * (i)), "y", aufloesung );
             if (!cloud_fl_mess_y->empty()) {
                 erg_mess_y = min_max(cloud_fl_mess_y, "max", "elem", "x") - min_max(cloud_fl_mess_y, "min", "elem", "x");
             }
@@ -262,7 +260,7 @@ std::vector<double> auswerten(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, pcl::Po
 
         if (i < grenz_y_soll / aufloesung)
         {
-            cloud_fl_soll_y = flaechen_filter(cloud_soll, (start_y_soll + aufloesung * (i)), "y", aufloesung * 1.5);
+            cloud_fl_soll_y = flaechen_filter(cloud_soll, (start_y_soll + aufloesung * (i)), "y", aufloesung );
             erg_soll_y = min_max(cloud_fl_soll_y, "max", "elem", "x") - min_max(cloud_fl_soll_y, "min", "elem", "x");
             vec_soll_y.push_back(erg_soll_y);
         }
@@ -270,7 +268,7 @@ std::vector<double> auswerten(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, pcl::Po
             erg_soll_y = 0.0001;
         vec_abw_y.push_back(abs(erg_mess_y - erg_soll_y));
 
-#ifndef DEBUG
+#ifdef DEBUG
         file1 << std::to_string(i * aufloesung) << "  " << std::to_string(erg_soll_y) << "  " << std::to_string(erg_mess_y) << std::endl;
 #endif
 
@@ -306,7 +304,7 @@ std::vector<double> auswerten(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, pcl::Po
 
     }
     std::cout << zaheler++ << std::endl;
-#ifndef DEBUG
+#ifdef DEBUG
     file1.close();
 #endif
  
@@ -326,7 +324,7 @@ std::vector<double> auswerten(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, pcl::Po
     erg_sabw_y = 2 * sqrt(zw_ery / (stepy - 1));
     std::cout << zaheler++ << std::endl;
 
-#ifndef DEBUG
+#ifdef DEBUG
 
     while (!viewer1.wasStopped())
     { // Display the visualiser until 'q' key is pressed
@@ -350,7 +348,7 @@ std::vector<double> auswerten(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, pcl::Po
     std::cout << erg_mess_mittel_x << "    " << erg_mess_mittel_y << "    " << hoehe_mittel  << "    "<<std::endl;
     ret[3] = erg_mess_mittel_x;
     ret[4] = erg_mess_mittel_y;
-    ret[5] = hoehe_mittel;
+    ret[5] = hoehe_mittel ;
 
     ret[6] = abw_mitt_x;
     ret[7] = abw_mitt_y;

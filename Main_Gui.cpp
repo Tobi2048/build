@@ -1,7 +1,7 @@
 #ifdef _DEBUG
 #define DEBUG
 #endif
-#define ausw
+//#define ausw
 #ifdef ausw
 #define DEBUG
 #endif
@@ -103,51 +103,95 @@ LRESULT CALLBACK MessageHandler(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 	switch (uMsg) {
 	case WM_COMMAND:
 		switch (LOWORD(wParam)) {
-	
+			SendMessage(list_mess, LB_ADDSTRING, 0, (LPARAM)"A_gut_1");
+			SendMessage(list_mess, LB_ADDSTRING, 0, (LPARAM)"A_gut_2");
+			SendMessage(list_mess, LB_ADDSTRING, 0, (LPARAM)"A_gut_r_3");
+			SendMessage(list_mess, LB_ADDSTRING, 0, (LPARAM)"A_gut_r_4");
+			SendMessage(list_mess, LB_ADDSTRING, 0, (LPARAM)"A_gut_5");
+			SendMessage(list_mess, LB_ADDSTRING, 0, (LPARAM)"A_gut_6");
+			SendMessage(list_mess, LB_ADDSTRING, 0, (LPARAM)"A_schlecht_1");
+			SendMessage(list_mess, LB_ADDSTRING, 0, (LPARAM)"A_schlecht_2");
+			SendMessage(list_mess, LB_ADDSTRING, 0, (LPARAM)"A_schlecht_3");
+			SendMessage(list_mess, LB_ADDSTRING, 0, (LPARAM)"A_schlecht_4");
+			SendMessage(list_mess, LB_ADDSTRING, 0, (LPARAM)"A_schlecht_form");
+			SendMessage(list_mess, LB_ADDSTRING, 0, (LPARAM)"B_gut_1");
+			SendMessage(list_mess, LB_ADDSTRING, 0, (LPARAM)"B_gut_2");
+			SendMessage(list_mess, LB_ADDSTRING, 0, (LPARAM)"B_schlecht_1");
+			SendMessage(list_mess, LB_ADDSTRING, 0, (LPARAM)"C_gut_1");
+			SendMessage(list_mess, LB_ADDSTRING, 0, (LPARAM)"C_gut_2");
+			SendMessage(list_mess, LB_ADDSTRING, 0, (LPARAM)"C_schlecht_1");
+			SendMessage(list_mess, LB_ADDSTRING, 0, (LPARAM)"C_schlecht_2");
 			
 		case button_id_open_mess:
 			if (SendMessage(list_mess, LB_GETSEL, 0, 0) > 0) {
-				datn = "1_A_gut";
+				datn = "A_gut_1";
 		
 			}
 			else if (SendMessage(list_mess, LB_GETSEL, 1, 0) > 0) {
-				datn = "2_A_schlecht";
+
+				datn = "A_gut_2";
 			
 			}
 			else if (SendMessage(list_mess, LB_GETSEL, 2, 0) > 0) {
-				datn = "3_A_schlecht";
-			
+				datn = "A_gut_3";
+
 			}
 			else if (SendMessage(list_mess, LB_GETSEL, 3, 0) > 0) {
-				datn = "4_A_gut";
+				datn = "A_gut_r_1";
 			
 			}
-			else if (SendMessage(list_mess, LB_GETSEL, 4, 0) > 0) {
-				datn = "5_A_schlecht_form";
+			else if (SendMessage(list_mess, LB_GETSEL,4, 0) > 0) {
+				datn = "A_gut_r_2";
 			
 			}
-			else if (SendMessage(list_mess, LB_GETSEL, 5, 0) > 0) {
-				datn = "6_B_gut";
+		
 			
+			
+
+			else if (SendMessage(list_mess, LB_GETSEL,5, 0) > 0) {
+				datn = "A_schlecht_1";
+				
 			}
 			else if (SendMessage(list_mess, LB_GETSEL, 6, 0) > 0) {
-				datn = "7_B_gut_l";
+				datn = "A_schlecht_2";
+				
 				
 			}
 			else if (SendMessage(list_mess, LB_GETSEL, 7, 0) > 0) {
-				datn = "8_C_gut";
-				
-				
+				datn = "A_schlecht_3";
 			}
 			else if (SendMessage(list_mess, LB_GETSEL, 8, 0) > 0) {
-				datn = "9_C_schlecht";
-				
-				 
-
+				datn = "A_schlecht_4";
 			}
 			else if (SendMessage(list_mess, LB_GETSEL, 9, 0) > 0) {
-				datn = "10_B_schlecht";
+				datn = "A_schlecht_form";
+			}
+			else if (SendMessage(list_mess, LB_GETSEL,10, 0) > 0) {
+				datn = "B_gut_1";
+			}
+			else if (SendMessage(list_mess, LB_GETSEL,11, 0) > 0) {
+				datn = "B_gut_2";
+			}
+			else if (SendMessage(list_mess, LB_GETSEL, 12, 0) > 0) {
+				datn = "B_schlecht_1";
+
+			}
+			else if (SendMessage(list_mess, LB_GETSEL, 13, 0) > 0) {
+				datn = "C_gut_1";
 				
+			}
+			else if (SendMessage(list_mess, LB_GETSEL, 14, 0) > 0) {
+				datn = "C_gut_2";
+
+			}
+			else if (SendMessage(list_mess, LB_GETSEL, 15, 0) > 0) {
+				datn = "C_schlecht_1";
+
+			}
+			
+			else if (SendMessage(list_mess, LB_GETSEL, 16, 0) > 0) {
+				datn = "C_schlecht_2";
+
 			}
 			else {
 				SetWindowText(mess_text, "Bitte erst eine Datei \n auswählen");

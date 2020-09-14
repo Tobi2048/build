@@ -6,7 +6,7 @@
 pcl::PointCloud<pcl::PointXYZ>::Ptr sollstein_erstellen(double aufloesung ,std::string dat)
 {//------------------------------------------------------------------------------------------solldaten eckpunkte laden---------------------------------------
 	pcl::PointCloud<pcl::PointXYZ>::Ptr point_cloud(new pcl::PointCloud<pcl::PointXYZ>);
-	
+	aufloesung = 1;
 	
 	int number_Txt;
 	FILE* fp_txt;
@@ -77,7 +77,7 @@ std::vector<double> ausgabe_solldaten(std::string dat)
 		std::cout << "could not open" << std::endl;
 	soll_w[0] =(( vec_TxtPoints[2].y - vec_TxtPoints[0].y)+ (vec_TxtPoints[3].y - vec_TxtPoints[1].y))/2;//länge links
 	soll_w[3]= vec_TxtPoints[3].y - vec_TxtPoints[1].y;//länge rechts
-	soll_w[1]= vec_TxtPoints[1].x - vec_TxtPoints[0].x;//breite
+	soll_w[1]=((vec_TxtPoints[1].x * (vec_TxtPoints[3].y/ vec_TxtPoints[2].y))+ ((vec_TxtPoints[3].x/2) * ((vec_TxtPoints[2].y- vec_TxtPoints[3].y )/ vec_TxtPoints[2].y)))  ;//breite
 	soll_w[2]=vec_TxtPoints[4].z - vec_TxtPoints[0].z;//höhe
 
 	return (soll_w);
